@@ -5,10 +5,35 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-import json
-import sys
-import agent
+#
+# Read configuration
+#
 
+import os
+import sys
+import json
+
+# Prepare return variable
 config = {}
 
+# Read current configuration from the environment file
+config["host"] = os.getenv("TRAEFIK_HOST")
+config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
+config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
+
+config["imap_server"] = os.getenv("ROUNDCUBEMAIL_DEFAULT_HOST")
+config["smtp_server"] = os.getenv("ROUNDCUBEMAIL_SMTP_SERVER")
+config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS")
+config["upload_max_filesize"] = int((os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE").replace('M','')))
+config["imap_port"] = int(os.getenv("ROUNDCUBEMAIL_DEFAULT_PORT"))
+config["smtp_port"] = int(os.getenv("ROUNDCUBEMAIL_SMTP_PORT"))
+
+config["starttls_imap"] = os.getenv("STARTTLS_IMAP") == "True"
+config["starttls_smtp"] = os.getenv("STARTTLS_SMTP") == "True"
+config["encrypted_imap"] = os.getenv("ENCRYPTED_IMAP") == "True"
+config["encrypted_smtp"] = os.getenv("ENCRYPTED_SMTP") == "True"
+config["tls_verify_imap"] = os.getenv("TLS_VERIFY_IMAP") == "True"
+config["tls_verify_smtp"] = os.getenv("TLS_VERIFY_SMTP") == "True"
+
+# Dump the configuratio to stdou
 json.dump(config, fp=sys.stdout)
