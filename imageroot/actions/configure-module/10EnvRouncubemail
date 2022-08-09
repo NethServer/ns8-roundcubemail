@@ -16,8 +16,7 @@ import os
 data = json.load(sys.stdin)
 
 # Setup default values
-imap_server = data["imap_server"]
-smtp_server = data["smtp_server"]
+mail_server = data["mail_server"]
 plugins = data.get("plugins",'archive,zipdownload')
 upload_max_filesize = str(data.get("upload_max_filesize", '10')) + 'M'
 imap_port = data["imap_port"]
@@ -41,19 +40,20 @@ if starttls_smtp and encrypted_smtp:
 
 # cases following encryption or not
 if starttls_imap:
-    imap_server = 'tls://' + imap_server
+    imap_server = 'tls://' + mail_server
 elif encrypted_imap:
-    imap_server = 'ssl://' + imap_server
+    imap_server = 'ssl://' + mail_server
 
 if starttls_smtp:
-    smtp_server = 'tls://' + smtp_server
+    smtp_server = 'tls://' + mail_server
 elif encrypted_smtp:
-    smtp_server = 'ssl://' + smtp_server
+    smtp_server = 'ssl://' + mail_server
 
 
 # Talk with agent using file descriptor.
 # Setup configuration from user input.
 
+agent.set_env("MAIL_SERVER", mail_server)
 agent.set_env("ROUNDCUBEMAIL_DEFAULT_HOST", imap_server)
 agent.set_env("ROUNDCUBEMAIL_SMTP_SERVER", smtp_server)
 agent.set_env("ROUNDCUBEMAIL_PLUGINS", plugins)

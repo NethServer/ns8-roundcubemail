@@ -8,8 +8,7 @@
             "host": "roundcubemail.domain.org",
             "http2https": true,
             "lets_encrypt": true,
-            "imap_server":"imap.domain.org",
-            "smtp_server":"smtp.domain.org",
+            "mail_server":"mail.domain.org",
             "imap_port": 143,
             "smtp_port":587,
             "starttls_imap": true,
@@ -27,8 +26,7 @@
         "host",
         "http2https",
         "lets_encrypt",
-        "imap_server",
-        "smtp_server",
+        "mail_server",
         "imap_port",
         "smtp_port",
         "starttls_imap",
@@ -56,14 +54,9 @@
             "title": "HTTP to HTTPS redirection",
             "description": "Redirect all the HTTP requests to HTTPS"
         },
-        "imap_server": {
+        "mail_server": {
             "type": "string",
-            "description": "Host name for the application, like 'imap.domain.org'",
-            "format": "idn-hostname"
-        },
-        "smtp_server": {
-            "type": "string",
-            "description": "Host name for the application, like 'smtp.domain.org'",
+            "description": "Host name for the mail server, like 'mail.domain.org'",
             "format": "idn-hostname"
         },
         "imap_port": {

@@ -19,8 +19,7 @@ Launch `configure-module`, by setting the following parameters:
 - `host`: a fully qualified domain name for the application
 - `http2https`: enable or disable HTTP to HTTPS redirection (true/false)
 - `lets_encrypt`: enable or disable Let's Encrypt certificate (true/false)
-- `imap_server`: a fully qualified domain name for the IMAP server
-- `smtp_server`: a fully qualified domain name for the SMTP server
+- `mail_server`: a fully qualified domain name for the mail server
 - `plugins`: a list of plugins(coma separated) to enable in roundcubemail
 - `upload_max_filesize`: The maximum size of attachment in MB (default 5MB)
 - `imap_port`: The port number of the IMAP server (1-65535)
@@ -40,8 +39,7 @@ api-cli run configure-module --agent module/roundcubemail1 --data - <<EOF
   "host": "roundcubemail.domain.com",
   "http2https": true,
   "lets_encrypt": false
-  "imap_server": "mail.domain.com",
-  "smtp_server": "mail.domain.com",
+  "mail_server": "mail.domain.com",
   "plugins": "archive,zipdownload",
   "upload_max_filesize": 5,
   "imap_port": 993,

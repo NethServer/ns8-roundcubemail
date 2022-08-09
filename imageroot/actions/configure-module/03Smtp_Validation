@@ -18,7 +18,7 @@ data = json.load(sys.stdin)
 
 
 # Setup default values
-smtp_server = data["smtp_server"]
+mail_server = data["mail_server"]
 smtp_port = data["smtp_port"]
 encrypted_smtp = data["encrypted_smtp"]
 tls_verify_smtp = data["tls_verify_smtp"]
@@ -35,9 +35,9 @@ else:
 
 try :
     if not encrypted_smtp:
-        smtp = smtplib.SMTP(smtp_server, port=smtp_port, timeout=10)
+        smtp = smtplib.SMTP(mail_server, port=smtp_port, timeout=10)
     else:
-        smtp = smtplib.SMTP_SSL(smtp_server, port=smtp_port, timeout=10, context=ctx)
+        smtp = smtplib.SMTP_SSL(mail_server, port=smtp_port, timeout=10, context=ctx)
 
 except ssl.SSLCertVerificationError as err:
     agent.set_status('validation-failed')
