@@ -11,22 +11,39 @@ import agent
 import agent.tasks
 import os
 
-request = json.load(sys.stdin)
+# Try to parse the stdin as JSON.
+# If parsing fails, output everything to stderr
+data = json.load(sys.stdin)
 
-# TODO: do something with the request payload. For example configure a
-# custom route in our web router. Here the path is hardcoded as
-# 'roundecubemail'.
+# Setup default values
+host = data.get("host")
+h2hs = data.get("http2https", True)
+le = data.get("lets_encrypt", False)
 
-# Configure Traefik to route "/roundecubemail" path requests to the roundecubemail service
+# Talk with agent using file descriptor.
+# Setup configuration from user input.
+agent.set_env("TRAEFIK_HOST", host)
+agent.set_env("TRAEFIK_HTTP2HTTPS", h2hs)
+agent.set_env("TRAEFIK_LETS_ENCRYPT", le)
+
+# Make sure everything is saved inside the environment file
+# just before starting systemd unit
+agent.dump_env()
+
+# Find default traefik instance for current node
+default_traefik_id = agent.resolve_agent_id('traefik@node')
+if default_traefik_id is None:
+    sys.exit(2)
+
 response = agent.tasks.run(
     agent_id=agent.resolve_agent_id('traefik@node'),
     action='set-route',
     data={
         'instance': os.environ['MODULE_ID'],
         'url':  'http://127.0.0.1:' + os.environ["TCP_PORT"],
-        'http2https': False,
-        'lets_encrypt': False,
-        'path': '/roundecubemail',
+        'host': host,
+        'http2https': h2hs,
+        'lets_encrypt': le
     },
 )
 
