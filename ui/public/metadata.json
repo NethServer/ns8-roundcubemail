@@ -1,19 +1,19 @@
 {
-  "name": "roundecubemail",
+  "name": "roundcubemail",
   "description": {
-    "en": "My roundecubemail module"
+    "en": "The Roundcube Webmail suite"
   },
-  "categories": [],
+  "categories": ["collaboration"],
   "authors": [
     {
-      "name": "Name Surname",
-      "email": "author@yourmail.org"
+      "name": "Stephane de Labrusse",
+      "email": "stephdl@de-labrusse.fr"
     }
   ],
   "docs": {
-    "documentation_url": "https://docs.roundecubemail.com/",
+    "documentation_url": "https://docs.roundcube.net/doc/help/1.1/en_US/",
     "bug_url": "https://github.com/NethServer/dev",
-    "code_url": "https://github.com/author/ns8-roundecubemail"
+    "code_url": "https://github.com/NethServer/ns8-roundcubemail"
   },
-  "source": "ghcr.io/nethserver/roundecubemail"
+  "source": "ghcr.io/nethserver/roundcubemail"
 }
