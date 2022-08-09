@@ -38,7 +38,7 @@ api-cli run configure-module --agent module/roundcubemail1 --data - <<EOF
 {
   "host": "roundcubemail.domain.com",
   "http2https": true,
-  "lets_encrypt": false
+  "lets_encrypt": false,
   "mail_server": "mail.domain.com",
   "plugins": "archive,zipdownload",
   "upload_max_filesize": 5,
