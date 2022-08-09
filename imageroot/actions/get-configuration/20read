@@ -17,15 +17,15 @@ import json
 config = {}
 
 # Read current configuration from the environment file
-config["host"] = os.getenv("TRAEFIK_HOST")
+config["host"] = os.getenv("TRAEFIK_HOST","")
 config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 
-config["mail_server"] = os.getenv("MAIL_SERVER")
-config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS")
-config["upload_max_filesize"] = int((os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE").replace('M','')))
-config["imap_port"] = int(os.getenv("ROUNDCUBEMAIL_DEFAULT_PORT"))
-config["smtp_port"] = int(os.getenv("ROUNDCUBEMAIL_SMTP_PORT"))
+config["mail_server"] = os.getenv("MAIL_SERVER","")
+config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS","archive,zipdownload")
+config["upload_max_filesize"] = int((os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","5").replace('M','')))
+config["imap_port"] = int(os.getenv("ROUNDCUBEMAIL_DEFAULT_PORT","143"))
+config["smtp_port"] = int(os.getenv("ROUNDCUBEMAIL_SMTP_PORT","587"))
 
 config["starttls_imap"] = os.getenv("STARTTLS_IMAP") == "True"
 config["starttls_smtp"] = os.getenv("STARTTLS_SMTP") == "True"
@@ -34,5 +34,5 @@ config["encrypted_smtp"] = os.getenv("ENCRYPTED_SMTP") == "True"
 config["tls_verify_imap"] = os.getenv("TLS_VERIFY_IMAP") == "True"
 config["tls_verify_smtp"] = os.getenv("TLS_VERIFY_SMTP") == "True"
 
-# Dump the configuratio to stdou
+# Dump the configuration to stdout
 json.dump(config, fp=sys.stdout)
