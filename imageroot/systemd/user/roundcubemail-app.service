@@ -1,0 +1,40 @@
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+[Unit]
+Description=Podman  roundcubemail-app.service
+BindsTo=roundcubemail.service
+After=roundcubemail.service mariadb-app.service
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=%S/state/environment
+WorkingDirectory=%S/state
+Restart=always
+TimeoutStopSec=70
+ExecStartPre=/bin/mkdir -p %S/state/config
+ExecStartPre=/bin/rm -f %t/roundcubemail-app.pid %t/roundcubemail-app.ctr-id
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/roundcubemail-app.pid \
+    --cidfile %t/roundcubemail-app.ctr-id --cgroups=no-conmon \
+    --pod-id-file %t/roundcubemail.pod-id --replace -d --name  roundcubemail-app \
+    --volume html:/var/www/html/:Z \
+    --volume  %S/state/config:/var/roundcube/config/:Z \
+    --env=ROUNDCUBEMAIL_* \
+    --env ROUNDCUBEMAIL_DB_TYPE=mysql \
+    --env ROUNDCUBEMAIL_DB_HOST=127.0.0.1 \
+    --env ROUNDCUBEMAIL_DB_PORT=3306 \
+    --env ROUNDCUBEMAIL_DB_USER=roundcubemail \
+    --env ROUNDCUBEMAIL_DB_PASSWORD=roundcubemail \
+    --env ROUNDCUBEMAIL_DB_NAME=roundcubemail \
+    ${ROUNDCUBEMAIL_IMAGE}
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/roundcubemail-app.ctr-id -t 10
+ExecReload=/usr/bin/podman kill -s HUP roundcubemail-app
+SyslogIdentifier=%u
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/roundcubemail-app.ctr-id
+PIDFile=%t/roundcubemail-app.pid
+Type=forking
+
+[Install]
+WantedBy=default.target
