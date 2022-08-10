@@ -26,16 +26,9 @@ tls_verify_smtp = "true" if data["tls_verify_smtp"] else "false"
 allow_self_signed_imap = "true" if not data["tls_verify_imap"]  else "false"
 allow_self_signed_smtp = "true" if not data["tls_verify_smtp"]  else "false"
 
-f = open("config/config.nethserver.php", "w")
-f.write("<?php \n")
-f.close()
-
-f = open("config/config.nethserver.php", "a")
-
-if data["starttls_imap"] or data["encrypted_imap"]:
-    f.write("$config['imap_conn_options'] = ['ssl'=>['verify_peer'=>"+tls_verify_imap+",'verify_peer_name'=>"+tls_verify_imap+",'allow_self_signed'=>"+allow_self_signed_imap+"], ]; \n")
-
-if  data["starttls_smtp"] or data["encrypted_smtp"]:
-    f.write("$config['smtp_conn_options'] = ['ssl'=>['verify_peer'=>"+tls_verify_smtp+",'verify_peer_name'=>"+tls_verify_smtp+",'allow_self_signed'=>"+allow_self_signed_smtp+"], ]; \n")
-
-f.close()
+with open("config/config.nethserver.php", "w") as f:
+    f.write("<?php \n")
+    if data["starttls_imap"] or data["encrypted_imap"]:
+        f.write("$config['imap_conn_options'] = ['ssl'=>['verify_peer'=>"+tls_verify_imap+",'verify_peer_name'=>"+tls_verify_imap+",'allow_self_signed'=>"+allow_self_signed_imap+"], ]; \n")
+    if  data["starttls_smtp"] or data["encrypted_smtp"]:
+        f.write("$config['smtp_conn_options'] = ['ssl'=>['verify_peer'=>"+tls_verify_smtp+",'verify_peer_name'=>"+tls_verify_smtp+",'allow_self_signed'=>"+allow_self_signed_smtp+"], ]; \n")
