@@ -22,7 +22,7 @@ config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 
 config["mail_server"] = os.getenv("MAIL_SERVER","")
-config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS","archive,zipdownload")
+config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS","archive,zipdownload,managesieve,markasjunk")
 config["upload_max_filesize"] = int((os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","5").replace('M','')))
 config["imap_port"] = int(os.getenv("ROUNDCUBEMAIL_DEFAULT_PORT","143"))
 config["smtp_port"] = int(os.getenv("ROUNDCUBEMAIL_SMTP_PORT","587"))

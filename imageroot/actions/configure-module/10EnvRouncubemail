@@ -17,7 +17,7 @@ data = json.load(sys.stdin)
 
 # Setup default values
 mail_server = data["mail_server"]
-plugins = data.get("plugins",'archive,zipdownload')
+plugins = data.get("plugins",'archive,zipdownload,managesieve,markasjunk')
 upload_max_filesize = str(data.get("upload_max_filesize", '5')) + 'M'
 imap_port = data["imap_port"]
 smtp_port = data["smtp_port"]
