@@ -7,4 +7,5 @@
 
 # If the control reaches this step, the service can be enabled and started
 
-systemctl --user enable --now roundecubemail.service
+systemctl --user enable roundcubemail.service
+systemctl --user restart roundcubemail.service

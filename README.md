@@ -1,66 +1,81 @@
-# ns8-roundecubemail
-
-This is a template module for [NethServer 8](https://github.com/NethServer/ns8-core).
-To start a new module from it:
-
-1. Click on [Use this template](https://github.com/NethServer/ns8-roundecubemail/generate).
-   Name your repo with `ns8-` prefix (e.g. `ns8-mymodule`). 
-   Do not end your module name with a number, like ~~`ns8-baaad2`~~!
-
-1. An automated initialization workflow starts: wait for its completion.
-   You can follow the run inside the "Actions" tab, the workflow is named "Initial commit"
-
-1. You can now clone the repository
-
-1. Edit this `README.md` file, by replacing this section with your module
-   description
-
-1. Commit and push your local changes
+# ns8-roundcubemail
 
 ## Install
 
 Instantiate the module with:
 
-    add-module ghcr.io/nethserver/roundecubemail:latest 1
+    add-module ghcr.io/nethserver/roundcubemail:latest 1
 
 The output of the command will return the instance name.
 Output example:
 
-    {"module_id": "roundecubemail1", "image_name": "roundecubemail", "image_url": "ghcr.io/nethserver/roundecubemail:latest"}
+    {"module_id": "roundcubemail1", "image_name": "roundcubemail", "image_url": "ghcr.io/nethserver/roundcubemail:latest"}
 
 ## Configure
 
-Let's assume that the roundecubemail instance is named `roundecubemail1`.
+Let's assume that the mattermost instance is named `mattermost1`.
 
 Launch `configure-module`, by setting the following parameters:
-- `<MODULE_PARAM1_NAME>`: <MODULE_PARAM1_DESCRIPTION>
-- `<MODULE_PARAM2_NAME>`: <MODULE_PARAM2_DESCRIPTION>
-- ...
+- `host`: a fully qualified domain name for the application
+- `http2https`: enable or disable HTTP to HTTPS redirection (true/false)
+- `lets_encrypt`: enable or disable Let's Encrypt certificate (true/false)
+- `mail_server`: a fully qualified domain name for the mail server
+- `plugins`: a list of plugins(coma separated) to enable in roundcubemail
+- `upload_max_filesize`: The maximum size of attachment in MB (default 5MB)
+- `imap_port`: The port number of the IMAP server (1-65535)
+- `smtp_port`: The port number of the SMTP server (1-65535)
+- `starttls_imap`: Use starttls to encrypt the communication for the IMAP server (true/false)
+- `starttls_smtp`: Use starttls to encrypt the communication for the SMTP server (true/false)
+- `encrypted_imap`: Use tls to encrypt the communication for the IMAP server (true/false)
+- `encrypted_smtp`: Use tls to encrypt the communication for the SMTP server (true/false)
+- `tls_verify_imap`: Verify the certificate of the imap server (true/false)
+- `tls_verify_smtp`: Verify the certificate of the smtp server (true/false)
 
 Example:
 
-    api-cli run module/roundecubemail1/configure-module --data '{}'
+```
+api-cli run configure-module --agent module/roundcubemail1 --data - <<EOF
+{
+  "host": "roundcubemail.domain.com",
+  "http2https": true,
+  "lets_encrypt": false,
+  "mail_server": "mail.domain.com",
+  "plugins": "archive,zipdownload",
+  "upload_max_filesize": 5,
+  "imap_port": 993,
+  "smtp_port": 465,
+  "starttls_imap": false,
+  "starttls_smtp": false,
+  "encrypted_imap": true,
+  "encrypted_smtp": true,
+  "tls_verify_imap": false,
+  "tls_verify_smtp": false
+}
+EOF
+```
 
 The above command will:
-- start and configure the roundecubemail instance
-- (describe configuration process)
-- ...
+- start and configure the roundcubemail instance
+- configure a virtual host for trafik to access the instance
 
-Send a test HTTP request to the roundecubemail backend service:
+## Get the configuration
+You can retrieve the configuration with
 
-    curl http://127.0.0.1/roundecubemail/
+```
+api-cli run get-configuration --agent module/roundcubemail1 --data null | jq
+```
 
 ## Uninstall
 
 To uninstall the instance:
 
-    remove-module --no-preserve roundecubemail1
+    remove-module --no-preserve roundcubemail1
 
 ## Testing
 
 Test the module using the `test-module.sh` script:
 
 
-    ./test-module.sh <NODE_ADDR> ghcr.io/nethserver/roundecubemail:latest
+    ./test-module.sh <NODE_ADDR> ghcr.io/nethserver/roundcubemail:latest
 
 The tests are made using [Robot Framework](https://robotframework.org/)

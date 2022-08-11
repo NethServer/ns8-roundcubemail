@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+import os
+import sys
+import json
+import agent
+import urllib.request
+import urllib.error
+import ssl
+
+
+# retrieve json data
+data = json.load(sys.stdin)
+
+# Setup default values
+host = data.get("host")
+# do not test if it is the same host
+oldHost = os.environ.get('TRAEFIK_HOST','')
+
+if host == oldHost:
+    exit(0)
+
+# set error validation
+agent.set_weight(os.path.basename(__file__), 0)
+
+http = 0
+https = 0
+
+# do not verify the certificate
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
+# try on http
+try:
+    req = urllib.request.Request('http://127.0.0.1')
+    req.add_header('Host', host)
+    urllib.request.urlopen(req, context=ctx)
+except urllib.error.HTTPError as e:
+    http = e.code
+
+# try on https
+try:
+    req = urllib.request.Request('https://127.0.0.1')
+    req.add_header('Host', host)
+    urllib.request.urlopen(req, context=ctx)
+except urllib.error.HTTPError as d:
+    https = d.code
+
+if http == 404 and  https == 404:
+    # there is no website on http or https -> OK
+    exit(0)
+else:
+    # path exists -> nok
+    agent.set_status('validation-failed')
+    json.dump([{'field':'host','parameter':'host','value':host,'error':'domain_already_used_in_traefik'}],fp=sys.stdout)
+    sys.exit(2)
