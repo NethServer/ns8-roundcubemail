@@ -20,7 +20,7 @@ data = json.load(sys.stdin)
 # Setup default values
 mail_server = data["mail_server"]
 imap_port = data["imap_port"]
-encrypted_imap = data["encrypted_imap"]
+encrypt_imap = data["encrypt_imap"]
 tls_verify_imap = data["tls_verify_imap"]
 
 
@@ -34,7 +34,7 @@ else:
     ctx.verify_mode = ssl.CERT_NONE
 
 try :
-    if not encrypted_imap:
+    if encrypt_imap != 'tls':
         imap = imaplib.IMAP4(mail_server, port=imap_port, timeout=10)
     else:
         imap = imaplib.IMAP4_SSL(mail_server, port=imap_port, timeout=10, ssl_context=ctx)

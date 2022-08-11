@@ -24,10 +24,8 @@ Launch `configure-module`, by setting the following parameters:
 - `upload_max_filesize`: The maximum size of attachment in MB (default 5MB)
 - `imap_port`: The port number of the IMAP server (1-65535)
 - `smtp_port`: The port number of the SMTP server (1-65535)
-- `starttls_imap`: Use starttls to encrypt the communication for the IMAP server (true/false)
-- `starttls_smtp`: Use starttls to encrypt the communication for the SMTP server (true/false)
-- `encrypted_imap`: Use tls to encrypt the communication for the IMAP server (true/false)
-- `encrypted_smtp`: Use tls to encrypt the communication for the SMTP server (true/false)
+- `encrypt_imap`: Use tls to encrypt the communication for the IMAP server (none/starttls/tls)
+- `encrypt_smtp`: Use tls to encrypt the communication for the SMTP server (none/starttls/tls)
 - `tls_verify_imap`: Verify the certificate of the imap server (true/false)
 - `tls_verify_smtp`: Verify the certificate of the smtp server (true/false)
 
@@ -40,14 +38,12 @@ api-cli run configure-module --agent module/roundcubemail1 --data - <<EOF
   "http2https": true,
   "lets_encrypt": false,
   "mail_server": "mail.domain.com",
-  "plugins": "archive,zipdownload",
+  "plugins": "archive,zipdownload,managesieve,markasjunk",
   "upload_max_filesize": 5,
   "imap_port": 993,
   "smtp_port": 465,
-  "starttls_imap": false,
-  "starttls_smtp": false,
-  "encrypted_imap": true,
-  "encrypted_smtp": true,
+  "encrypt_imap": "starttls",
+  "encrypt_smtp": "starttls",
   "tls_verify_imap": false,
   "tls_verify_smtp": false
 }

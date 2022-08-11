@@ -21,34 +21,25 @@ plugins = data.get("plugins",'archive,zipdownload,managesieve,markasjunk')
 upload_max_filesize = str(data.get("upload_max_filesize", '5')) + 'M'
 imap_port = data["imap_port"]
 smtp_port = data["smtp_port"]
-starttls_imap = data["starttls_imap"]
-starttls_smtp = data["starttls_smtp"]
-encrypted_imap = data["encrypted_imap"]
-encrypted_smtp = data["encrypted_smtp"]
+encrypt_imap = data["encrypt_imap"]
+encrypt_smtp = data["encrypt_smtp"]
 tls_verify_imap = data["tls_verify_imap"]
 tls_verify_smtp = data["tls_verify_smtp"]
 
-if starttls_imap and encrypted_imap:
-    agent.set_status('validation-failed')
-    json.dump([{'field':'encryption_failure','parameter':'starttls_imap','value':'','error':'starttls_and_ecryption_cannot_be_true_together'}],fp=sys.stdout, default=str)
-    sys.exit(1)
-
-if starttls_smtp and encrypted_smtp:
-    agent.set_status('validation-failed')
-    json.dump([{'field':'encryption_failure','parameter':'starttls_smtp','value':'','error':'starttls_and_ecryption_cannot_be_true_together'}],fp=sys.stdout, default=str)
-    sys.exit(1)
-
 # cases following encryption or not
-if starttls_imap:
+if encrypt_imap == 'starttls':
     imap_server = 'tls://' + mail_server
-elif encrypted_imap:
+elif encrypt_imap == 'tls':
     imap_server = 'ssl://' + mail_server
+else:
+    imap_server = mail_server
 
-if starttls_smtp:
+if encrypt_smtp == 'starttls':
     smtp_server = 'tls://' + mail_server
-elif encrypted_smtp:
+elif encrypt_smtp == 'tls':
     smtp_server = 'ssl://' + mail_server
-
+else:
+    smtp_server = mail_server
 
 # Talk with agent using file descriptor.
 # Setup configuration from user input.
@@ -60,10 +51,8 @@ agent.set_env("ROUNDCUBEMAIL_PLUGINS", plugins)
 agent.set_env("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE", upload_max_filesize)
 agent.set_env("ROUNDCUBEMAIL_DEFAULT_PORT", imap_port)
 agent.set_env("ROUNDCUBEMAIL_SMTP_PORT", smtp_port)
-agent.set_env("STARTTLS_SMTP", starttls_smtp)
-agent.set_env("STARTTLS_IMAP", starttls_imap)
-agent.set_env("ENCRYPTED_SMTP", encrypted_smtp)
-agent.set_env("ENCRYPTED_IMAP", encrypted_imap)
+agent.set_env("ENCRYPT_SMTP", encrypt_smtp)
+agent.set_env("ENCRYPT_IMAP", encrypt_imap)
 agent.set_env("TLS_VERIFY_SMTP", tls_verify_smtp)
 agent.set_env("TLS_VERIFY_IMAP", tls_verify_imap)
 
