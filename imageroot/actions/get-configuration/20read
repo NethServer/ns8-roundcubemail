@@ -27,10 +27,8 @@ config["upload_max_filesize"] = int((os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZ
 config["imap_port"] = int(os.getenv("ROUNDCUBEMAIL_DEFAULT_PORT","143"))
 config["smtp_port"] = int(os.getenv("ROUNDCUBEMAIL_SMTP_PORT","587"))
 
-config["starttls_imap"] = os.getenv("STARTTLS_IMAP") == "True"
-config["starttls_smtp"] = os.getenv("STARTTLS_SMTP") == "True"
-config["encrypted_imap"] = os.getenv("ENCRYPTED_IMAP") == "True"
-config["encrypted_smtp"] = os.getenv("ENCRYPTED_SMTP") == "True"
+config["encrypt_imap"] = os.getenv("ENCRYPT_IMAP")
+config["encrypt_smtp"] = os.getenv("ENCRYPT_SMTP")
 config["tls_verify_imap"] = os.getenv("TLS_VERIFY_IMAP") == "True"
 config["tls_verify_smtp"] = os.getenv("TLS_VERIFY_SMTP") == "True"
 

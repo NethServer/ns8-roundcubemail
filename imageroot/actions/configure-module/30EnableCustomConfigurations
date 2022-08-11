@@ -17,10 +17,8 @@ data = json.load(sys.stdin)
 
 # Setup default values
 mail_server = data["mail_server"]
-starttls_imap   = "true" if data["starttls_imap"]   else "false"
-starttls_smtp   = "true" if data["starttls_smtp"]   else "false"
-encrypted_imap  = "true" if data["encrypted_imap"]  else "false"
-encrypted_smtp  = "true" if data["encrypted_smtp"]  else "false"
+encrypt_imap   = "true" if data["encrypt_imap"] != 'none' else "false"
+encrypt_smtp   = "true" if data["encrypt_smtp"] != 'none' else "false"
 tls_verify_imap = "true" if data["tls_verify_imap"] else "false"
 tls_verify_smtp = "true" if data["tls_verify_smtp"] else "false"
 # allow self signed certicate
@@ -29,13 +27,13 @@ allow_self_signed_smtp = "true" if not data["tls_verify_smtp"]  else "false"
 
 with open("config/config.nethserver.php", "w") as f:
     f.write("<?php \n")
-    if data["starttls_imap"] or data["encrypted_imap"]:
+    if data["encrypt_imap"]:
         f.write("$config['imap_conn_options'] = ['ssl'=>['verify_peer'=>"+tls_verify_imap+",'verify_peer_name'=>"+tls_verify_imap+",'allow_self_signed'=>"+allow_self_signed_imap+"], ]; \n")
-    if  data["starttls_smtp"] or data["encrypted_smtp"]:
+    if  data["encrypt_smtp"]:
         f.write("$config['smtp_conn_options'] = ['ssl'=>['verify_peer'=>"+tls_verify_smtp+",'verify_peer_name'=>"+tls_verify_smtp+",'allow_self_signed'=>"+allow_self_signed_smtp+"], ]; \n")
 
 with open("config/config.managesieve.php", "w") as f:
-    f.write("<?php \n")
-    f.write("$config['managesieve_host'] = 'tls://"+mail_server+":4190';")
+    f.write("<?php\n")
+    f.write("$config['managesieve_host'] = 'tls://"+mail_server+":4190';\n")
     # FIXME Enable/Disable TLS
-    f.write("$config['managesieve_conn_options'] = ['ssl'=>['verify_peer'=>false,'verify_peer_name'=>false,'allow_self_signed'=>true], ];")
+    f.write("$config['managesieve_conn_options'] = ['ssl'=>['verify_peer'=>false,'verify_peer_name'=>false,'allow_self_signed'=>true], ];\n")

@@ -20,7 +20,7 @@ data = json.load(sys.stdin)
 # Setup default values
 mail_server = data["mail_server"]
 smtp_port = data["smtp_port"]
-encrypted_smtp = data["encrypted_smtp"]
+encrypt_smtp = data["encrypt_smtp"]
 tls_verify_smtp = data["tls_verify_smtp"]
 
 
@@ -34,7 +34,7 @@ else:
     ctx.verify_mode = ssl.CERT_NONE
 
 try :
-    if not encrypted_smtp:
+    if encrypt_smtp != 'tls':
         smtp = smtplib.SMTP(mail_server, port=smtp_port, timeout=10)
     else:
         smtp = smtplib.SMTP_SSL(mail_server, port=smtp_port, timeout=10, context=ctx)

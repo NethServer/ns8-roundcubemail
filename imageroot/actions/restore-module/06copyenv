@@ -24,10 +24,8 @@ for evar in [
         "ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE",
         "ROUNDCUBEMAIL_DEFAULT_PORT",
         "ROUNDCUBEMAIL_SMTP_PORT",
-        "STARTTLS_SMTP",
-        "STARTTLS_IMAP",
-        "ENCRYPTED_SMTP",
-        "ENCRYPTED_IMAP", 
+        "ENCRYPT_SMTP",
+        "ENCRYPT_IMAP",
         "TLS_VERIFY_SMTP", 
         "TLS_VERIFY_IMAP",
     ]:
