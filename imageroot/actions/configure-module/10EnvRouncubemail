@@ -17,7 +17,7 @@ data = json.load(sys.stdin)
 
 # Setup default values
 mail_server = data["mail_server"]
-plugins = data.get("plugins",'archive,zipdownload,managesieve,markasjunk')
+plugins = 'archive,zipdownload,managesieve,markasjunk,' + data.get("plugins",'')
 upload_max_filesize = str(data.get("upload_max_filesize", '5')) + 'M'
 imap_port = data["imap_port"]
 smtp_port = data["smtp_port"]
@@ -48,6 +48,7 @@ agent.set_env("MAIL_SERVER", mail_server)
 agent.set_env("ROUNDCUBEMAIL_DEFAULT_HOST", imap_server)
 agent.set_env("ROUNDCUBEMAIL_SMTP_SERVER", smtp_server)
 agent.set_env("ROUNDCUBEMAIL_PLUGINS", plugins)
+agent.set_env("ROUNDCUBEMAIL_PLUGINS_NETHSERVER", data.get("plugins",''))
 agent.set_env("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE", upload_max_filesize)
 agent.set_env("ROUNDCUBEMAIL_DEFAULT_PORT", imap_port)
 agent.set_env("ROUNDCUBEMAIL_SMTP_PORT", smtp_port)

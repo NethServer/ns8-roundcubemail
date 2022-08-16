@@ -230,7 +230,7 @@ export default {
       imap_port: "143",
       smtp_port: "587",
       mail_server: "",
-      plugins: "archive,zipdownload,managesieve,markasjunk",
+      plugins: "",
       upload_max_filesize:"5",
       options:[
         {
