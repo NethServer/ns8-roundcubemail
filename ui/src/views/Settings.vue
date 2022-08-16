@@ -152,7 +152,7 @@
                 <template slot="content">
                   <cv-text-input
                     :label="$t('settings.plugins')"
-                    placeholder="archive,zipdownload,managesieve,markasjunk"
+                    :placeholder="$t('settings.placeholder_plugins')"
                     v-model.trim="plugins"
                     class="mg-bottom"
                     :invalid-message="$t(error.plugins)"
@@ -179,6 +179,26 @@
                   kind="error"
                   :title="$t('action.configure-module')"
                   :description="error.configureModule"
+                  :showCloseButton="false"
+                />
+              </div>
+            </div>
+            <div v-if="error.test_imap" class="bx--row">
+              <div class="bx--col">
+                <NsInlineNotification
+                  kind="error"
+                  :title="$t('action.test_imap')"
+                  :description="error.test_imap"
+                  :showCloseButton="false"
+                />
+              </div>
+            </div>
+            <div v-if="error.test_smtp" class="bx--row">
+              <div class="bx--col">
+                <NsInlineNotification
+                  kind="error"
+                  :title="$t('action.test_smtp')"
+                  :description="error.test_smtp"
                   :showCloseButton="false"
                 />
               </div>
@@ -265,7 +285,9 @@ export default {
         imap_port: "",
         smtp_port: "",
         plugins: "",
-        upload_max_filesize:""
+        upload_max_filesize: "",
+        test_imap: "",
+        test_smtp: "",
       },
     };
   },
@@ -386,6 +408,8 @@ export default {
       }
     },
     async configureModule() {
+      this.error.test_imap = false;
+      this.error.test_smtp = false;
       const isValidationOk = this.validateConfigureModule();
       if (!isValidationOk) {
         return;
