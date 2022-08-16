@@ -1,23 +1,23 @@
 <template>
-  <div class="bx--grid bx--grid--full-width">
-    <div class="bx--row">
-      <div class="bx--col-lg-16 page-title">
+  <cv-grid fullWidth>
+    <cv-row>
+      <cv-column class="page-title">
         <h2>{{ $t("settings.title") }}</h2>
-      </div>
-    </div>
-    <div v-if="error.getConfiguration" class="bx--row">
-      <div class="bx--col">
+      </cv-column>
+    </cv-row>
+    <cv-row v-if="error.getConfiguration">
+      <cv-column>
         <NsInlineNotification
           kind="error"
           :title="$t('action.get-configuration')"
           :description="error.getConfiguration"
           :showCloseButton="false"
         />
-      </div>
-    </div>
-    <div class="bx--row">
-      <div class="bx--col-lg-16">
-        <cv-tile :light="true">
+      </cv-column>
+    </cv-row>
+    <cv-row>
+      <cv-column>
+        <cv-tile light>
           <cv-form @submit.prevent="configureModule">
             <cv-text-input
               :label="$t('settings.roundcubemail_fqdn')"
@@ -173,36 +173,36 @@
                 </template>
               </cv-accordion-item>
             </cv-accordion>
-            <div v-if="error.configureModule" class="bx--row">
-              <div class="bx--col">
+            <cv-row v-if="error.configureModule">
+              <cv-column>
                 <NsInlineNotification
                   kind="error"
                   :title="$t('action.configure-module')"
                   :description="error.configureModule"
                   :showCloseButton="false"
                 />
-              </div>
-            </div>
-            <div v-if="error.test_imap" class="bx--row">
-              <div class="bx--col">
+              </cv-column>
+            </cv-row>
+            <cv-row v-if="error.test_imap">
+              <cv-column>
                 <NsInlineNotification
                   kind="error"
                   :title="$t('action.test_imap')"
                   :description="error.test_imap"
                   :showCloseButton="false"
                 />
-              </div>
-            </div>
-            <div v-if="error.test_smtp" class="bx--row">
-              <div class="bx--col">
+              </cv-column>
+            </cv-row>
+            <cv-row v-if="error.test_smtp">
+              <cv-column>
                 <NsInlineNotification
                   kind="error"
                   :title="$t('action.test_smtp')"
                   :description="error.test_smtp"
                   :showCloseButton="false"
                 />
-              </div>
-            </div>
+              </cv-column>
+            </cv-row>
             <NsButton
               kind="primary"
               :icon="Save20"
@@ -212,9 +212,9 @@
             >
           </cv-form>
         </cv-tile>
-      </div>
-    </div>
-  </div>
+      </cv-column>
+    </cv-row>
+  </cv-grid>
 </template>
 
 <script>
