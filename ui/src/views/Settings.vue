@@ -69,7 +69,7 @@
             </cv-text-input>
             <cv-combo-box
               v-model="encrypt_imap"
-              :label="$t('setttings.choose')"
+              :label="$t('settings.choose')"
               :title="$t('settings.encrypt_imap')"
               :auto-filter="true"
               :auto-highlight="true"
@@ -108,7 +108,7 @@
             </template>
             <cv-combo-box
               v-model="encrypt_smtp"
-              :label="$t('setttings.choose')"
+              :label="$t('settings.choose')"
               :title="$t('settings.encrypt_smtp')"
               :auto-filter="true"
               :auto-highlight="true"
@@ -187,7 +187,7 @@
               <cv-column>
                 <NsInlineNotification
                   kind="error"
-                  :title="$t('action.test_imap')"
+                  :title="$t('settings.test_imap')"
                   :description="error.test_imap"
                   :showCloseButton="false"
                 />
@@ -197,7 +197,7 @@
               <cv-column>
                 <NsInlineNotification
                   kind="error"
-                  :title="$t('action.test_smtp')"
+                  :title="$t('settings.test_smtp')"
                   :description="error.test_smtp"
                   :showCloseButton="false"
                 />
@@ -399,7 +399,7 @@ export default {
       for (const validationError of validationErrors) {
         const param = validationError.parameter;
         // set i18n error message
-        this.error[param] = "settings." + validationError.error;
+        this.error[param] = this.$t("settings." + validationError.error);
 
         if (!focusAlreadySet) {
           this.focusElement(param);
