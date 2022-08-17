@@ -452,7 +452,7 @@ export default {
             smtp_port: parseInt(this.smtp_port),
             mail_server: this.mail_server,
             plugins: this.plugins,
-            upload_max_filesize: this.upload_max_filesize
+            upload_max_filesize: parseInt(this.upload_max_filesize)
 
           },
           extra: {
