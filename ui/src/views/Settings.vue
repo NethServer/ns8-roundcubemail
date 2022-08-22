@@ -160,7 +160,9 @@
                     v-model.trim="plugins"
                     class="mg-bottom"
                     :invalid-message="$t(error.plugins)"
-                    :disabled="loading.getConfiguration || loading.configureModule"
+                    :disabled="
+                      loading.getConfiguration || loading.configureModule
+                    "
                     ref="plugins"
                   >
                   </cv-text-input>
@@ -170,7 +172,9 @@
                     v-model.trim="upload_max_filesize"
                     class="mg-bottom"
                     :invalid-message="$t(error.upload_max_filesize)"
-                    :disabled="loading.getConfiguration || loading.configureModule"
+                    :disabled="
+                      loading.getConfiguration || loading.configureModule
+                    "
                     ref="upload_max_filesize"
                   >
                   </cv-text-input>
@@ -229,12 +233,18 @@ import {
   UtilService,
   TaskService,
   IconService,
-  PageTitleService
+  PageTitleService,
 } from "@nethserver/ns8-ui-lib";
 
 export default {
   name: "Settings",
-  mixins: [TaskService, IconService, UtilService, QueryParamService,PageTitleService],
+  mixins: [
+    TaskService,
+    IconService,
+    UtilService,
+    QueryParamService,
+    PageTitleService,
+  ],
   pageTitle() {
     return this.$t("settings.title") + " - " + this.appName;
   },
@@ -255,8 +265,8 @@ export default {
       smtp_port: "587",
       mail_server: "",
       plugins: "",
-      upload_max_filesize:"5",
-      options:[
+      upload_max_filesize: "5",
+      options: [
         {
           name: "none",
           label: this.$t("settings.none"),
@@ -283,7 +293,7 @@ export default {
         host: "",
         lets_encrypt: "",
         http2https: "",
-        mail_server:"",
+        mail_server: "",
         encrypt_imap: "",
         encrypt_smtp: "",
         imap_port: "",
@@ -320,7 +330,7 @@ export default {
 
       // register to task error
       this.core.$root.$once(
-         `${taskAction}-aborted-${eventId}`,
+        `${taskAction}-aborted-${eventId}`,
         this.getConfigurationAborted
       );
 
@@ -448,7 +458,7 @@ export default {
             host: this.host,
             lets_encrypt: this.isLetsEncryptEnabled,
             http2https: this.isHttpToHttpsEnabled,
-            tls_verify_imap:  this.is_tls_verify_imap,
+            tls_verify_imap: this.is_tls_verify_imap,
             tls_verify_smtp: this.is_tls_verify_smtp,
             encrypt_imap: this.encrypt_imap,
             encrypt_smtp: this.encrypt_smtp,
@@ -456,8 +466,7 @@ export default {
             smtp_port: parseInt(this.smtp_port),
             mail_server: this.mail_server,
             plugins: this.plugins,
-            upload_max_filesize: parseInt(this.upload_max_filesize)
-
+            upload_max_filesize: parseInt(this.upload_max_filesize),
           },
           extra: {
             title: this.$t("settings.instance_configuration", {
@@ -498,8 +507,7 @@ export default {
   margin-bottom: $spacing-06;
 }
 
-  .maxwidth {
-    max-width: 38rem;
-  }
-
+.maxwidth {
+  max-width: 38rem;
+}
 </style>
