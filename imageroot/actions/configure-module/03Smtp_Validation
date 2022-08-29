@@ -36,6 +36,8 @@ else:
 try :
     if encrypt_smtp != 'tls':
         smtp = smtplib.SMTP(mail_server, port=smtp_port, timeout=10)
+        if encrypt_smtp == 'starttls':
+            smtp.starttls(context=ctx)
     else:
         smtp = smtplib.SMTP_SSL(mail_server, port=smtp_port, timeout=10, context=ctx)
 

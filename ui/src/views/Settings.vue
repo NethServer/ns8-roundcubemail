@@ -23,21 +23,190 @@
       <cv-column>
         <cv-tile light>
           <cv-form @submit.prevent="configureModule">
-            <!-- TODO remove test field and code configuration fields -->
             <cv-text-input
-              :label="$t('settings.test_filed')"
-              v-model="testField"
-              :placeholder="$t('settings.test_filed')"
+              :label="$t('settings.roundcubemail_fqdn')"
+              placeholder="roundcubemail.example.org"
+              v-model.trim="host"
+              class="mg-bottom"
+              :invalid-message="$t(error.host)"
               :disabled="loading.getConfiguration || loading.configureModule"
-              :invalid-message="error.testField"
-              ref="testField"
-            ></cv-text-input>
+              ref="host"
+            >
+            </cv-text-input>
+            <cv-toggle
+              value="letsEncrypt"
+              :label="$t('settings.lets_encrypt')"
+              v-model="isLetsEncryptEnabled"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              class="mg-bottom"
+            >
+              <template slot="text-left">{{
+                $t("settings.disabled")
+              }}</template>
+              <template slot="text-right">{{
+                $t("settings.enabled")
+              }}</template>
+            </cv-toggle>
+            <cv-toggle
+              value="httpToHttps"
+              :label="$t('settings.http_to_https')"
+              v-model="isHttpToHttpsEnabled"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              class="mg-bottom"
+            >
+              <template slot="text-left">{{
+                $t("settings.disabled")
+              }}</template>
+              <template slot="text-right">{{
+                $t("settings.enabled")
+              }}</template>
+            </cv-toggle>
+            <cv-text-input
+              :label="$t('settings.mail_server_fqdn')"
+              placeholder="mail.example.org"
+              v-model.trim="mail_server"
+              class="mg-bottom"
+              :invalid-message="$t(error.mail_server)"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              ref="mail_server"
+            >
+            </cv-text-input>
+            <cv-combo-box
+              v-model="encrypt_imap"
+              :label="$t('settings.choose')"
+              :title="$t('settings.encrypt_imap')"
+              :auto-filter="true"
+              :auto-highlight="true"
+              :options="options"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              :invalid-message="error.encrypt_imap"
+              light
+              ref="encrypt_imap"
+            >
+            </cv-combo-box>
+            <cv-text-input
+              :label="$t('settings.imap_port')"
+              placeholder="143"
+              v-model.trim="imap_port"
+              class="mg-bottom"
+              :invalid-message="$t(error.imap_port)"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              ref="imap_port"
+            >
+            </cv-text-input>
+            <template v-if="encrypt_imap != 'none'">
+              <cv-toggle
+                value="tls_verify_imap"
+                :label="$t('settings.tls_verify_imap')"
+                v-model="is_tls_verify_imap"
+                :disabled="loading.getConfiguration || loading.configureModule"
+                class="mg-bottom"
+              >
+                <template slot="text-left">{{
+                  $t("settings.disabled")
+                }}</template>
+                <template slot="text-right">{{
+                  $t("settings.enabled")
+                }}</template>
+              </cv-toggle>
+            </template>
+            <cv-combo-box
+              v-model="encrypt_smtp"
+              :label="$t('settings.choose')"
+              :title="$t('settings.encrypt_smtp')"
+              :auto-filter="true"
+              :auto-highlight="true"
+              :options="options"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              :invalid-message="error.encrypt_smtp"
+              light
+              ref="encrypt_imap"
+            >
+            </cv-combo-box>
+            <cv-text-input
+              :label="$t('settings.smtp_port')"
+              placeholder="587"
+              v-model.trim="smtp_port"
+              class="mg-bottom"
+              :invalid-message="$t(error.smtp_port)"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              ref="smtp_port"
+            >
+            </cv-text-input>
+            <template v-if="encrypt_smtp != 'none'">
+              <cv-toggle
+                value="tls_verify_smtp"
+                :label="$t('settings.tls_verify_smtp')"
+                v-model="is_tls_verify_smtp"
+                :disabled="loading.getConfiguration || loading.configureModule"
+                class="mg-bottom"
+              >
+                <template slot="text-left">{{
+                  $t("settings.disabled")
+                }}</template>
+                <template slot="text-right">{{
+                  $t("settings.enabled")
+                }}</template>
+              </cv-toggle>
+            </template>
+            <!-- advanced options -->
+            <cv-accordion ref="accordion" class="maxwidth mg-bottom">
+              <cv-accordion-item :open="toggleAccordion[0]">
+                <template slot="title">{{ $t("settings.advanced") }}</template>
+                <template slot="content">
+                  <cv-text-input
+                    :label="$t('settings.plugins')"
+                    :placeholder="$t('settings.placeholder_plugins')"
+                    v-model.trim="plugins"
+                    class="mg-bottom"
+                    :invalid-message="$t(error.plugins)"
+                    :disabled="
+                      loading.getConfiguration || loading.configureModule
+                    "
+                    ref="plugins"
+                  >
+                  </cv-text-input>
+                  <cv-text-input
+                    :label="$t('settings.upload_max_filesize')"
+                    placeholder="5"
+                    v-model.trim="upload_max_filesize"
+                    class="mg-bottom"
+                    :invalid-message="$t(error.upload_max_filesize)"
+                    :disabled="
+                      loading.getConfiguration || loading.configureModule
+                    "
+                    ref="upload_max_filesize"
+                  >
+                  </cv-text-input>
+                </template>
+              </cv-accordion-item>
+            </cv-accordion>
             <cv-row v-if="error.configureModule">
               <cv-column>
                 <NsInlineNotification
                   kind="error"
                   :title="$t('action.configure-module')"
                   :description="error.configureModule"
+                  :showCloseButton="false"
+                />
+              </cv-column>
+            </cv-row>
+            <cv-row v-if="error.test_imap">
+              <cv-column>
+                <NsInlineNotification
+                  kind="error"
+                  :title="$t('settings.test_imap')"
+                  :description="error.test_imap"
+                  :showCloseButton="false"
+                />
+              </cv-column>
+            </cv-row>
+            <cv-row v-if="error.test_smtp">
+              <cv-column>
+                <NsInlineNotification
+                  kind="error"
+                  :title="$t('settings.test_smtp')"
+                  :description="error.test_smtp"
                   :showCloseButton="false"
                 />
               </cv-column>
@@ -85,7 +254,35 @@ export default {
         page: "settings",
       },
       urlCheckInterval: null,
-      testField: "", // TODO remove
+      host: "",
+      isLetsEncryptEnabled: false,
+      isHttpToHttpsEnabled: true,
+      is_tls_verify_imap: false,
+      is_tls_verify_smtp: false,
+      encrypt_imap: "starttls",
+      encrypt_smtp: "starttls",
+      imap_port: "143",
+      smtp_port: "587",
+      mail_server: "",
+      plugins: "",
+      upload_max_filesize: "5",
+      options: [
+        {
+          name: "none",
+          label: this.$t("settings.none"),
+          value: "none",
+        },
+        {
+          name: "starttls",
+          label: this.$t("settings.starttls"),
+          value: "starttls",
+        },
+        {
+          name: "tls",
+          label: this.$t("settings.tls"),
+          value: "tls",
+        },
+      ],
       loading: {
         getConfiguration: false,
         configureModule: false,
@@ -93,12 +290,26 @@ export default {
       error: {
         getConfiguration: "",
         configureModule: "",
-        testField: "", // TODO remove
+        host: "",
+        lets_encrypt: "",
+        http2https: "",
+        mail_server: "",
+        encrypt_imap: "",
+        encrypt_smtp: "",
+        imap_port: "",
+        smtp_port: "",
+        plugins: "",
+        upload_max_filesize: "",
+        test_imap: "",
+        test_smtp: "",
       },
     };
   },
   computed: {
     ...mapState(["instanceName", "core", "appName"]),
+  },
+  created() {
+    this.getConfiguration();
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -109,9 +320,6 @@ export default {
   beforeRouteLeave(to, from, next) {
     clearInterval(this.urlCheckInterval);
     next();
-  },
-  created() {
-    this.getConfiguration();
   },
   methods: {
     async getConfiguration() {
@@ -157,45 +365,65 @@ export default {
       this.loading.getConfiguration = false;
     },
     getConfigurationCompleted(taskContext, taskResult) {
-      this.loading.getConfiguration = false;
       const config = taskResult.output;
-
-      // TODO set configuration fields
-      // ...
-
-      // TODO remove
-      console.log("config", config);
-
-      // TODO focus first configuration field
-      this.focusElement("testField");
+      this.host = config.host;
+      this.isLetsEncryptEnabled = config.lets_encrypt;
+      this.isHttpToHttpsEnabled = config.http2https;
+      this.is_tls_verify_imap = config.tls_verify_imap;
+      this.is_tls_verify_smtp = config.tls_verify_smtp;
+      this.encrypt_imap = config.encrypt_imap;
+      this.encrypt_smtp = config.encrypt_smtp;
+      this.imap_port = config.imap_port;
+      this.smtp_port = config.smtp_port;
+      this.upload_max_filesize = config.upload_max_filesize;
+      this.mail_server = config.mail_server;
+      this.plugins = config.plugins;
+      this.loading.getConfiguration = false;
+      this.focusElement("host");
     },
     validateConfigureModule() {
       this.clearErrors(this);
+
       let isValidationOk = true;
 
-      // TODO remove testField and validate configuration fields
-      if (!this.testField) {
-        // test field cannot be empty
-        this.error.testField = this.$t("common.required");
+      if (!this.mail_server) {
+        this.error.mail_server = "common.required";
 
         if (isValidationOk) {
-          this.focusElement("testField");
-          isValidationOk = false;
+          this.focusElement("mail_server");
         }
+        isValidationOk = false;
       }
+
+      if (!this.host) {
+        this.error.host = "common.required";
+
+        if (isValidationOk) {
+          this.focusElement("host");
+        }
+        isValidationOk = false;
+      }
+
       return isValidationOk;
     },
     configureModuleValidationFailed(validationErrors) {
       this.loading.configureModule = false;
+      let focusAlreadySet = false;
 
       for (const validationError of validationErrors) {
         const param = validationError.parameter;
-
         // set i18n error message
         this.error[param] = this.$t("settings." + validationError.error);
+
+        if (!focusAlreadySet) {
+          this.focusElement(param);
+          focusAlreadySet = true;
+        }
       }
     },
     async configureModule() {
+      this.error.test_imap = false;
+      this.error.test_smtp = false;
       const isValidationOk = this.validateConfigureModule();
       if (!isValidationOk) {
         return;
@@ -227,13 +455,24 @@ export default {
         this.createModuleTaskForApp(this.instanceName, {
           action: taskAction,
           data: {
-            // TODO configuration fields
+            host: this.host,
+            lets_encrypt: this.isLetsEncryptEnabled,
+            http2https: this.isHttpToHttpsEnabled,
+            tls_verify_imap: this.is_tls_verify_imap,
+            tls_verify_smtp: this.is_tls_verify_smtp,
+            encrypt_imap: this.encrypt_imap,
+            encrypt_smtp: this.encrypt_smtp,
+            imap_port: parseInt(this.imap_port),
+            smtp_port: parseInt(this.smtp_port),
+            mail_server: this.mail_server,
+            plugins: this.plugins,
+            upload_max_filesize: parseInt(this.upload_max_filesize),
           },
           extra: {
-            title: this.$t("settings.configure_instance", {
+            title: this.$t("settings.instance_configuration", {
               instance: this.instanceName,
             }),
-            description: this.$t("common.processing"),
+            description: this.$t("settings.configuring"),
             eventId,
           },
         })
@@ -264,4 +503,11 @@ export default {
 
 <style scoped lang="scss">
 @import "../styles/carbon-utils";
+.mg-bottom {
+  margin-bottom: $spacing-06;
+}
+
+.maxwidth {
+  max-width: 38rem;
+}
 </style>

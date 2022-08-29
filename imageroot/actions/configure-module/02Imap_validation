@@ -36,6 +36,8 @@ else:
 try :
     if encrypt_imap != 'tls':
         imap = imaplib.IMAP4(mail_server, port=imap_port, timeout=10)
+        if encrypt_imap == 'starttls':
+            imap.starttls(ssl_context=ctx)
     else:
         imap = imaplib.IMAP4_SSL(mail_server, port=imap_port, timeout=10, ssl_context=ctx)
 
