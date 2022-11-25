@@ -21,18 +21,18 @@ container=$(buildah from scratch)
 # Reuse existing nodebuilder-roundcubemail container, to speed up builds
 if ! buildah containers --format "{{.ContainerName}}" | grep -q nodebuilder-roundcubemail; then
     echo "Pulling NodeJS runtime..."
-    buildah from --name nodebuilder-roundcubemail -v "${PWD}:/usr/src:Z" docker.io/library/node:lts
+    buildah from --name nodebuilder-roundcubemail -v "${PWD}:/usr/src:Z" docker.io/library/node:18-slim
 fi
 
 echo "Build static UI files with node..."
-buildah run nodebuilder-roundcubemail sh -c "cd /usr/src/ui && yarn install && yarn build"
+buildah run --env="NODE_OPTIONS=--openssl-legacy-provider" nodebuilder-roundcubemail sh -c "cd /usr/src/ui && yarn install && yarn build"
 
 # Add imageroot directory to the container image
 buildah add "${container}" imageroot /imageroot
 buildah add "${container}" ui/dist /ui
 # Setup the entrypoint, ask to reserve one TCP port with the label and set a rootless container
 buildah config --entrypoint=/ \
-    --label="org.nethserver.authorizations=traefik@any:routeadm" \
+    --label="org.nethserver.authorizations=traefik@node:routeadm" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
     --label="org.nethserver.images=docker.io/mariadb:10.7.4 docker.io/roundcube/roundcubemail:1.6.0-apache" \
