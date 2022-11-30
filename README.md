@@ -22,8 +22,6 @@ Launch `configure-module`, by setting the following parameters:
 - `mail_server`: a fully qualified domain name for the mail server
 - `plugins`: a list of plugins(coma separated) to enable in roundcubemail
 - `upload_max_filesize`: The maximum size of attachment in MB (default 5MB)
-- `imap_port`: The port number of the IMAP server (1-65535)
-- `smtp_port`: The port number of the SMTP server (1-65535)
 - `encrypt_imap`: Use tls to encrypt the communication for the IMAP server (none/starttls/tls)
 - `encrypt_smtp`: Use tls to encrypt the communication for the SMTP server (none/starttls/tls)
 - `tls_verify_imap`: Verify the certificate of the imap server (true/false)
@@ -40,8 +38,6 @@ api-cli run configure-module --agent module/roundcubemail1 --data - <<EOF
   "mail_server": "mail.domain.com",
   "plugins": "archive,zipdownload,managesieve,markasjunk",
   "upload_max_filesize": 5,
-  "imap_port": 993,
-  "smtp_port": 465,
   "encrypt_imap": "starttls",
   "encrypt_smtp": "starttls",
   "tls_verify_imap": false,
