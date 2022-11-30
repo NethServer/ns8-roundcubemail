@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+#
+# Find port of mail service
+#
+
+import os
+import sys
+import json
+import agent
+
+mail_server_to_use = os.environ["MAIL_SERVER_TO_USE"]
+rdb = agent.redis_connect(host="127.0.0.1") # full read-only access on every key
+
+# we query about TCP service provided by the mail server
+smtp_port = rdb.hget(f"module/{mail_server_to_use}/srv/tcp/submission", "port") or ""
+imap_port = rdb.hget(f"module/{mail_server_to_use}/srv/tcp/imap", "port") or ""
+
+agent.set_env("ROUNDCUBEMAIL_DEFAULT_PORT", imap_port)
+agent.set_env("ROUNDCUBEMAIL_SMTP_PORT", smtp_port)
+
+# Make sure everything is saved inside the environment file
+# just before starting systemd unit
+agent.dump_env()
