@@ -12,6 +12,7 @@
 import os
 import sys
 import json
+import agent
 
 # Prepare return variable
 config = {}
@@ -21,16 +22,28 @@ config["host"] = os.getenv("TRAEFIK_HOST","")
 config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 
-config["mail_server"] = os.getenv("MAIL_SERVER","")
+config["mail_server_to_use"] = os.getenv("MAIL_SERVER_TO_USE","")
 config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS_NETHSERVER","")
-config["upload_max_filesize"] = int((os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","5").replace('M','')))
-config["imap_port"] = int(os.getenv("ROUNDCUBEMAIL_DEFAULT_PORT","143"))
-config["smtp_port"] = int(os.getenv("ROUNDCUBEMAIL_SMTP_PORT","587"))
+config["upload_max_filesize"] = os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","10").replace('M','')
 
-config["encrypt_imap"] = os.getenv("ENCRYPT_IMAP",'starttls')
-config["encrypt_smtp"] = os.getenv("ENCRYPT_SMTP",'starttls')
-config["tls_verify_imap"] = os.getenv("TLS_VERIFY_IMAP") == "True"
-config["tls_verify_smtp"] = os.getenv("TLS_VERIFY_SMTP") == "True"
+rdb = agent.redis_connect()
+modules=[]
+
+# we query about all mail server
+for kenv in rdb.scan_iter(match='module/mail*/environment'):
+    # we query redis about configured mail server 
+    if rdb.hget(kenv, "MAIL_HOSTNAME"):
+        # we query remote redis about tcp port used
+        modules.append(
+                {
+                    "name": kenv.removeprefix("module/").removesuffix("/environment"),
+                    "label": kenv.removeprefix("module/").removesuffix("/environment")+' (NODE '+rdb.hget(kenv, "NODE_ID")+') '+ rdb.hget(kenv, "MAIL_HOSTNAME"),
+                    "value": kenv.removeprefix("module/").removesuffix("/environment")
+                }
+        )
+
+#one is node, two is hostname, three is imap, four is submission
+config['mail_server_URL'] = modules
 
 # Dump the configuration to stdout
 json.dump(config, fp=sys.stdout)
