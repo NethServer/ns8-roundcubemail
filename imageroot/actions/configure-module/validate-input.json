@@ -8,7 +8,7 @@
             "host": "roundcubemail.domain.org",
             "http2https": true,
             "lets_encrypt": true,
-            "mail_server_to_use":"mail1",
+            "mail_server":"mail1",
             "plugins":"archive,zipdownload",
             "upload_max_filesize":10
         }
@@ -18,7 +18,7 @@
         "host",
         "http2https",
         "lets_encrypt",
-        "mail_server_to_use",
+        "mail_server",
         "plugins",
         "upload_max_filesize"
     ],
@@ -38,9 +38,9 @@
             "title": "HTTP to HTTPS redirection",
             "description": "Redirect all the HTTP requests to HTTPS"
         },
-        "mail_server_to_use": {
+        "mail_server": {
             "type": "string",
-            "title": "mail_server_to_use",
+            "title": "mail_server",
             "description": "module_id of the mail server like 'mail1'"
         },
         "plugins": {

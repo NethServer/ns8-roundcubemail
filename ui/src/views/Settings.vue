@@ -62,7 +62,7 @@
               }}</template>
             </cv-toggle>
             <NsComboBox
-              v-model.trim="mail_server_to_use"
+              v-model.trim="mail_server"
               :autoFilter="true"
               :autoHighlight="true"
               :title="$t('settings.mail_server_fqdn')"
@@ -71,12 +71,12 @@
               :userInputLabel="core.$t('settings.choose_mail_server')"
               :acceptUserInput="true"
               :showItemType="true"
-              :invalid-message="$t(error.mail_server_to_use)"
+              :invalid-message="$t(error.mail_server)"
               :disabled="loading.getConfiguration || loading.configureModule"
               tooltipAlignment="start"
               tooltipDirection="top"
               light
-              ref="mail_server_to_use"
+              ref="mail_server"
             >
               <template slot="tooltip">
               {{
@@ -192,7 +192,7 @@ export default {
       host: "",
       isLetsEncryptEnabled: false,
       isHttpToHttpsEnabled: true,
-      mail_server_to_use: "",
+      mail_server: "",
       mail_server_URL: [],
       plugins: "",
       upload_max_filesize: "5",
@@ -206,7 +206,7 @@ export default {
         host: "",
         lets_encrypt: "",
         http2https: "",
-        mail_server_to_use: "",
+        mail_server: "",
         plugins: "",
         upload_max_filesize: "",
       },
@@ -277,7 +277,7 @@ export default {
       this.isLetsEncryptEnabled = config.lets_encrypt;
       this.isHttpToHttpsEnabled = config.http2https;
       this.upload_max_filesize = config.upload_max_filesize;
-      this.mail_server_to_use = config.mail_server_to_use;
+      this.mail_server = config.mail_server;
       this.mail_server_URL = config.mail_server_URL;
       this.plugins = config.plugins;
       this.loading.getConfiguration = false;
@@ -350,7 +350,7 @@ export default {
             host: this.host,
             lets_encrypt: this.isLetsEncryptEnabled,
             http2https: this.isHttpToHttpsEnabled,
-            mail_server_to_use: this.mail_server_to_use,
+            mail_server: this.mail_server,
             plugins: this.plugins,
             upload_max_filesize: parseInt(this.upload_max_filesize),
           },

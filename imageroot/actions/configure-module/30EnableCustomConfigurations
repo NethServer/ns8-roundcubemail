@@ -19,8 +19,8 @@ data = json.load(sys.stdin)
 rdb = agent.redis_connect()
 
 # Setup default values
-mail_server_to_use = data["mail_server_to_use"]
-mail_server = rdb.hget(f"module/{mail_server_to_use}/srv/tcp/imap", "host") or ""
+mail_server = data["mail_server"]
+mail_server = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "host") or ""
 
 # for now it seems I cannot use no encryption on smtp
 with open("config/config.nethserver.php", "w") as f:

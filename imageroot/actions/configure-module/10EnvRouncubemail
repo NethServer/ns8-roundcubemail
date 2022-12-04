@@ -19,9 +19,9 @@ data = json.load(sys.stdin)
 rdb = agent.redis_connect()
 
 # Setup default values
-mail_server_to_use = data["mail_server_to_use"]
-smtp_host = rdb.hget(f"module/{mail_server_to_use}/srv/tcp/submission", "host") or ""
-imap_host = rdb.hget(f"module/{mail_server_to_use}/srv/tcp/imap", "host") or ""
+mail_server = data["mail_server"]
+smtp_host = rdb.hget(f"module/{mail_server}/srv/tcp/submission", "host") or ""
+imap_host = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "host") or ""
 
 plugins = 'archive,zipdownload,managesieve,markasjunk,' + data.get("plugins",'')
 upload_max_filesize = str(data.get("upload_max_filesize", '5')) + 'M'
@@ -32,7 +32,7 @@ smtp_server = 'tls://'+smtp_host
 # Talk with agent using file descriptor.
 # Setup configuration from user input.
 
-agent.set_env("MAIL_SERVER_TO_USE", mail_server_to_use)
+agent.set_env("MAIL_SERVER", mail_server)
 agent.set_env("ROUNDCUBEMAIL_DEFAULT_HOST", imap_server)
 agent.set_env("ROUNDCUBEMAIL_SMTP_SERVER", smtp_server)
 agent.set_env("ROUNDCUBEMAIL_PLUGINS", plugins)
