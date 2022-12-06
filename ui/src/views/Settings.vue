@@ -69,7 +69,7 @@
               :label="$t('settings.choose_mail_server')"
               :options="mail_server_URL"
               :userInputLabel="core.$t('settings.choose_mail_server')"
-              :acceptUserInput="true"
+              :acceptUserInput="false"
               :showItemType="true"
               :invalid-message="$t(error.mail_server)"
               :disabled="loading.getConfiguration || loading.configureModule"
