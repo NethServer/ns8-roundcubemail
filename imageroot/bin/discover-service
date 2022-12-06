@@ -21,9 +21,13 @@ rdb = agent.redis_connect(host="127.0.0.1") # full read-only access on every key
 smtp_port = rdb.hget(f"module/{mail_server}/srv/tcp/submission", "port") or ""
 imap_port = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "port") or ""
 
-agent.set_env("ROUNDCUBEMAIL_DEFAULT_PORT", imap_port)
-agent.set_env("ROUNDCUBEMAIL_SMTP_PORT", smtp_port)
+envfile = "roundcubemail_default_port.env"
 
-# Make sure everything is saved inside the environment file
-# just before starting systemd unit
-agent.dump_env()
+# Using .tmp suffix: do not overwrite the target file until the new one is
+# saved to disk:
+with open(envfile + ".tmp", "w") as efp:
+    print(f"ROUNDCUBEMAIL_DEFAULT_PORT={imap_port}", file=efp)
+    print(f"ROUNDCUBEMAIL_SMTP_PORT={smtp_port}", file=efp)
+
+# Commit changes by replacing the existing envfile:
+os.replace(envfile + ".tmp", envfile)
