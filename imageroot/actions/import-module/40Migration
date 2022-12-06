@@ -12,18 +12,14 @@ exec 1>&2 # Redirect any output to the journal (stderr)
 mkdir -vp initdb.d
 mv -v roundcubemail.sql initdb.d
 #do the bash file to restore and exit once done
-cat - >initdb.d/roundcubemail_restore.sh <<'EOS'
-# Read dump file from standard input:
-cd docker-entrypoint-initdb.d
-mysql -uroundcubemail -proundcubemail roundcubemail < roundcubemail.sql
+cat - >initdb.d/zz_roundcubemail_restore.sh <<'EOS'
 # Print additional information:
 mysql --version
 # The script is sourced, override entrypoint args and exit:
 set -- true
-exit 1
+docker_temp_server_stop
+exit 0
 EOS
-# file must be executable
-chmod a+x initdb.d/roundcubemail_restore.sh
 
 # once we exit we remove initdb.d
 trap 'rm -rfv initdb.d/' EXIT
