@@ -24,9 +24,6 @@ mail_server = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "host") or ""
 
 with open("config/config.nethserver.php", "w") as f:
     f.write("<?php \n")
-    # for now it seems I cannot use no encryption on smtp, we need tls
-    f.write("$config['imap_conn_options'] = ['ssl'=>['verify_peer'=>false,'verify_peer_name'=>false,'allow_self_signed'=>true], ]; \n")
-    f.write("$config['smtp_conn_options'] = ['ssl'=>['verify_peer'=>false,'verify_peer_name'=>false,'allow_self_signed'=>true], ]; \n")
     # we need a full email adress with foo@domain.com
     f.write("$config['login_username_filter'] = 'email'; \n")
     # allow the browser to save login/credential and to fill them
@@ -34,5 +31,4 @@ with open("config/config.nethserver.php", "w") as f:
 
 with open("config/config.managesieve.php", "w") as f:
     f.write("<?php\n")
-    f.write("$config['managesieve_host'] = 'tls://"+mail_server+":4190';\n")
-    f.write("$config['managesieve_conn_options'] = ['ssl'=>['verify_peer'=>false,'verify_peer_name'=>false,'allow_self_signed'=>true], ];\n")
+    f.write("$config['managesieve_host'] = '"+mail_server+":4190';\n")
