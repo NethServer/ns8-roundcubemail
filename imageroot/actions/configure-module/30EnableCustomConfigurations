@@ -16,24 +16,19 @@ import os
 data = json.load(sys.stdin)
 
 # Setup default values
+rdb = agent.redis_connect()
+
+# Setup default values
 mail_server = data["mail_server"]
-encrypt_imap   = "true" if data["encrypt_imap"] != 'none' else "false"
-encrypt_smtp   = "true" if data["encrypt_smtp"] != 'none' else "false"
-tls_verify_imap = "true" if data["tls_verify_imap"] else "false"
-tls_verify_smtp = "true" if data["tls_verify_smtp"] else "false"
-# allow self signed certicate
-allow_self_signed_imap = "true" if not data["tls_verify_imap"]  else "false"
-allow_self_signed_smtp = "true" if not data["tls_verify_smtp"]  else "false"
+mail_server = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "host") or ""
 
 with open("config/config.nethserver.php", "w") as f:
     f.write("<?php \n")
-    if data["encrypt_imap"]:
-        f.write("$config['imap_conn_options'] = ['ssl'=>['verify_peer'=>"+tls_verify_imap+",'verify_peer_name'=>"+tls_verify_imap+",'allow_self_signed'=>"+allow_self_signed_imap+"], ]; \n")
-    if  data["encrypt_smtp"]:
-        f.write("$config['smtp_conn_options'] = ['ssl'=>['verify_peer'=>"+tls_verify_smtp+",'verify_peer_name'=>"+tls_verify_smtp+",'allow_self_signed'=>"+allow_self_signed_smtp+"], ]; \n")
+    # we need a full email adress with foo@domain.com
+    f.write("$config['login_username_filter'] = 'email'; \n")
+    # allow the browser to save login/credential and to fill them
+    f.write("$config['login_autocomplete'] = 2; \n")
 
 with open("config/config.managesieve.php", "w") as f:
     f.write("<?php\n")
-    f.write("$config['managesieve_host'] = 'tls://"+mail_server+":4190';\n")
-    # FIXME Enable/Disable TLS
-    f.write("$config['managesieve_conn_options'] = ['ssl'=>['verify_peer'=>false,'verify_peer_name'=>false,'allow_self_signed'=>true], ];\n")
+    f.write("$config['managesieve_host'] = '"+mail_server+":4190';\n")

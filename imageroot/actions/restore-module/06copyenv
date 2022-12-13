@@ -23,12 +23,6 @@ for evar in [
         "ROUNDCUBEMAIL_PLUGINS",
         "ROUNDCUBEMAIL_PLUGINS_NETHSERVER",
         "ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE",
-        "ROUNDCUBEMAIL_DEFAULT_PORT",
-        "ROUNDCUBEMAIL_SMTP_PORT",
-        "ENCRYPT_SMTP",
-        "ENCRYPT_IMAP",
-        "TLS_VERIFY_SMTP", 
-        "TLS_VERIFY_IMAP",
     ]:
      agent.set_env(evar, original_environment[evar])
 

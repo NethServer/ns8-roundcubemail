@@ -8,13 +8,7 @@
             "host": "roundcubemail.domain.org",
             "http2https": true,
             "lets_encrypt": true,
-            "mail_server":"mail.domain.org",
-            "imap_port": 143,
-            "smtp_port":587,
-            "encrypt_imap": "starttls",
-            "encrypt_smtp": "starttls",
-            "tls_verify_imap": true,
-            "tls_verify_smtp":true,
+            "mail_server":"mail1",
             "plugins":"archive,zipdownload",
             "upload_max_filesize":10
         }
@@ -25,12 +19,6 @@
         "http2https",
         "lets_encrypt",
         "mail_server",
-        "imap_port",
-        "smtp_port",
-        "encrypt_imap",
-        "encrypt_smtp",
-        "tls_verify_imap",
-        "tls_verify_smtp",
         "plugins",
         "upload_max_filesize"
     ],
@@ -52,46 +40,8 @@
         },
         "mail_server": {
             "type": "string",
-            "description": "Host name for the mail server, like 'mail.domain.org'",
-            "format": "idn-hostname"
-        },
-        "imap_port": {
-            "type": "integer",
-            "title": "port",
-            "minimum": 1,
-            "maximum": 65535,
-            "description": "Port number of the imap smarthost"
-        },
-        "smtp_port": {
-            "type": "integer",
-            "title": "port",
-            "minimum": 1,
-            "maximum": 65535,
-            "description": "Port number of the smtp smarthost"
-        },
-        "encrypt_imap": {
-            "type": "string",
-            "format": "regex",
-            "pattern": "^(none|starttls|tls)$",
-            "title": "encrypt_imap",
-            "description": "Enable or disable the tls encryption with the imap server"
-        },
-        "encrypt_smtp": {
-            "type": "string",
-            "format": "regex",
-            "pattern": "^(none|starttls|tls)$",
-            "title": "encrypt_smtp",
-            "description": "Enable or disable the tls encryption with the smtp server"
-        },
-        "tls_verify_imap": {
-            "type": "boolean",
-            "title": "tls_verify_imap",
-            "description": "Enable or disable the usage of a valid certificate with the imap server"
-        },
-        "tls_verify_smtp": {
-            "type": "boolean",
-            "title": "tls_verify_smtp",
-            "description": "Enable or disable the usage of a valid certificate with the smtp server"
+            "title": "mail_server",
+            "description": "module_id of the mail server like 'mail1'"
         },
         "plugins": {
             "type": "string",

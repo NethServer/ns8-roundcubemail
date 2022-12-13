@@ -61,94 +61,29 @@
                 $t("settings.enabled")
               }}</template>
             </cv-toggle>
-            <cv-text-input
-              :label="$t('settings.mail_server_fqdn')"
-              placeholder="mail.example.org"
+            <NsComboBox
               v-model.trim="mail_server"
-              class="mg-bottom"
+              :autoFilter="true"
+              :autoHighlight="true"
+              :title="$t('settings.mail_server_fqdn')"
+              :label="$t('settings.choose_mail_server')"
+              :options="mail_server_URL"
+              :userInputLabel="core.$t('settings.choose_mail_server')"
+              :acceptUserInput="false"
+              :showItemType="true"
               :invalid-message="$t(error.mail_server)"
               :disabled="loading.getConfiguration || loading.configureModule"
+              tooltipAlignment="start"
+              tooltipDirection="top"
+              light
               ref="mail_server"
             >
-            </cv-text-input>
-            <cv-combo-box
-              v-model="encrypt_imap"
-              :label="$t('settings.choose')"
-              :title="$t('settings.encrypt_imap')"
-              :auto-filter="true"
-              :auto-highlight="true"
-              :options="options"
-              :disabled="loading.getConfiguration || loading.configureModule"
-              :invalid-message="error.encrypt_imap"
-              light
-              ref="encrypt_imap"
-            >
-            </cv-combo-box>
-            <cv-text-input
-              :label="$t('settings.imap_port')"
-              placeholder="143"
-              v-model.trim="imap_port"
-              class="mg-bottom"
-              :invalid-message="$t(error.imap_port)"
-              :disabled="loading.getConfiguration || loading.configureModule"
-              ref="imap_port"
-            >
-            </cv-text-input>
-            <template v-if="encrypt_imap != 'none'">
-              <cv-toggle
-                value="tls_verify_imap"
-                :label="$t('settings.tls_verify_imap')"
-                v-model="is_tls_verify_imap"
-                :disabled="loading.getConfiguration || loading.configureModule"
-                class="mg-bottom"
-              >
-                <template slot="text-left">{{
-                  $t("settings.disabled")
-                }}</template>
-                <template slot="text-right">{{
-                  $t("settings.enabled")
-                }}</template>
-              </cv-toggle>
-            </template>
-            <cv-combo-box
-              v-model="encrypt_smtp"
-              :label="$t('settings.choose')"
-              :title="$t('settings.encrypt_smtp')"
-              :auto-filter="true"
-              :auto-highlight="true"
-              :options="options"
-              :disabled="loading.getConfiguration || loading.configureModule"
-              :invalid-message="error.encrypt_smtp"
-              light
-              ref="encrypt_imap"
-            >
-            </cv-combo-box>
-            <cv-text-input
-              :label="$t('settings.smtp_port')"
-              placeholder="587"
-              v-model.trim="smtp_port"
-              class="mg-bottom"
-              :invalid-message="$t(error.smtp_port)"
-              :disabled="loading.getConfiguration || loading.configureModule"
-              ref="smtp_port"
-            >
-            </cv-text-input>
-            <template v-if="encrypt_smtp != 'none'">
-              <cv-toggle
-                value="tls_verify_smtp"
-                :label="$t('settings.tls_verify_smtp')"
-                v-model="is_tls_verify_smtp"
-                :disabled="loading.getConfiguration || loading.configureModule"
-                class="mg-bottom"
-              >
-                <template slot="text-left">{{
-                  $t("settings.disabled")
-                }}</template>
-                <template slot="text-right">{{
-                  $t("settings.enabled")
-                }}</template>
-              </cv-toggle>
-            </template>
+              <template slot="tooltip">
+              {{
+                $t("settings.choose_the_mail_server_to_use")
+              }}
+              </template>
+            </NsComboBox>
             <!-- advanced options -->
             <cv-accordion ref="accordion" class="maxwidth mg-bottom">
               <cv-accordion-item :open="toggleAccordion[0]">
@@ -257,32 +192,10 @@ export default {
       host: "",
       isLetsEncryptEnabled: false,
       isHttpToHttpsEnabled: true,
-      is_tls_verify_imap: false,
-      is_tls_verify_smtp: false,
-      encrypt_imap: "starttls",
-      encrypt_smtp: "starttls",
-      imap_port: "143",
-      smtp_port: "587",
       mail_server: "",
+      mail_server_URL: [],
       plugins: "",
       upload_max_filesize: "5",
-      options: [
-        {
-          name: "none",
-          label: this.$t("settings.none"),
-          value: "none",
-        },
-        {
-          name: "starttls",
-          label: this.$t("settings.starttls"),
-          value: "starttls",
-        },
-        {
-          name: "tls",
-          label: this.$t("settings.tls"),
-          value: "tls",
-        },
-      ],
       loading: {
         getConfiguration: false,
         configureModule: false,
@@ -294,14 +207,8 @@ export default {
         lets_encrypt: "",
         http2https: "",
         mail_server: "",
-        encrypt_imap: "",
-        encrypt_smtp: "",
-        imap_port: "",
-        smtp_port: "",
         plugins: "",
         upload_max_filesize: "",
-        test_imap: "",
-        test_smtp: "",
       },
     };
   },
@@ -369,14 +276,9 @@ export default {
       this.host = config.host;
       this.isLetsEncryptEnabled = config.lets_encrypt;
       this.isHttpToHttpsEnabled = config.http2https;
-      this.is_tls_verify_imap = config.tls_verify_imap;
-      this.is_tls_verify_smtp = config.tls_verify_smtp;
-      this.encrypt_imap = config.encrypt_imap;
-      this.encrypt_smtp = config.encrypt_smtp;
-      this.imap_port = config.imap_port;
-      this.smtp_port = config.smtp_port;
       this.upload_max_filesize = config.upload_max_filesize;
       this.mail_server = config.mail_server;
+      this.mail_server_URL = config.mail_server_URL;
       this.plugins = config.plugins;
       this.loading.getConfiguration = false;
       this.focusElement("host");
@@ -385,16 +287,6 @@ export default {
       this.clearErrors(this);
 
       let isValidationOk = true;
-
-      if (!this.mail_server) {
-        this.error.mail_server = "common.required";
-
-        if (isValidationOk) {
-          this.focusElement("mail_server");
-        }
-        isValidationOk = false;
-      }
-
       if (!this.host) {
         this.error.host = "common.required";
 
@@ -458,12 +350,6 @@ export default {
             host: this.host,
             lets_encrypt: this.isLetsEncryptEnabled,
             http2https: this.isHttpToHttpsEnabled,
-            tls_verify_imap: this.is_tls_verify_imap,
-            tls_verify_smtp: this.is_tls_verify_smtp,
-            encrypt_imap: this.encrypt_imap,
-            encrypt_smtp: this.encrypt_smtp,
-            imap_port: parseInt(this.imap_port),
-            smtp_port: parseInt(this.smtp_port),
             mail_server: this.mail_server,
             plugins: this.plugins,
             upload_max_filesize: parseInt(this.upload_max_filesize),

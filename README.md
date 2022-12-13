@@ -1,5 +1,9 @@
 # ns8-roundcubemail
 
+Found all settings to overwrite the default, drop them in your file for example ~.config/state/config/mySettings.php (start by `<?php`)
+
+https://github.com/roundcube/roundcubemail/blob/master/config/defaults.inc.php
+
 ## Install
 
 Instantiate the module with:
@@ -19,15 +23,9 @@ Launch `configure-module`, by setting the following parameters:
 - `host`: a fully qualified domain name for the application
 - `http2https`: enable or disable HTTP to HTTPS redirection (true/false)
 - `lets_encrypt`: enable or disable Let's Encrypt certificate (true/false)
-- `mail_server`: a fully qualified domain name for the mail server
-- `plugins`: a list of plugins(coma separated) to enable in roundcubemail
+- `mail_server`: the module ID of the the mail server (only on NS8), for example `mail1`
+- `plugins`: a list of plugins(coma separated) to enable in roundcubemail (default enabled : `archive,zipdownload,managesieve,markasjunk`)
 - `upload_max_filesize`: The maximum size of attachment in MB (default 5MB)
-- `imap_port`: The port number of the IMAP server (1-65535)
-- `smtp_port`: The port number of the SMTP server (1-65535)
-- `encrypt_imap`: Use tls to encrypt the communication for the IMAP server (none/starttls/tls)
-- `encrypt_smtp`: Use tls to encrypt the communication for the SMTP server (none/starttls/tls)
-- `tls_verify_imap`: Verify the certificate of the imap server (true/false)
-- `tls_verify_smtp`: Verify the certificate of the smtp server (true/false)
 
 Example:
 
@@ -37,15 +35,9 @@ api-cli run configure-module --agent module/roundcubemail1 --data - <<EOF
   "host": "roundcubemail.domain.com",
   "http2https": true,
   "lets_encrypt": false,
-  "mail_server": "mail.domain.com",
-  "plugins": "archive,zipdownload,managesieve,markasjunk",
+  "mail_server": "mail1",
+  "plugins": "",
   "upload_max_filesize": 5,
-  "imap_port": 993,
-  "smtp_port": 465,
-  "encrypt_imap": "starttls",
-  "encrypt_smtp": "starttls",
-  "tls_verify_imap": false,
-  "tls_verify_smtp": false
 }
 EOF
 ```

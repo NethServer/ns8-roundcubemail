@@ -15,47 +15,26 @@ import os
 # If parsing fails, output everything to stderr
 data = json.load(sys.stdin)
 
+# Connect to redis
+rdb = agent.redis_connect()
+
 # Setup default values
 mail_server = data["mail_server"]
+smtp_server = rdb.hget(f"module/{mail_server}/srv/tcp/submission", "host") or ""
+imap_server = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "host") or ""
+
 plugins = 'archive,zipdownload,managesieve,markasjunk,' + data.get("plugins",'')
 upload_max_filesize = str(data.get("upload_max_filesize", '5')) + 'M'
-imap_port = data["imap_port"]
-smtp_port = data["smtp_port"]
-encrypt_imap = data["encrypt_imap"]
-encrypt_smtp = data["encrypt_smtp"]
-tls_verify_imap = data["tls_verify_imap"]
-tls_verify_smtp = data["tls_verify_smtp"]
-
-# cases following encryption or not
-if encrypt_imap == 'starttls':
-    imap_server = 'tls://' + mail_server
-elif encrypt_imap == 'tls':
-    imap_server = 'ssl://' + mail_server
-else:
-    imap_server = mail_server
-
-if encrypt_smtp == 'starttls':
-    smtp_server = 'tls://' + mail_server
-elif encrypt_smtp == 'tls':
-    smtp_server = 'ssl://' + mail_server
-else:
-    smtp_server = mail_server
 
 # Talk with agent using file descriptor.
 # Setup configuration from user input.
-
 agent.set_env("MAIL_SERVER", mail_server)
 agent.set_env("ROUNDCUBEMAIL_DEFAULT_HOST", imap_server)
 agent.set_env("ROUNDCUBEMAIL_SMTP_SERVER", smtp_server)
 agent.set_env("ROUNDCUBEMAIL_PLUGINS", plugins)
 agent.set_env("ROUNDCUBEMAIL_PLUGINS_NETHSERVER", data.get("plugins",''))
 agent.set_env("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE", upload_max_filesize)
-agent.set_env("ROUNDCUBEMAIL_DEFAULT_PORT", imap_port)
-agent.set_env("ROUNDCUBEMAIL_SMTP_PORT", smtp_port)
-agent.set_env("ENCRYPT_SMTP", encrypt_smtp)
-agent.set_env("ENCRYPT_IMAP", encrypt_imap)
-agent.set_env("TLS_VERIFY_SMTP", tls_verify_smtp)
-agent.set_env("TLS_VERIFY_IMAP", tls_verify_imap)
+
 
 # Make sure everything is saved inside the environment file
 # just before starting systemd unit
