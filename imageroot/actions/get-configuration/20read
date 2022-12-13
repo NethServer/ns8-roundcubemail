@@ -26,21 +26,19 @@ config["mail_server"] = os.getenv("MAIL_SERVER","")
 config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS_NETHSERVER","")
 config["upload_max_filesize"] = os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","10").replace('M','')
 
-rdb = agent.redis_connect()
+rdb = agent.redis_connect(host='127.0.0.1')
 modules=[]
 
 # we query about all mail server
-for kenv in rdb.scan_iter(match='module/mail*/environment'):
-    # we query redis about configured mail server 
-    if rdb.hget(kenv, "MAIL_HOSTNAME"):
-        # we query remote redis about tcp port used
-        modules.append(
+for key in agent.list_service_providers(rdb,'imap','tcp'):
+    # we query agent about configured mail server 
+    modules.append(
                 {
-                    "name": kenv.removeprefix("module/").removesuffix("/environment"),
-                    "label": kenv.removeprefix("module/").removesuffix("/environment")+' (NODE '+rdb.hget(kenv, "NODE_ID")+') '+ rdb.hget(kenv, "MAIL_HOSTNAME"),
-                    "value": kenv.removeprefix("module/").removesuffix("/environment")
+                    "name": key['module_id'],
+                    "label": key['module_id']+' (NODE '+key['node']+') '+ key['mail_hostname'],
+                    "value": key['module_id']
                 }
-        )
+    )
 
 #one is node, two is hostname, three is imap, four is submission
 config['mail_server_URL'] = modules
