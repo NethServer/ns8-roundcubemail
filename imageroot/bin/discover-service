@@ -6,7 +6,7 @@
 #
 
 #
-# Find port of mail service
+# Find settings (port, ip, ..) of mail service among the cluster
 #
 
 import os
@@ -20,6 +20,9 @@ rdb = agent.redis_connect(host="127.0.0.1") # full read-only access on every key
 # we query about TCP service provided by the mail server
 smtp_port = rdb.hget(f"module/{mail_server}/srv/tcp/submission", "port") or ""
 imap_port = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "port") or ""
+# we query about the IP in the cluster of the mail server
+smtp_server = rdb.hget(f"module/{mail_server}/srv/tcp/submission", "host") or ""
+imap_server = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "host") or ""
 
 envfile = "roundcubemail_default_port.env"
 
@@ -28,6 +31,13 @@ envfile = "roundcubemail_default_port.env"
 with open(envfile + ".tmp", "w") as efp:
     print(f"ROUNDCUBEMAIL_DEFAULT_PORT={imap_port}", file=efp)
     print(f"ROUNDCUBEMAIL_SMTP_PORT={smtp_port}", file=efp)
+    print(f"ROUNDCUBEMAIL_DEFAULT_HOST={imap_server}", file=efp)
+    print(f"ROUNDCUBEMAIL_SMTP_SERVER={smtp_server}", file=efp)
 
 # Commit changes by replacing the existing envfile:
 os.replace(envfile + ".tmp", envfile)
+
+# we need to expand the IP of mail server in sieve file
+with open("config/config.managesieve.php", "w") as f:
+    f.write("<?php\n")
+    f.write("$config['managesieve_host'] = '"+imap_server+":4190';\n")
