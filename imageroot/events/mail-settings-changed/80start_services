@@ -10,4 +10,4 @@ set -e
 exec 1>&2 # Send any output to stderr, to not alter the action response protocol
 
 # If the control reaches this step, the service can be enabled and started
-systemctl --user restart roundcubemail.service
+systemctl --user  try-restart roundcubemail.service
