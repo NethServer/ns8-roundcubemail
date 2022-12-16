@@ -21,7 +21,6 @@ for evar in [
         "ROUNDCUBEMAIL_DEFAULT_HOST",
         "ROUNDCUBEMAIL_SMTP_SERVER",
         "ROUNDCUBEMAIL_PLUGINS",
-        "ROUNDCUBEMAIL_PLUGINS_NETHSERVER",
         "ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE",
     ]:
      agent.set_env(evar, original_environment[evar])
