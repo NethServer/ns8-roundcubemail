@@ -13,9 +13,12 @@ import agent.tasks
 # Try to parse the stdin as JSON.
 # If parsing fails, output everything to stderr
 data = json.load(sys.stdin)
+# Connect to redis
+rdb = agent.redis_connect()
 
 # Setup default values
 mail_server = data["mail_server"]
+module_uuid = rdb.hget(f"module/{mail_server}/srv/tcp/submission", "module_uuid") or ""
 
 plugins = 'archive,zipdownload,managesieve,markasjunk,' + data.get("plugins",'')
 upload_max_filesize = str(data.get("upload_max_filesize", '5')) + 'M'
@@ -23,6 +26,7 @@ upload_max_filesize = str(data.get("upload_max_filesize", '5')) + 'M'
 # Talk with agent using file descriptor.
 # Setup configuration from user input.
 agent.set_env("MAIL_SERVER", mail_server)
+agent.set_env("MAIL_MODULE_UUID", module_uuid)
 agent.set_env("ROUNDCUBEMAIL_PLUGINS", plugins)
 agent.set_env("ROUNDCUBEMAIL_PLUGINS_NETHSERVER", data.get("plugins",''))
 agent.set_env("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE", upload_max_filesize)
