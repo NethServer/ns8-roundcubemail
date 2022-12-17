@@ -37,7 +37,7 @@ api-cli run configure-module --agent module/roundcubemail1 --data - <<EOF
   "lets_encrypt": false,
   "mail_server": "mail1",
   "plugins": "",
-  "upload_max_filesize": 5,
+  "upload_max_filesize": 5
 }
 EOF
 ```
