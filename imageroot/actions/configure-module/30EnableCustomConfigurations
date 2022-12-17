@@ -5,30 +5,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-import json
-import sys
-import agent
-import agent.tasks
-import os
-
-# Try to parse the stdin as JSON.
-# If parsing fails, output everything to stderr
-data = json.load(sys.stdin)
-
-# Setup default values
-rdb = agent.redis_connect()
-
-# Setup default values
-mail_server = data["mail_server"]
-mail_server = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "host") or ""
-
+#
+# Write default settings of roundcubemail
+#
 with open("config/config.nethserver.php", "w") as f:
     f.write("<?php \n")
     # we need a full email adress with foo@domain.com
     f.write("$config['login_username_filter'] = 'email'; \n")
     # allow the browser to save login/credential and to fill them
     f.write("$config['login_autocomplete'] = 2; \n")
-
-with open("config/config.managesieve.php", "w") as f:
-    f.write("<?php\n")
-    f.write("$config['managesieve_host'] = '"+mail_server+":4190';\n")
