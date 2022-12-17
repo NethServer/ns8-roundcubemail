@@ -32,7 +32,6 @@ agent.set_env("MAIL_SERVER", mail_server)
 agent.set_env("ROUNDCUBEMAIL_DEFAULT_HOST", imap_server)
 agent.set_env("ROUNDCUBEMAIL_SMTP_SERVER", smtp_server)
 agent.set_env("ROUNDCUBEMAIL_PLUGINS", plugins)
-agent.set_env("ROUNDCUBEMAIL_PLUGINS_NETHSERVER", data.get("plugins",''))
 agent.set_env("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE", upload_max_filesize)
 
 
