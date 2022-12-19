@@ -5,6 +5,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
+set -e
+
+# Redirect any output to the journal (stderr)
+exec 1>&2
+
 # If the control reaches this step, the service can be enabled and started
 
 systemctl --user enable roundcubemail.service
