@@ -19,9 +19,8 @@ data = json.load(sys.stdin)
 # Connect to redis
 rdb = agent.redis_connect()
 
-if "mail_server" in data and data["mail_server"] != os.getenv("MAIL_SERVER"):
-    mail_server = data["mail_server"]
-    if not rdb.exists(f"module/{mail_server}/srv/tcp/imap"):
-            agent.set_status('validation-failed')
-            json.dump([{'field':'mail_server','parameter':'mail_server','value': data["mail_server"],'error':'mail_server_is_not_valid'}], fp=sys.stdout)
-            sys.exit(3)
+mail_server = data["mail_server"]
+if not rdb.exists(f"module/{mail_server}/srv/tcp/imap"):
+        agent.set_status('validation-failed')
+        json.dump([{'field':'mail_server','parameter':'mail_server','value': data["mail_server"],'error':'mail_server_is_not_valid'}], fp=sys.stdout)
+        sys.exit(3)
