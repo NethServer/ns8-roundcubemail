@@ -26,6 +26,7 @@ smtp = agent.list_service_providers(rdb, 'submission', 'tcp', {
 if imap:
     imap_port = imap[0]['port']
     imap_server = imap[0]['host']
+    user_domain = imap[0]['user_domain']
 
 if smtp:
     smtp_port = smtp[0]['port']
@@ -49,3 +50,15 @@ os.replace(envfile + ".tmp", envfile)
 with open("config/config.managesieve.php", "w") as f:
     f.write("<?php\n")
     f.write("$config['managesieve_host'] = '"+imap_server+":4190';\n")
+
+#
+# Write default settings of roundcubemail
+#
+with open("config/config.nethserver.php", "w") as f:
+    f.write("<?php \n")
+    # we want to prefill with user_domain of list_service_providers
+    if imap_server and user_domain:
+        f.write("$config['username_domain'] = array('"+imap_server+"' => '"+ user_domain +"'); \n")
+        f.write("$config['mail_domain'] = array('"+imap_server+"' => '"+ user_domain +"'); \n")
+    # allow the browser to save login/credential and to fill them
+    f.write("$config['login_autocomplete'] = 2; \n")
