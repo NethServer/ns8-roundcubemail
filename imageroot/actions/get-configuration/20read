@@ -28,7 +28,9 @@ imap = agent.list_service_providers(rdb, 'imap', 'tcp', {
     'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
 })
 
-config["mail_server"] = imap[0]['module_id'] if imap else ''
+# we try first to use MAIL_SERVER (module_id of mail server) 
+# failback to MAIL_MODULE_UUID (module_uuid of mail server)
+config["mail_server"] = imap[0]['module_id'] if imap else os.getenv('MAIL_SERVER', '')
 
 config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS","")
 config["upload_max_filesize"] = os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","10").replace('M','')

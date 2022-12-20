@@ -16,12 +16,25 @@ import agent
 
 rdb = agent.redis_connect(host="127.0.0.1") # full read-only access on every key
 
+
 imap = agent.list_service_providers(rdb, 'imap', 'tcp', {
-    'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
+    'module_id': os.getenv('MAIL_SERVER', '')
 })
+
+if not imap:
+    imap = agent.list_service_providers(rdb, 'imap', 'tcp', {
+        'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
+    })
+
+
 smtp = agent.list_service_providers(rdb, 'submission', 'tcp', {
-    'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
+    'module_id': os.getenv('MAIL_SERVER', '')
 })
+
+if not smtp:
+    smtp = agent.list_service_providers(rdb, 'submission', 'tcp', {
+        'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
+    })
 
 if imap:
     imap_port = imap[0]['port']
