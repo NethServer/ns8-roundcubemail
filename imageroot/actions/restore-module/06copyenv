@@ -18,6 +18,7 @@ for evar in [
         "TRAEFIK_HTTP2HTTPS",
         "TRAEFIK_LETS_ENCRYPT",
         "MAIL_MODULE_UUID",
+        "MAIL_SERVER",
         "ROUNDCUBEMAIL_PLUGINS",
         "ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE",
     ]:
