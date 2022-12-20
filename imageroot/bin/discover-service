@@ -46,7 +46,7 @@ if smtp:
     smtp_server = smtp[0]['host']
 
 
-envfile = "roundcubemail_default_port.env"
+envfile = "roundcubemail_default_network.env"
 
 # Using .tmp suffix: do not overwrite the target file until the new one is
 # saved to disk:
