@@ -14,15 +14,23 @@ import sys
 import json
 import agent
 
-mail_server = os.environ["MAIL_SERVER"]
 rdb = agent.redis_connect(host="127.0.0.1") # full read-only access on every key
 
-# we query about TCP service provided by the mail server
-smtp_port = rdb.hget(f"module/{mail_server}/srv/tcp/submission", "port") or ""
-imap_port = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "port") or ""
-# we query about the IP in the cluster of the mail server
-smtp_server = rdb.hget(f"module/{mail_server}/srv/tcp/submission", "host") or ""
-imap_server = rdb.hget(f"module/{mail_server}/srv/tcp/imap", "host") or ""
+imap = agent.list_service_providers(rdb, 'imap', 'tcp', {
+    'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
+})
+smtp = agent.list_service_providers(rdb, 'submission', 'tcp', {
+    'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
+})
+
+if imap:
+    imap_port = imap[0]['port']
+    imap_server = imap[0]['host']
+
+if smtp:
+    smtp_port = smtp[0]['port']
+    smtp_server = smtp[0]['host']
+
 
 envfile = "roundcubemail_default_port.env"
 
