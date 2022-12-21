@@ -11,7 +11,7 @@ After=roundcubemail.service mariadb-app.service
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
 EnvironmentFile=%S/state/environment
-EnvironmentFile=-%S/state/roundcubemail_default_port.env
+EnvironmentFile=-%S/state/roundcubemail_default_network.env
 WorkingDirectory=%S/state
 Restart=always
 TimeoutStopSec=70

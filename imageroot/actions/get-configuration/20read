@@ -22,14 +22,22 @@ config["host"] = os.getenv("TRAEFIK_HOST","")
 config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 
-config["mail_server"] = os.getenv("MAIL_SERVER","")
+rdb = agent.redis_connect() # full read-only access on every key
+
+imap = agent.list_service_providers(rdb, 'imap', 'tcp', {
+    'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
+})
+
+# we try first to use MAIL_MODULE_UUID  (module_uuid of mail server) 
+# failback to MAIL_SERVER (module_id of mail server)
+config["mail_server"] = imap[0]['module_id'] if imap else os.getenv('MAIL_SERVER', '')
+
 config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS","")
 config["upload_max_filesize"] = os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","10").replace('M','')
 
-rdb = agent.redis_connect(host='127.0.0.1')
 modules=[]
 
-# we query about all mail server
+# we query about all mail server to use it inside the user interface
 for key in agent.list_service_providers(rdb,'imap','tcp'):
     # we query agent about configured mail server 
     modules.append(
@@ -40,7 +48,7 @@ for key in agent.list_service_providers(rdb,'imap','tcp'):
                 }
     )
 
-#one is node, two is hostname, three is imap, four is submission
+# use it inside a dropdown
 config['mail_server_URL'] = modules
 
 # Dump the configuration to stdout
