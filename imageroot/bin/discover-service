@@ -40,10 +40,14 @@ if imap:
     imap_port = imap[0]['port']
     imap_server = imap[0]['host']
     user_domain = imap[0]['user_domain']
+else:
+    sys.exit(2)
 
 if smtp:
     smtp_port = smtp[0]['port']
     smtp_server = smtp[0]['host']
+else:
+    sys.exit(3)
 
 
 envfile = "roundcubemail_default_network.env"
