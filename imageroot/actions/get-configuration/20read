@@ -22,7 +22,7 @@ config["host"] = os.getenv("TRAEFIK_HOST","")
 config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 
-rdb = agent.redis_connect(host="127.0.0.1") # full read-only access on every key
+rdb = agent.redis_connect() # full read-only access on every key
 
 imap = agent.list_service_providers(rdb, 'imap', 'tcp', {
     'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
