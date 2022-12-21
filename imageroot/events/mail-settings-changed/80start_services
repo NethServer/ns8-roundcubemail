@@ -1,13 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env python3
 
 #
 # Copyright (C) 2022 Nethesis S.r.l.
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-set -e
+import json
+import sys
+import agent
+import os
 
-exec 1>&2 # Send any output to stderr, to not alter the action response protocol
-
-# If the control reaches this step, the service can be enabled and started
-systemctl --user  try-restart roundcubemail.service
+event = json.load(sys.stdin)
+# if the mail server has been removed, we try to discover the new mail server
+if event['module_uuid'] == os.getenv('MAIL_MODULE_UUID', ''):
+   agent.run_helper("systemctl", "--user", "try-restart", "roundcubemail.service").check_returncode()
