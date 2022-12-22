@@ -14,43 +14,39 @@ import sys
 import json
 import agent
 
-rdb = agent.redis_connect(host="127.0.0.1") # full read-only access on every key
-
+# This script must rely on local node resources to ensure service startup
+# even if the leader node is not reachable: connect to local Redis
+# replica.
+rdb = agent.redis_connect(use_replica=True)
 
 imap = agent.list_service_providers(rdb, 'imap', 'tcp', {
-    'module_id': os.getenv('MAIL_SERVER', '')
+    'module_uuid': os.environ['MAIL_SERVER']
 })
 
-if not imap:
-    imap = agent.list_service_providers(rdb, 'imap', 'tcp', {
-        'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
-    })
-
+if len(imap) != 1:
+    # Only ONE provider for the same UUID is allowed. Zero means it is
+    # missing. More than one means the DB is inconsistent.
+    print(agent.SD_ERR + "Cannot find the imap service of my Mail module instance", os.environ['MAIL_SERVER'], file=sys.stderr)
+    sys.exit(4)
 
 smtp = agent.list_service_providers(rdb, 'submission', 'tcp', {
-    'module_id': os.getenv('MAIL_SERVER', '')
+    'module_uuid': os.getenv('MAIL_SERVER', '')
 })
 
-if not smtp:
-    smtp = agent.list_service_providers(rdb, 'submission', 'tcp', {
-        'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
-    })
+if len(smtp) != 1:
+    # Only ONE provider for the same UUID is allowed. Zero means it is
+    # missing. More than one means the DB is inconsistent.
+    print(agent.SD_ERR + "Cannot find the submission service of my Mail module instance", os.environ['MAIL_SERVER'], file=sys.stderr)
+    sys.exit(5)
 
-if imap:
-    imap_port = imap[0]['port']
-    imap_server = imap[0]['host']
-    user_domain = imap[0]['user_domain']
-else:
-    sys.exit(2)
+imap_port = imap[0]['port']
+imap_server = imap[0]['host']
+user_domain = imap[0]['user_domain']
 
-if smtp:
-    smtp_port = smtp[0]['port']
-    smtp_server = smtp[0]['host']
-else:
-    sys.exit(3)
+smtp_port = smtp[0]['port']
+smtp_server = smtp[0]['host']
 
-
-envfile = "roundcubemail_default_network.env"
+envfile = "discovery.env"
 
 # Using .tmp suffix: do not overwrite the target file until the new one is
 # saved to disk:

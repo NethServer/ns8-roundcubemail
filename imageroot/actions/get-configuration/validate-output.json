@@ -8,7 +8,8 @@
             "host": "roundcubemail.domain.org",
             "http2https": true,
             "lets_encrypt": true,
-            "mail_server": "mail1",
+            "mail_server": "9b9a7388-a661-4399-a7d2-c2ab08f4227c",
+            "mail_server_URL": [],
             "plugins": "archive,zipdownload",
             "upload_max_filesize": 10
         }
@@ -47,7 +48,7 @@
         "mail_server": {
             "type": "string",
             "title": "mail_server",
-            "description": "module_id of the mail server like 'mail1'"
+            "description": "module_uuid of the mail server like 9b9a7388-a661-4399-a7d2-c2ab08f4227c"
         },
         "plugins": {
             "type": "string",
