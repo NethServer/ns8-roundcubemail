@@ -4,4 +4,11 @@
 # Copyright (C) 2022 Nethesis S.r.l.
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
-systemctl --user restart roundcubemail.service
+
+set -e
+
+# Redirect any output to the journal (stderr)
+exec 1>&2
+
+# Restart if running, ignore if stopped
+systemctl --user try-restart roundcubemail.service
