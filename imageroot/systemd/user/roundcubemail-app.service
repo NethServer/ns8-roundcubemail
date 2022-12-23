@@ -17,7 +17,7 @@ Restart=always
 TimeoutStopSec=70
 ExecStartPre=/bin/mkdir -p config
 ExecStartPre=/bin/rm -f %t/roundcubemail-app.pid %t/roundcubemail-app.ctr-id
-ExecStartPre=-/usr/local/bin/runagent discover-service
+ExecStartPre=/usr/local/bin/runagent discover-service
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/roundcubemail-app.pid \
     --cidfile %t/roundcubemail-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/roundcubemail.pod-id --replace -d --name  roundcubemail-app \
