@@ -11,6 +11,7 @@ import agent
 import os
 
 event = json.load(sys.stdin)
-# if the mail server has been removed, we try to discover the new mail server
+
 if event['module_uuid'] == os.getenv('MAIL_MODULE_UUID', ''):
-   agent.run_helper("systemctl", "--user", "try-restart", "roundcubemail.service").check_returncode()
+   # Restart to apply changed settings
+   agent.run_helper("systemctl", "--user", "try-restart", "roundcubemail-app.service").check_returncode()

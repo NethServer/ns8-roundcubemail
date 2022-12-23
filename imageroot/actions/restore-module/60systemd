@@ -10,5 +10,5 @@ set -e
 # Redirect any output to the journal (stderr)
 exec 1>&2
 
-# Enable and restart the service
+# Enable and start the service
 systemctl --user enable --now roundcubemail.service

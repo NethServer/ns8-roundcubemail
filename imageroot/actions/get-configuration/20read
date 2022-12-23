@@ -24,14 +24,7 @@ config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 
 rdb = agent.redis_connect() # full read-only access on every key
 
-imap = agent.list_service_providers(rdb, 'imap', 'tcp', {
-    'module_uuid': os.getenv('MAIL_MODULE_UUID', '')
-})
-
-# we try first to use MAIL_MODULE_UUID  (module_uuid of mail server) 
-# failback to MAIL_SERVER (module_id of mail server)
-config["mail_server"] = imap[0]['module_id'] if imap else os.getenv('MAIL_SERVER', '')
-
+config["mail_server"] = os.getenv("MAIL_SERVER", "") # the value is the Mail module UUID!
 config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS","")
 config["upload_max_filesize"] = os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","10").replace('M','')
 
@@ -39,14 +32,11 @@ modules=[]
 
 # we query about all mail server to use it inside the user interface
 for key in agent.list_service_providers(rdb,'imap','tcp'):
-    # we query agent about configured mail server 
-    modules.append(
-                {
-                    "name": key['module_id'],
-                    "label": key['module_id']+' (NODE '+key['node']+') '+ key['mail_hostname'],
-                    "value": key['module_id']
-                }
-    )
+    modules.append({
+        "name": key['module_id'],
+        "label": key['mail_hostname'],
+        "value": key['module_uuid'],
+    })
 
 # use it inside a dropdown
 config['mail_server_URL'] = modules

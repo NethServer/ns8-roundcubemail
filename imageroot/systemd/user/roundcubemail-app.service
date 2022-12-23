@@ -11,18 +11,18 @@ After=roundcubemail.service mariadb-app.service
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
 EnvironmentFile=%S/state/environment
-EnvironmentFile=-%S/state/roundcubemail_default_network.env
+EnvironmentFile=-%S/state/discovery.env
 WorkingDirectory=%S/state
 Restart=always
 TimeoutStopSec=70
-ExecStartPre=/bin/mkdir -p %S/state/config
+ExecStartPre=/bin/mkdir -p config
 ExecStartPre=/bin/rm -f %t/roundcubemail-app.pid %t/roundcubemail-app.ctr-id
-ExecStartPre=-/usr/local/bin/runagent discover-service
+ExecStartPre=/usr/local/bin/runagent discover-service
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/roundcubemail-app.pid \
     --cidfile %t/roundcubemail-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/roundcubemail.pod-id --replace -d --name  roundcubemail-app \
     --volume html:/var/www/html/:Z \
-    --volume  %S/state/config:/var/roundcube/config/:Z \
+    --volume ./config:/var/roundcube/config:Z \
     --env=ROUNDCUBEMAIL_* \
     --env ROUNDCUBEMAIL_DB_TYPE=mysql \
     --env ROUNDCUBEMAIL_DB_HOST=127.0.0.1 \
