@@ -299,7 +299,7 @@ export default {
         isValidationOk = false;
       }
       if (!this.mail_server) {
-        this.error.host = "common.required";
+        this.error.mail_server = "common.required";
 
         if (isValidationOk) {
           this.focusElement("mail_server");
