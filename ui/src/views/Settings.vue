@@ -75,7 +75,6 @@
               :disabled="loading.getConfiguration || loading.configureModule"
               tooltipAlignment="start"
               tooltipDirection="top"
-              light
               ref="mail_server"
             >
               <template slot="tooltip">
@@ -277,7 +276,11 @@ export default {
       this.isLetsEncryptEnabled = config.lets_encrypt;
       this.isHttpToHttpsEnabled = config.http2https;
       this.upload_max_filesize = config.upload_max_filesize;
-      this.mail_server = config.mail_server;
+      // force to reload mail_server value after dom update
+      this.$nextTick(() => {
+        this.mail_server = config.mail_server;
+      });
+
       this.mail_server_URL = config.mail_server_URL;
       this.plugins = config.plugins;
       this.loading.getConfiguration = false;
@@ -295,7 +298,14 @@ export default {
         }
         isValidationOk = false;
       }
+      if (!this.mail_server) {
+        this.error.host = "common.required";
 
+        if (isValidationOk) {
+          this.focusElement("mail_server");
+        }
+        isValidationOk = false;
+      }
       return isValidationOk;
     },
     configureModuleValidationFailed(validationErrors) {
