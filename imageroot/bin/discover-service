@@ -72,6 +72,7 @@ with open("config/config.nethserver.php", "w") as f:
     # we want to prefill with user_domain of list_service_providers
     if imap_server and user_domain:
         f.write("$config['username_domain'] = array('"+imap_server+"' => '"+ user_domain +"'); \n")
+        f.write("$config['username_domain_forced'] = true; \n")
         f.write("$config['mail_domain'] = array('"+imap_server+"' => '"+ user_domain +"'); \n")
     # allow the browser to save login/credential and to fill them
     f.write("$config['login_autocomplete'] = 2; \n")
