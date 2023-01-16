@@ -23,7 +23,9 @@ Launch `configure-module`, by setting the following parameters:
 - `host`: a fully qualified domain name for the application
 - `http2https`: enable or disable HTTP to HTTPS redirection (true/false)
 - `lets_encrypt`: enable or disable Let's Encrypt certificate (true/false)
-- `mail_server`: the module ID of the the mail server (only on NS8), for example `mail1`
+- `mail_server`: the module UUID of the the mail server (only on NS8), for example `24c52316-5af5-4b4d-8b0f-734f9ee9c1d9`
+- `mail_domain`: the mail domain used for user IMAP login and Roundcube user identifier. It must
+  correspond to a valid mail domain handled by `mail_server` where user names are valid mail addresses too
 - `plugins`: a list of plugins(coma separated) to enable in roundcubemail (default enabled : `archive,zipdownload,managesieve,markasjunk`)
 - `upload_max_filesize`: The maximum size of attachment in MB (default 5MB)
 

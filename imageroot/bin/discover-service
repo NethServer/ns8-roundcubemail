@@ -41,7 +41,7 @@ if len(smtp) != 1:
 
 imap_port = imap[0]['port']
 imap_server = imap[0]['host']
-user_domain = imap[0]['user_domain']
+user_domain = os.getenv('MAIL_DOMAIN', imap[0]['user_domain'])
 
 smtp_port = smtp[0]['port']
 smtp_server = smtp[0]['host']
