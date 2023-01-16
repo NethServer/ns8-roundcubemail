@@ -43,6 +43,11 @@
             "title": "mail_server",
             "description": "module_uuid of the mail server like 9b9a7388-a661-4399-a7d2-c2ab08f4227c"
         },
+        "mail_domain": {
+            "type": "string",
+            "title": "mail_domain",
+            "description": "The mail domain used for user IMAP login and Roundcube user identifier. It must correspond to a valid mail domain handled by `mail_server` where user names are valid mail addresses too"
+        },
         "plugins": {
             "type": "string",
             "title": "plugins",
