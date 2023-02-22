@@ -1,1 +1,72 @@
-{}
+{
+    "settings": {
+        "plugins": "",
+        "http_to_https": "",
+        "instance_configuration": "",
+        "lets_encrypt": "",
+        "upload_max_filesize_invalid_type": "",
+        "mail_server_is_not_valid": "",
+        "configuring": "",
+        "upload_max_filesize": "",
+        "advanced": "",
+        "placeholder_plugins": "",
+        "title": "",
+        "save": "",
+        "choose_the_mail_server_to_use": "",
+        "enabled": "",
+        "configure_instance": "",
+        "choose_mail_server": "",
+        "disabled": "",
+        "mail_server_fqdn": "",
+        "roundcubemail_fqdn": ""
+    },
+    "error": {
+        "403": "",
+        "error": "",
+        "validation_error": "",
+        "404": "",
+        "generic_error": "",
+        "cannot_retrieve_installed_modules": "",
+        "network_timeout": "",
+        "401": "",
+        "network_error": "",
+        "cannot_retrieve_module_info": ""
+    },
+    "status": {
+        "title": "",
+        "no_images": "",
+        "node": "",
+        "no_services": "",
+        "installation_node": "",
+        "no_volumes": "",
+        "app_volumes": "",
+        "created": "",
+        "mount": "",
+        "services": "",
+        "app_images": "",
+        "size": "",
+        "name": "",
+        "app_instance": ""
+    },
+    "about": {
+        "title": ""
+    },
+    "action": {
+        "list-backup-repositories": "",
+        "get-configuration": "",
+        "get-module-info": "",
+        "list-backups": "",
+        "get-status": "",
+        "list-installed-modules": "",
+        "get-name": "",
+        "configure-module": ""
+    },
+    "task": {
+        "cannot_create_task": ""
+    },
+    "common": {
+        "work_in_progress": "",
+        "processing": "",
+        "required": ""
+    }
+}
