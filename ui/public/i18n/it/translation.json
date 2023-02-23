@@ -10,11 +10,11 @@
         "upload_max_filesize": "",
         "advanced": "",
         "placeholder_plugins": "",
-        "title": "",
-        "save": "",
+        "title": "Impostazioni",
+        "save": "Salva",
         "choose_the_mail_server_to_use": "",
         "enabled": "",
-        "configure_instance": "",
+        "configure_instance": "Configura {instance}",
         "choose_mail_server": "",
         "disabled": "",
         "mail_server_fqdn": "",
@@ -22,30 +22,30 @@
     },
     "error": {
         "403": "",
-        "error": "",
-        "validation_error": "",
-        "404": "",
+        "error": "Errore",
+        "validation_error": "Errore di validazione",
+        "404": "Risorsa non trovata",
         "generic_error": "",
         "cannot_retrieve_installed_modules": "",
         "network_timeout": "",
         "401": "",
-        "network_error": "",
+        "network_error": "Errore di rete",
         "cannot_retrieve_module_info": ""
     },
     "status": {
-        "title": "",
-        "no_images": "",
-        "node": "",
-        "no_services": "",
+        "title": "Stato",
+        "no_images": "Nessuna immagine",
+        "node": "Nodo",
+        "no_services": "Nessun servizio",
         "installation_node": "",
-        "no_volumes": "",
+        "no_volumes": "Nessun volume",
         "app_volumes": "",
-        "created": "",
+        "created": "Creato",
         "mount": "",
-        "services": "",
+        "services": "Servizio | Servizi",
         "app_images": "",
-        "size": "",
-        "name": "",
+        "size": "Dimensione",
+        "name": "Nome",
         "app_instance": ""
     },
     "about": {
@@ -59,7 +59,7 @@
         "get-status": "",
         "list-installed-modules": "",
         "get-name": "",
-        "configure-module": ""
+        "configure-module": "Configura modulo"
     },
     "task": {
         "cannot_create_task": ""
@@ -67,6 +67,6 @@
     "common": {
         "work_in_progress": "",
         "processing": "",
-        "required": ""
+        "required": "Obbligatorio"
     }
 }
