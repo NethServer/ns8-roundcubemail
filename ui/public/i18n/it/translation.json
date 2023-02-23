@@ -21,14 +21,14 @@
         "roundcubemail_fqdn": ""
     },
     "error": {
-        "403": "",
+        "403": "Operazione non autorizzata",
         "error": "Errore",
         "validation_error": "Errore di validazione",
         "404": "Risorsa non trovata",
-        "generic_error": "",
+        "generic_error": "Qualcosa è andato storto",
         "cannot_retrieve_installed_modules": "Impossibile elencare moduli installati",
-        "network_timeout": "",
-        "401": "",
+        "network_timeout": "Timeout di rete",
+        "401": "Autenticazione non valida",
         "network_error": "Errore di rete",
         "cannot_retrieve_module_info": "Impossibile recuperare info modulo"
     },
@@ -62,7 +62,7 @@
         "configure-module": "Configura modulo"
     },
     "task": {
-        "cannot_create_task": "Impossibile eseguire task [action]"
+        "cannot_create_task": "Impossibile eseguire task {action}"
     },
     "common": {
         "work_in_progress": "In lavorazione",
