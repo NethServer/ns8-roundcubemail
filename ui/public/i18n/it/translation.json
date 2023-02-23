@@ -26,11 +26,11 @@
         "validation_error": "Errore di validazione",
         "404": "Risorsa non trovata",
         "generic_error": "",
-        "cannot_retrieve_installed_modules": "",
+        "cannot_retrieve_installed_modules": "Impossibile elencare moduli installati",
         "network_timeout": "",
         "401": "",
         "network_error": "Errore di rete",
-        "cannot_retrieve_module_info": ""
+        "cannot_retrieve_module_info": "Impossibile recuperare info modulo"
     },
     "status": {
         "title": "Stato",
@@ -39,17 +39,17 @@
         "no_services": "Nessun servizio",
         "installation_node": "",
         "no_volumes": "Nessun volume",
-        "app_volumes": "",
+        "app_volumes": "Volume app|Volumi app",
         "created": "Creato",
         "mount": "",
         "services": "Servizio | Servizi",
-        "app_images": "",
+        "app_images": "Immagine app|Immagini app",
         "size": "Dimensione",
         "name": "Nome",
-        "app_instance": ""
+        "app_instance": "Istanza app"
     },
     "about": {
-        "title": ""
+        "title": "Informazioni"
     },
     "action": {
         "list-backup-repositories": "",
@@ -62,7 +62,7 @@
         "configure-module": "Configura modulo"
     },
     "task": {
-        "cannot_create_task": ""
+        "cannot_create_task": "Impossibile eseguire task [action]"
     },
     "common": {
         "work_in_progress": "",
