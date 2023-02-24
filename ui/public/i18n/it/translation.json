@@ -37,11 +37,11 @@
         "no_images": "Nessuna immagine",
         "node": "Nodo",
         "no_services": "Nessun servizio",
-        "installation_node": "",
+        "installation_node": "Nodo",
         "no_volumes": "Nessun volume",
         "app_volumes": "Volume app|Volumi app",
         "created": "Creato",
-        "mount": "",
+        "mount": "Percorso di mount",
         "services": "Servizio | Servizi",
         "app_images": "Immagine app|Immagini app",
         "size": "Dimensione",
@@ -52,21 +52,21 @@
         "title": "Informazioni"
     },
     "action": {
-        "list-backup-repositories": "",
-        "get-configuration": "",
-        "get-module-info": "",
-        "list-backups": "",
-        "get-status": "",
-        "list-installed-modules": "",
-        "get-name": "",
+        "list-backup-repositories": "Elenca repository di backup",
+        "get-configuration": "Visualizza configurazione",
+        "get-module-info": "Visualizza info modulo",
+        "list-backups": "Elenca backup",
+        "get-status": "Visualizza stato",
+        "list-installed-modules": "Elenca moduli installati",
+        "get-name": "Visualizza nome",
         "configure-module": "Configura modulo"
     },
     "task": {
         "cannot_create_task": "Impossibile eseguire task [action]"
     },
     "common": {
-        "work_in_progress": "",
-        "processing": "",
+        "work_in_progress": "In lavorazione",
+        "processing": "Elaborazione in corso...",
         "required": "Obbligatorio"
     }
 }
