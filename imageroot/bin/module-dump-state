@@ -7,7 +7,7 @@
 
 set -e
 
-if ! systemctl --user -q is-enabled roundcubemail.service; then
+if ! systemctl --user -q is-active roundcubemail.service; then
     exit 0
 fi
 
