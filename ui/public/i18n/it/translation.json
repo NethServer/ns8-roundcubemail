@@ -13,10 +13,10 @@
         "title": "Impostazioni",
         "save": "Salva",
         "choose_the_mail_server_to_use": "",
-        "enabled": "",
+        "enabled": "Abilitato",
         "configure_instance": "Configura {instance}",
         "choose_mail_server": "",
-        "disabled": "",
+        "disabled": "Disabilitato",
         "mail_server_fqdn": "",
         "roundcubemail_fqdn": ""
     },
