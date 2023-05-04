@@ -1,7 +1,8 @@
 {
   "name": "roundcubemail",
   "description": {
-    "en": "The Roundcube Webmail suite"
+    "en": "The Roundcube Webmail suite",
+    "it": "Webmail suite Roundcube"
   },
   "categories": ["collaboration"],
   "authors": [
