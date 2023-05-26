@@ -29,14 +29,19 @@ config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS","").replace('archive,zipdo
 config["upload_max_filesize"] = os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","10").replace('M','')
 
 modules=[]
-
+tmp = []
 # we query about all mail server to use it inside the user interface
 for key in agent.list_service_providers(rdb,'imap','tcp'):
-    modules.append({
-        "name": key['module_id'],
-        "label": key['mail_hostname'],
-        "value": key['module_uuid'],
-    })
+    mail = key['module_id']
+    get_retval = agent.tasks.run(f"module/{mail}",'list-domains')
+    for kd in get_retval['output']:
+        if kd['addusers']:
+            obj = {
+                "name": key['module_id'],
+                "label": key['mail_hostname']+' domain: '+kd['domain'],
+                "value": key['module_uuid']+','+kd['domain'],
+            }
+            modules.append(obj)
 
 # use it inside a dropdown
 config['mail_server_URL'] = modules
