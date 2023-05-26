@@ -37,8 +37,8 @@
     "configuring": "Configuring",
     "instance_configuration": "Configure Roundcube",
     "placeholder_plugins": "Plugins list (comma separated: plugin1,plugin2,plugin3)",
-    "choose_mail_server": "Select a mail server as endpoint",
-    "choose_the_mail_server_to_use": "Roundcube needs to connect to a mail server, select one in the list",
+    "choose_mail_server": "Select a mail server as endpoint with the forced mail domain of users",
+    "choose_the_mail_server_to_use": "Roundcube needs to connect to a mail server, select one in the list. By choosing a mail domain you will force the identity of users",
     "mail_server_is_not_valid": "This mail server cannot be used by Roundcube webmail"
   },
   "about": {
