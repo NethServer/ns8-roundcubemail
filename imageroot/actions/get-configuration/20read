@@ -25,6 +25,7 @@ config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 rdb = agent.redis_connect() # full read-only access on every key
 
 config["mail_server"] = os.getenv("MAIL_SERVER", "") # the value is the Mail module UUID!
+config["mail_domain"] = os.getenv("MAIL_DOMAIN", "") # the value is the mail domain of user to force domain identity : user@domain.com !
 config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS","").replace('archive,zipdownload,managesieve,markasjunk,','')
 config["upload_max_filesize"] = os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","10").replace('M','')
 

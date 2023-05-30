@@ -192,6 +192,7 @@ export default {
       isLetsEncryptEnabled: false,
       isHttpToHttpsEnabled: true,
       mail_server: "",
+      mail_domain: "",
       mail_server_URL: [],
       plugins: "",
       upload_max_filesize: "5",
@@ -278,7 +279,13 @@ export default {
       this.upload_max_filesize = config.upload_max_filesize;
       // force to reload mail_server value after dom update
       this.$nextTick(() => {
-        this.mail_server = config.mail_server;
+        const mail_server_tmp = config.mail_server;
+        const mail_domain_tmp = config.mail_domain;
+        if (mail_server_tmp && mail_domain_tmp) {
+          this.mail_server = mail_server_tmp + ',' + mail_domain_tmp;
+        } else {
+          this.mail_server = "";
+        }
       });
 
       this.mail_server_URL = config.mail_server_URL;
