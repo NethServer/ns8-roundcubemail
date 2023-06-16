@@ -39,7 +39,7 @@ for key in agent.list_service_providers(rdb,'imap','tcp'):
         if kd['addusers']:
             obj = {
                 "name": key['module_id'],
-                "label": f"{kd['domain']} ({kd['mail_hostname']})",
+                "label": f"{kd['domain']} ({key['mail_hostname']})",
                 "value": key['module_uuid']+','+kd['domain'],
             }
             modules.append(obj)
