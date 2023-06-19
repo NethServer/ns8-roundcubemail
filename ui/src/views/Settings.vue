@@ -192,6 +192,7 @@ export default {
       isLetsEncryptEnabled: false,
       isHttpToHttpsEnabled: true,
       mail_server: "",
+      mail_domain: "",
       mail_server_URL: [],
       plugins: "",
       upload_max_filesize: "5",
@@ -278,7 +279,13 @@ export default {
       this.upload_max_filesize = config.upload_max_filesize;
       // force to reload mail_server value after dom update
       this.$nextTick(() => {
-        this.mail_server = config.mail_server;
+        const mail_server_tmp = config.mail_server;
+        const mail_domain_tmp = config.mail_domain;
+        if (mail_server_tmp && mail_domain_tmp) {
+          this.mail_server = mail_server_tmp + ',' + mail_domain_tmp;
+        } else {
+          this.mail_server = "";
+        }
       });
 
       this.mail_server_URL = config.mail_server_URL;
@@ -352,7 +359,9 @@ export default {
         `${taskAction}-completed-${eventId}`,
         this.configureModuleCompleted
       );
-
+      const tmparray = this.mail_server.split(',');
+      const mail_server_tmp = tmparray[0];
+      const mail_domain_tmp = tmparray[1];
       const res = await to(
         this.createModuleTaskForApp(this.instanceName, {
           action: taskAction,
@@ -360,7 +369,8 @@ export default {
             host: this.host,
             lets_encrypt: this.isLetsEncryptEnabled,
             http2https: this.isHttpToHttpsEnabled,
-            mail_server: this.mail_server,
+            mail_server: mail_server_tmp,
+            mail_domain: mail_domain_tmp,
             plugins: this.plugins,
             upload_max_filesize: parseInt(this.upload_max_filesize),
           },

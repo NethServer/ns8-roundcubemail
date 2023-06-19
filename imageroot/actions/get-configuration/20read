@@ -25,18 +25,24 @@ config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 rdb = agent.redis_connect() # full read-only access on every key
 
 config["mail_server"] = os.getenv("MAIL_SERVER", "") # the value is the Mail module UUID!
+config["mail_domain"] = os.getenv("MAIL_DOMAIN", "") # the value is the mail domain of user to force domain identity : user@domain.com !
 config["plugins"] = os.getenv("ROUNDCUBEMAIL_PLUGINS","").replace('archive,zipdownload,managesieve,markasjunk,','')
 config["upload_max_filesize"] = os.getenv("ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE","10").replace('M','')
 
 modules=[]
-
+tmp = []
 # we query about all mail server to use it inside the user interface
 for key in agent.list_service_providers(rdb,'imap','tcp'):
-    modules.append({
-        "name": key['module_id'],
-        "label": key['mail_hostname'],
-        "value": key['module_uuid'],
-    })
+    mail = key['module_id']
+    get_retval = agent.tasks.run(f"module/{mail}",'list-domains')
+    for kd in get_retval['output']:
+        if kd['addusers']:
+            obj = {
+                "name": key['module_id'],
+                "label": f"{kd['domain']} ({key['mail_hostname']})",
+                "value": key['module_uuid']+','+kd['domain'],
+            }
+            modules.append(obj)
 
 # use it inside a dropdown
 config['mail_server_URL'] = modules
