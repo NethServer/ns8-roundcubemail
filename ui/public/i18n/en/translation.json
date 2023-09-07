@@ -39,7 +39,8 @@
     "placeholder_plugins": "Plugins list (comma separated: plugin1,plugin2,plugin3)",
     "choose_mail_server": "Select a domain",
     "choose_the_mail_server_to_use": "Choose the domain suffix used for both identifying and initializing the user account and their mail address preferences",
-    "mail_server_is_not_valid": "This mail server cannot be used by Roundcube webmail"
+    "mail_server_is_not_valid": "This mail server cannot be used by Roundcube webmail",
+    "upload_max_filesize_number_lte": "Must be lesser Than 120MB"
   },
   "about": {
     "title": "About"
