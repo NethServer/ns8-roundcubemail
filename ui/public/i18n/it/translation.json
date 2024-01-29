@@ -37,7 +37,7 @@
         "no_images": "Nessuna immagine",
         "node": "Nodo",
         "no_services": "Nessun servizio",
-        "installation_node": "Nodo",
+        "installation_node": "Nodo di installazione",
         "no_volumes": "Nessun volume",
         "app_volumes": "Volume app|Volumi app",
         "created": "Creato",
@@ -57,7 +57,7 @@
         "get-module-info": "Visualizza info modulo",
         "list-backups": "Elenca backup",
         "get-status": "Visualizza stato",
-        "list-installed-modules": "Elenco moduli installati",
+        "list-installed-modules": "Elenca moduli installati",
         "get-name": "Visualizza nome",
         "configure-module": "Configura modulo"
     },
