@@ -6,7 +6,7 @@
         "lets_encrypt": "Richiedi certificato Let's Encrypt",
         "upload_max_filesize_invalid_type": "Deve essere un numero intero",
         "mail_server_is_not_valid": "Questo server di posta non può essere utilizzato dalla webmail di Roundcube",
-        "configuring": "Configurazione",
+        "configuring": "Configuring",
         "upload_max_filesize": "Dimensione massima degli allegati (MB)",
         "advanced": "Avanzate",
         "placeholder_plugins": "Elenco dei plugin (separati da virgole: plugin1,plugin2,plugin3)",
@@ -15,9 +15,9 @@
         "choose_the_mail_server_to_use": "Roundcube ha bisogno di collegarsi a un server di posta, selezionandone uno nell'elenco",
         "enabled": "Abilitato",
         "configure_instance": "Configura {instance}",
-        "choose_mail_server": "Selezionare un server di posta come endpoint",
+        "choose_mail_server": "Select a domain",
         "disabled": "Disabilitato",
-        "mail_server_fqdn": "Server di posta",
+        "mail_server_fqdn": "Mail server",
         "roundcubemail_fqdn": "Nome host di Roundcube (FQDN)"
     },
     "error": {
@@ -37,7 +37,7 @@
         "no_images": "Nessuna immagine",
         "node": "Nodo",
         "no_services": "Nessun servizio",
-        "installation_node": "Nodo",
+        "installation_node": "Nodo di installazione",
         "no_volumes": "Nessun volume",
         "app_volumes": "Volume app|Volumi app",
         "created": "Creato",
@@ -57,7 +57,7 @@
         "get-module-info": "Visualizza info modulo",
         "list-backups": "Elenca backup",
         "get-status": "Visualizza stato",
-        "list-installed-modules": "Elenco moduli installati",
+        "list-installed-modules": "Elenca moduli installati",
         "get-name": "Visualizza nome",
         "configure-module": "Configura modulo"
     },
