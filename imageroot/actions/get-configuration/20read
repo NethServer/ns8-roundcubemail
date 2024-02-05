@@ -36,7 +36,7 @@ for key in agent.list_service_providers(rdb,'imap','tcp'):
     mail = key['module_id']
     get_retval = agent.tasks.run(f"module/{mail}",'list-domains')
     for kd in get_retval['output']:
-        if kd['addusers']:
+        if 'addusers' in kd:
             obj = {
                 "name": key['module_id'],
                 "label": f"{kd['domain']} ({key['mail_hostname']})",
