@@ -40,7 +40,8 @@
     "choose_mail_server": "Select a domain",
     "choose_the_mail_server_to_use": "Choose the domain suffix used for both identifying and initializing the user account and their mail address preferences",
     "mail_server_is_not_valid": "This mail server cannot be used by Roundcube webmail",
-    "upload_max_filesize_number_lte": "Must be less than 120 MB"
+    "upload_max_filesize_number_lte": "Must be less than 120 MB",
+    "no_available_mail_domain_check_users": "No available mail domain, please check if users are added from user domain"
   },
   "about": {
     "title": "About"
