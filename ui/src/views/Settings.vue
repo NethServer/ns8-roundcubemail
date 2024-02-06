@@ -286,6 +286,16 @@ export default {
         } else {
           this.mail_server = "";
         }
+        // if mail_server_URL is empty, set default value
+        if (this.mail_server_URL.length === 0) {
+          this.mail_server_URL.push({
+            label: this.$t("settings.no_available_mail_domain_check_users"),
+            value: "",
+            name: ""
+          });
+          // we want to avoid to save the form, there is no users set in the mail domain
+          this.mail_server = "";
+        }
       });
 
       this.mail_server_URL = config.mail_server_URL;
