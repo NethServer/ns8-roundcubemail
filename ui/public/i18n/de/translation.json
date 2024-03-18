@@ -1,0 +1,77 @@
+{
+    "status": {
+        "services": "Dienst | Dienste",
+        "app_volumes": "App Volumen | App Volumen",
+        "installation_node": "Installations-Knoten",
+        "node": "Knoten",
+        "no_volumes": "Keine Volumen",
+        "app_instance": "App-Instanz",
+        "title": "Status",
+        "app_images": "App Abbild | App Abbilder",
+        "name": "Name",
+        "size": "Größe",
+        "created": "Erstellt",
+        "mount": "Einhängepunkt",
+        "no_services": "Keine Dienste",
+        "no_images": "Keine Abbilder"
+    },
+    "settings": {
+        "configure_instance": "{instance} konfigurieren",
+        "enabled": "Enabled",
+        "save": "Speichern",
+        "lets_encrypt": "LE Zertifikat anfordern",
+        "disabled": "Disabled",
+        "title": "Einstellungen",
+        "http_to_https": "HTTPS erzwingen",
+        "mail_server_fqdn": "E-Mail Server",
+        "roundcubemail_fqdn": "Roundcube Hostname (FQDN)",
+        "advanced": "Erweitert",
+        "upload_max_filesize": "Maximal zulässige Größe von Anhängen (MB)",
+        "upload_max_filesize_invalid_type": "Muss eine ganze Zahl sein",
+        "upload_max_filesize_number_lte": "Muss weniger als 120 MB betragen",
+        "mail_module_misconfigured": "Keine E-Mail-Domäne verfügbar",
+        "placeholder_plugins": "Plugins auflisten (comma separated: plugin1,plugin2,plugin3)",
+        "instance_configuration": "Roundcube konfigurieren",
+        "choose_the_mail_server_to_use": "Wählen Sie das Domänensuffix, das sowohl für die Identifizierung als auch für die Initialisierung des Benutzerkontos und der E-Mail-Adresseinstellungen verwendet wird",
+        "mail_server_is_not_valid": "Dieser Mailserver kann nicht von Roundcube Webmail verwendet werden",
+        "no_available_mail_domain_check_users": "Sicherstellen, dass in der zu nutzen gewünschten E-Mail-Domäne, das Kontrollkästchen \"Benutzeradressen aus der Benutzerdomäne hinzufügen\" aktiviert ist.",
+        "configuring": "konfiguriere",
+        "choose_mail_server": "Domäne auswählen",
+        "plugins": "Plugins",
+        "host_pattern": "Voll-qualifizierter Domänen-Name (FQDN) erforderlich",
+        "host_format": "Voll-qualifizierter Domänen-Name (FQDN) erforderlich"
+    },
+    "action": {
+        "get-status": "Status abrufen",
+        "list-backup-repositories": "Datensicherungs-Ziele auflisten",
+        "configure-module": "Modul konfigurieren",
+        "get-configuration": "Konfiguration abrufen",
+        "get-module-info": "Modul-Info abrufen",
+        "get-name": "Namen abrufen",
+        "list-backups": "Datensicherungen auflisten",
+        "list-installed-modules": "installierte Modules auflisten"
+    },
+    "common": {
+        "required": "Erforderlich",
+        "work_in_progress": "in Arbeit",
+        "processing": "Verarbeite..."
+    },
+    "about": {
+        "title": "Über"
+    },
+    "error": {
+        "cannot_retrieve_module_info": "Modul-Info kann nicht abgerufen werden",
+        "error": "Fehler",
+        "generic_error": "Etwas ist schief gegangen",
+        "validation_error": "Überprüfungsfehler",
+        "network_timeout": "Netzwerk-Zeitüberschreitung",
+        "network_error": "Netzwerk-Fehler",
+        "401": "Ungültige Authentifizierung",
+        "403": "Operation nicht genehmigt",
+        "404": "Ressource nicht gefunden",
+        "cannot_retrieve_installed_modules": "Installierte Module können nicht abgerufen werden"
+    },
+    "task": {
+        "cannot_create_task": "Aufgabe {action} kann nicht erstellt werden"
+    }
+}

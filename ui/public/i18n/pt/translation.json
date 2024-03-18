@@ -1,0 +1,77 @@
+{
+    "error": {
+        "403": "Operation not authorized",
+        "cannot_retrieve_installed_modules": "Cannot retrieve installed modules",
+        "401": "Invalid authentication",
+        "cannot_retrieve_module_info": "Cannot retrieve module info",
+        "generic_error": "Something went wrong",
+        "error": "Error",
+        "network_timeout": "Network timeout",
+        "404": "Resource not found",
+        "network_error": "Network error",
+        "validation_error": "Validation error"
+    },
+    "action": {
+        "list-backup-repositories": "List backup repositories",
+        "list-installed-modules": "List installed modules",
+        "list-backups": "List backups",
+        "get-name": "Get name",
+        "get-module-info": "Get module info",
+        "get-status": "Get status",
+        "configure-module": "Configure module",
+        "get-configuration": "Get configuration"
+    },
+    "settings": {
+        "mail_server_fqdn": "Mail server",
+        "advanced": "Advanced",
+        "configuring": "Configuring",
+        "disabled": "Disabled",
+        "no_available_mail_domain_check_users": "Make sure the mail domain you intend to use has \"Add user addresses from user domain\" checkbox enabled",
+        "mail_module_misconfigured": "No mail domain available",
+        "save": "Save",
+        "enabled": "Enabled",
+        "title": "Settings",
+        "configure_instance": "Configure {instance}",
+        "upload_max_filesize": "Maximum size for attachments (MB)",
+        "instance_configuration": "Configure Roundcube",
+        "http_to_https": "Force HTTPS",
+        "choose_the_mail_server_to_use": "Choose the domain suffix used for both identifying and initializing the user account and their mail address preferences",
+        "placeholder_plugins": "Plugins list (comma separated: plugin1,plugin2,plugin3)",
+        "choose_mail_server": "Select a domain",
+        "mail_server_is_not_valid": "This mail server cannot be used by Roundcube webmail",
+        "lets_encrypt": "Request LE Certificate",
+        "upload_max_filesize_number_lte": "Must be less than 120 MB",
+        "roundcubemail_fqdn": "Roundcube hostname (FQDN)",
+        "host_pattern": "Must be a valid fully qualified domain name",
+        "host_format": "Must be a valid fully qualified domain name",
+        "upload_max_filesize_invalid_type": "Must be an integer",
+        "plugins": "Plugins"
+    },
+    "common": {
+        "required": "Required",
+        "work_in_progress": "Work in progress",
+        "processing": "Processing..."
+    },
+    "status": {
+        "created": "Created",
+        "size": "Size",
+        "name": "Name",
+        "no_images": "No images",
+        "app_volumes": "App volume | App volumes",
+        "services": "Service | Services",
+        "app_images": "App image | App images",
+        "no_services": "No services",
+        "app_instance": "App instance",
+        "mount": "Mount",
+        "title": "Status",
+        "installation_node": "Installation node",
+        "node": "Node",
+        "no_volumes": "No volumes"
+    },
+    "about": {
+        "title": "About"
+    },
+    "task": {
+        "cannot_create_task": "Cannot create task {action}"
+    }
+}
