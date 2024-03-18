@@ -98,18 +98,20 @@
               <cv-accordion-item :open="toggleAccordion[0]">
                 <template slot="title">{{ $t("settings.advanced") }}</template>
                 <template slot="content">
-                  <cv-text-input
+                  <cv-text-area
                     :label="$t('settings.plugins')"
-                    :placeholder="$t('settings.placeholder_plugins')"
                     v-model.trim="plugins"
-                    class="mg-bottom"
-                    :invalid-message="$t(error.plugins)"
+                    :invalid-message="error.plugins"
+                    :helper-text="$t('settings.Write_plugins_list')"
+                    :value="plugins"
+                    class="maxwidth textarea mg-left"
+                    ref="plugins"
+                    :placeholder="$t('settings.Write_plugins_list')"
                     :disabled="
                       loading.getConfiguration || loading.configureModule
                     "
-                    ref="plugins"
                   >
-                  </cv-text-input>
+                  </cv-text-area>
                   <cv-text-input
                     :label="$t('settings.upload_max_filesize')"
                     placeholder="5"
@@ -304,9 +306,14 @@ export default {
       });
 
       this.mail_server_URL = config.mail_server_URL;
-      this.plugins = config.plugins;
+      this.plugins = config.plugins.split(",").join("\n");
       this.loading.getConfiguration = false;
       this.focusElement("host");
+    },
+    isValidPlugin(plugin) {
+      // test if user is valid login
+      const re = /^[a-zA-Z0-9-_]+$/;
+      return re.test(plugin);
     },
     validateConfigureModule() {
       this.clearErrors(this);
@@ -327,6 +334,24 @@ export default {
           this.focusElement("mail_server");
         }
         isValidationOk = false;
+      }
+      if (this.plugins) {
+        // test if the plugins list is valid
+        const plugins_list = this.plugins.split("\n");
+        for (const plugin of plugins_list) {
+          if (!this.isValidPlugin(plugin.trim())){
+            this.toggleAccordion[0] = true;
+            // set i18n error message and return plugin in object
+            this.error.plugins = this.$t("settings.invalid_plugin", {
+              plugin: plugin,
+            });
+            isValidationOk = false;
+            if (isValidationOk) {
+              this.focusElement("plugins");
+            }
+            break;
+          }
+        }
       }
       return isValidationOk;
     },
@@ -386,7 +411,7 @@ export default {
             http2https: this.isHttpToHttpsEnabled,
             mail_server: mail_server_tmp,
             mail_domain: mail_domain_tmp,
-            plugins: this.plugins,
+            plugins: this.plugins.split("\n").join(",").trim().toLowerCase(),
             upload_max_filesize: parseInt(this.upload_max_filesize),
           },
           extra: {
