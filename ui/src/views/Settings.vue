@@ -102,11 +102,11 @@
                     :label="$t('settings.plugins')"
                     v-model.trim="plugins"
                     :invalid-message="error.plugins"
-                    :helper-text="$t('settings.Write_plugins_list')"
+                    :helper-text="$t('settings.plugins_list')"
                     :value="plugins"
                     class="maxwidth textarea mg-left"
                     ref="plugins"
-                    :placeholder="$t('settings.Write_plugins_list')"
+                    :placeholder="$t('settings.plugins_list')"
                     :disabled="
                       loading.getConfiguration || loading.configureModule
                     "
@@ -311,7 +311,6 @@ export default {
       this.focusElement("host");
     },
     isValidPlugin(plugin) {
-      // test if user is valid login
       const re = /^[a-zA-Z0-9-_]+$/;
       return re.test(plugin);
     },
