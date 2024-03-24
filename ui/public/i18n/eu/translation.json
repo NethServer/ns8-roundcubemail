@@ -23,7 +23,9 @@
         "host_pattern": "Must be a valid fully qualified domain name",
         "host_format": "Must be a valid fully qualified domain name",
         "upload_max_filesize_invalid_type": "Must be an integer",
-        "plugins": "Plugins"
+        "plugins": "Plugins",
+        "invalid_plugin": "Invalid plugin name: {plugin}",
+        "plugins_list": "Plugins list (one plugin per line)"
     },
     "error": {
         "403": "Operation not authorized",

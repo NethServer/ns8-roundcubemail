@@ -23,7 +23,9 @@
         "no_available_mail_domain_check_users": "Asegúrate de que el dominio de correo que deseas utilizar tenga habilitada la casilla de verificación \"Agregar direcciones de usuario desde el dominio de usuario\"",
         "mail_module_misconfigured": "No hay dominio de correo disponible",
         "host_pattern": "Debe ser un nombre de dominio válido y completo",
-        "host_format": "Debe ser un nombre de dominio válido y completo"
+        "host_format": "Debe ser un nombre de dominio válido y completo",
+        "invalid_plugin": "Nombre del complemento no válido: {plugin}",
+        "plugins_list": "Lista de complementos (un complemento por línea)"
     },
     "error": {
         "403": "Operación no autorizada",
