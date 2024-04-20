@@ -13,17 +13,19 @@
         "title": "Impostazioni",
         "save": "Salva",
         "choose_the_mail_server_to_use": "Roundcube ha bisogno di collegarsi a un server di posta, selezionandone uno nell'elenco",
-        "enabled": "Enabled",
+        "enabled": "Abilitato",
         "configure_instance": "Configura {instance}",
         "choose_mail_server": "Seleziona un dominio",
-        "disabled": "Disabled",
+        "disabled": "Disabilitato",
         "mail_server_fqdn": "Server di posta",
         "roundcubemail_fqdn": "Nome host di Roundcube (FQDN)",
         "no_available_mail_domain_check_users": "Assicuratevi che il dominio di posta elettronica che intendete utilizzare abbia \"Add user addresses from user domain\" casella di controllo abilitata",
         "mail_module_misconfigured": "Nessun dominio di posta disponibile",
         "host_pattern": "Deve essere un nome di dominio pienamente qualificato valido",
         "host_format": "Deve essere un nome di dominio pienamente qualificato valido",
-        "upload_max_filesize_number_lte": "Must be less than 120 MB"
+        "upload_max_filesize_number_lte": "Must be less than 120 MB",
+        "invalid_plugin": "Invalid plugin name: {plugin}",
+        "plugins_list": "Plugins list (one plugin per line)"
     },
     "error": {
         "403": "Operazione non autorizzata",
@@ -71,7 +73,7 @@
     },
     "common": {
         "work_in_progress": "In lavorazione",
-        "processing": "Elaborazione in corso...",
+        "processing": "In elaborazione…",
         "required": "Obbligatorio"
     }
 }
