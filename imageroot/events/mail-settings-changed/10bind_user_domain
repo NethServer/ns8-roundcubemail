@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+import json
+import sys
+import agent
+import os
+
+event = json.load(sys.stdin)
+
+if event['module_uuid'] == os.getenv('MAIL_SERVER', ''):
+   # Update user domain in redis because the mail server might have changed its user_domain
+   rdb = agent.redis_connect()
+
+   providers = agent.list_service_providers(rdb, 'imap', 'tcp', {
+      'module_uuid': os.environ['MAIL_SERVER']
+   })
+
+   if providers:
+      user_domain = providers[0]['user_domain']
+      agent.bind_user_domains([user_domain])
