@@ -13,6 +13,7 @@ import os
 import sys
 import json
 import agent
+from agent.ldapproxy import Ldapproxy
 
 # This script must rely on local node resources to ensure service startup
 # even if the leader node is not reachable: connect to local Redis
@@ -76,3 +77,82 @@ with open("config/config.nethserver.php", "w") as f:
         f.write("$config['mail_domain'] = array('"+imap_server+"' => '"+ user_domain +"'); \n")
     # allow the browser to save login/credential and to fill them
     f.write("$config['login_autocomplete'] = 2; \n")
+
+# retrieve ldap user domain and following shcematype write the addressbook ldap configuration
+lp = Ldapproxy()
+domain = lp.get_domain(imap[0]['user_domain'])
+schema = domain['schema']
+base_dn = domain['base_dn']
+bind_dn = domain['bind_dn']
+bind_password = domain['bind_password']
+port = domain['port']
+
+openldap = f"""$config['ldap_public']['public'] = array(
+    'name'                   => 'Public LDAP Addressbook',
+    'hosts'                  => array('ldap://10.0.2.2:{port}'),
+    'port'                   => {port},
+    'use_tls'                => false,
+    'user_specific'          => false,
+    'base_dn'                => '{base_dn}',
+    'bind_dn'                => '{bind_dn}',
+    'bind_pass'              => '{bind_password}',
+    'scope'                  => 'sub',
+    'referrals'              => 0,
+    'filter'                 => '(objectClass=inetOrgPerson)',
+    'search_fields'          => array('mail','cn'),
+    'fuzzy_search'           => true,
+  'fieldmap' => array(
+    'name'         => 'cn',
+    'surname'      => 'sn',
+    'firstname'    => 'givenName',
+    'jobtitle'     => 'title',
+    'email'        => 'uid',
+    'locality'     => 'l',
+    'organization' => 'o',
+    'department'   => 'ou',
+    'phone'        => 'telephoneNumber',
+    'street'       => 'street',
+  )
+);
+$config['autocomplete_addressbooks'] = array('sql','public');
+"""
+
+ad = f"""$config['ldap_public']['public'] = array(
+    'name'                   => 'Public LDAP Addressbook',
+    'hosts'                  => array('ldap://10.0.2.2:{port}'),
+    'port'                   => {port},
+    'use_tls'                => false,
+    'user_specific'          => false,
+    'base_dn'                => '{base_dn}',
+    'bind_dn'                => '{bind_dn}',
+    'bind_pass'              => '{bind_password}',
+    'scope'                  => 'sub',
+    'referrals'              => 0,
+    'filter'                 => '(&(objectClass=user)(objectCategory=person)(!(isCriticalSystemObject=TRUE)))',
+    'search_fields'          => array('mail', 'cn', 'sAMAccountName', 'displayname', 'sn', 'givenName', 'userPrincipalName'),
+    'fuzzy_search'           => true,
+    'sort'                   => 'cn',
+    'fieldmap' => array(
+        'name'        => 'displayName',
+        'title'       => 'title',
+        'email:account' => 'sAMAccountName',
+        'email:extra'   => 'mail:*',
+        'phone:work'  => 'telephoneNumber',
+        'phone:mobile' => 'mobile',
+        'phone:workfax' => 'facsimileTelephoneNumber',
+        'street'      => 'street',
+        'zipcode'     => 'postalCode',
+        'locality'    => 'l',
+        'department'  => 'departmentNumber',
+        'notes'       => 'description',
+        'photo'       => 'jpegPhoto',
+    ),
+);
+$config['autocomplete_addressbooks'] = array('sql','public');
+"""
+
+# Write the configuration to a PHP file
+with open('./config/config.addressbook.php', 'w') as file:
+    file.write("<?php\n")
+    file.write(str(ad if schema == 'ad' else openldap))
+
