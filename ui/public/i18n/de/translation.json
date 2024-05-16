@@ -17,10 +17,10 @@
     },
     "settings": {
         "configure_instance": "{instance} konfigurieren",
-        "enabled": "Enabled",
+        "enabled": "Aktiviert",
         "save": "Speichern",
         "lets_encrypt": "LE Zertifikat anfordern",
-        "disabled": "Disabled",
+        "disabled": "Deaktiviert",
         "title": "Einstellungen",
         "http_to_https": "HTTPS erzwingen",
         "mail_server_fqdn": "E-Mail Server",
@@ -39,7 +39,9 @@
         "choose_mail_server": "Domäne auswählen",
         "plugins": "Plugins",
         "host_pattern": "Voll-qualifizierter Domänen-Name (FQDN) erforderlich",
-        "host_format": "Voll-qualifizierter Domänen-Name (FQDN) erforderlich"
+        "host_format": "Voll-qualifizierter Domänen-Name (FQDN) erforderlich",
+        "invalid_plugin": "Fehlerhafter Plugin-Name: {plugin}",
+        "plugins_list": "Plugin-List (ein Plugin pro Zeile)"
     },
     "action": {
         "get-status": "Status abrufen",
