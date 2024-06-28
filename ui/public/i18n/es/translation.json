@@ -7,17 +7,16 @@
         "configure_instance": "Configurar {instance}",
         "configuring": "Configurando",
         "upload_max_filesize": "Tamaño máximo de los adjuntos (MB)",
-        "disabled": "Deshabilitado",
+        "disabled": "Desactivado",
         "instance_configuration": "Configurar Roundcube",
         "http_to_https": "Forzar HTTPS",
         "choose_the_mail_server_to_use": "Elija el sufijo del dominio tanto para identificar como para inicializar la cuenta y las preferencias del correo",
-        "placeholder_plugins": "Lista de complementos (separados por comas: complemento1,complemento,complemento3)",
         "choose_mail_server": "Seleccionar un dominio",
         "mail_server_is_not_valid": "Este servidor de correo no puede ser utilizado por Roundcube webmail",
         "lets_encrypt": "Solicitar un certificado LE",
         "upload_max_filesize_number_lte": "Debe ser inferior a 120 MB",
         "save": "Guardar",
-        "enabled": "Habilitado",
+        "enabled": "Activado",
         "roundcubemail_fqdn": "Nombre del host de Roundcube (FQDN)",
         "title": "Ajustes",
         "no_available_mail_domain_check_users": "Asegúrate de que el dominio de correo que deseas utilizar tenga habilitada la casilla de verificación \"Agregar direcciones de usuario desde el dominio de usuario\"",
@@ -30,18 +29,18 @@
     "error": {
         "403": "Operación no autorizada",
         "cannot_retrieve_installed_modules": "No se pueden recuperar los módulos instalados",
-        "401": "Autentificación no válida",
+        "401": "Autentificación inválida",
         "cannot_retrieve_module_info": "No se puede recuperar la información del módulo",
-        "generic_error": "Algo salió mal",
+        "generic_error": "Algo ha salido mal",
         "error": "Error",
-        "network_timeout": "Tiempo de espera de red agotado",
+        "network_timeout": "Tiempo de espera de la red agotado",
         "404": "Recurso no encontrado",
-        "network_error": "Fallo de red",
-        "validation_error": "Fallo en la validación"
+        "network_error": "Error en la red",
+        "validation_error": "Error en la validación"
     },
     "common": {
         "required": "Obligatorio",
-        "work_in_progress": "Trabajo en curso",
+        "work_in_progress": "Trabajando",
         "processing": "Procesando..."
     },
     "status": {
@@ -49,28 +48,28 @@
         "size": "Tamaño",
         "name": "Nombre",
         "no_images": "Sin imágenes",
-        "app_volumes": "Volumen de aplicación | Volúmenes de aplicación",
+        "app_volumes": "Volumen de la aplicación| Volumen de las aplicaciones",
         "services": "Servicio | Servicios",
-        "app_images": "Imagen de la aplicación | Imágenes de la aplicación",
+        "app_images": "Imagen de la aplicación| Imágenes de las aplicaciones",
         "no_services": "Sin servicios",
         "app_instance": "Instancia de la aplicación",
         "mount": "Montar",
         "title": "Estado",
-        "installation_node": "Nodo de instalación",
+        "installation_node": "Nodo de la instalación",
         "node": "Nodo",
-        "no_volumes": "Sin volúmenes"
+        "no_volumes": "Sin volumenes"
     },
     "about": {
         "title": "Acerca de"
     },
     "action": {
-        "list-backup-repositories": "Lista de repositorios de la copia de seguridad",
+        "list-backup-repositories": "Mostrar repositorios de respaldo",
         "get-module-info": "Obtener información del módulo",
-        "list-installed-modules": "Listado de módulos instalados",
-        "list-backups": "Lista de las copias de seguridad",
+        "list-installed-modules": "Lista de módulos instalados",
+        "list-backups": "Mostrar copias de seguridad",
         "get-status": "Obtener el estado",
         "configure-module": "Configurar el módulo",
-        "get-configuration": "Obtener la configuración",
+        "get-configuration": "Obtener los ajustes",
         "get-name": "Obtener el nombre"
     },
     "task": {
