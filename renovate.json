@@ -17,6 +17,12 @@
         "\\bdocker\\.io/(?<depName>.+):(?<currentValue>[-0-9\\.a-z]+)"
       ],
       "datasourceTemplate": "docker"
+    },
+    {
+      "fileMatch": ["build-images.sh"],
+      "matchStrings": ["docker\\.io/mariadb:(?<currentValue>[^\\s]+)"],
+      "depNameTemplate": "mariadb",
+      "datasourceTemplate": "docker"
     }
   ]
 }
