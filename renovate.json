@@ -24,5 +24,21 @@
       "depNameTemplate": "mariadb",
       "datasourceTemplate": "docker"
     }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["node"],
+      "allowedVersions": "<= 18"
+    },
+    {
+      "matchPackageNames": [
+        "ghcr.io/marketsquare/robotframework-browser/rfbrowser-stable"
+      ],
+      "allowedVersions": "<= 10.0"
+    },
+    {
+      "matchPackageNames": ["mariadb"],
+      "allowedVersions": "<= 10.11"
+    }
   ]
 }
