@@ -4,9 +4,18 @@
   "ignorePaths": ["**/ui/**"],
   "regexManagers": [
     {
+      "fileMatch": ["test-module.sh"],
+      "matchStrings": [
+        "ghcr\\.io/marketsquare/robotframework-browser/rfbrowser-stable:(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "MarketSquare/robotframework-browser",
+      "datasourceTemplate": "github-releases"
+    },
+    {
       "fileMatch": ["build-images.sh"],
-      "matchStrings": ["docker\\.io/roundcube/roundcubemail:(?<currentValue>[^\\s]+)"],
-      "depNameTemplate": "roundcube/roundcubemail",
+      "matchStrings": [
+        "\\bdocker\\.io/(?<depName>.+):(?<currentValue>[-0-9\\.a-z]+)"
+      ],
       "datasourceTemplate": "docker"
     }
   ]
