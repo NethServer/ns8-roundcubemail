@@ -9,7 +9,6 @@
         "configuring": "Configurazione",
         "upload_max_filesize": "Dimensione massima degli allegati (MB)",
         "advanced": "Avanzate",
-        "placeholder_plugins": "Elenco dei plugin (separati da virgole: plugin1,plugin2,plugin3)",
         "title": "Impostazioni",
         "save": "Salva",
         "choose_the_mail_server_to_use": "Roundcube ha bisogno di collegarsi a un server di posta, selezionandone uno nell'elenco",
@@ -69,7 +68,7 @@
         "configure-module": "Configura modulo"
     },
     "task": {
-        "cannot_create_task": "Impossibile eseguire task {action}"
+        "cannot_create_task": "Impossibile eseguire il task {action}"
     },
     "common": {
         "work_in_progress": "In lavorazione",

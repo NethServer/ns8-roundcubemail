@@ -2,16 +2,16 @@
     "status": {
         "services": "Dienst | Dienste",
         "app_volumes": "App Volumen | App Volumen",
-        "installation_node": "Installations-Knoten",
+        "installation_node": "Knoten der Installation",
         "node": "Knoten",
         "no_volumes": "Keine Volumen",
-        "app_instance": "App-Instanz",
+        "app_instance": "App Instanz",
         "title": "Status",
         "app_images": "App Abbild | App Abbilder",
         "name": "Name",
         "size": "Größe",
         "created": "Erstellt",
-        "mount": "Einhängepunkt",
+        "mount": "Mount",
         "no_services": "Keine Dienste",
         "no_images": "Keine Abbilder"
     },
@@ -30,7 +30,6 @@
         "upload_max_filesize_invalid_type": "Muss eine ganze Zahl sein",
         "upload_max_filesize_number_lte": "Muss weniger als 120 MB betragen",
         "mail_module_misconfigured": "Keine E-Mail-Domäne verfügbar",
-        "placeholder_plugins": "Plugins auflisten (comma separated: plugin1,plugin2,plugin3)",
         "instance_configuration": "Roundcube konfigurieren",
         "choose_the_mail_server_to_use": "Wählen Sie das Domänensuffix, das sowohl für die Identifizierung als auch für die Initialisierung des Benutzerkontos und der E-Mail-Adresseinstellungen verwendet wird",
         "mail_server_is_not_valid": "Dieser Mailserver kann nicht von Roundcube Webmail verwendet werden",
@@ -45,33 +44,33 @@
     },
     "action": {
         "get-status": "Status abrufen",
-        "list-backup-repositories": "Datensicherungs-Ziele auflisten",
+        "list-backup-repositories": "Backup-Speicherorte auflisten",
         "configure-module": "Modul konfigurieren",
         "get-configuration": "Konfiguration abrufen",
         "get-module-info": "Modul-Info abrufen",
-        "get-name": "Namen abrufen",
-        "list-backups": "Datensicherungen auflisten",
-        "list-installed-modules": "installierte Modules auflisten"
+        "get-name": "Name abrufen",
+        "list-backups": "Backups auflisten",
+        "list-installed-modules": "Installierte Module auflisten"
     },
     "common": {
         "required": "Erforderlich",
-        "work_in_progress": "in Arbeit",
-        "processing": "Verarbeite..."
+        "work_in_progress": "In Bearbeitung",
+        "processing": "Verarbeitung läuft..."
     },
     "about": {
         "title": "Über"
     },
     "error": {
-        "cannot_retrieve_module_info": "Modul-Info kann nicht abgerufen werden",
+        "cannot_retrieve_module_info": "Fehler beim Abruf der Modul-Info",
         "error": "Fehler",
         "generic_error": "Etwas ist schief gegangen",
-        "validation_error": "Überprüfungsfehler",
+        "validation_error": "Fehler bei der Validierung",
         "network_timeout": "Netzwerk-Zeitüberschreitung",
         "network_error": "Netzwerk-Fehler",
-        "401": "Ungültige Authentifizierung",
-        "403": "Operation nicht genehmigt",
+        "401": "Authentifizierung fehlerhaft",
+        "403": "Vorgang nicht autorisiert",
         "404": "Ressource nicht gefunden",
-        "cannot_retrieve_installed_modules": "Installierte Module können nicht abgerufen werden"
+        "cannot_retrieve_installed_modules": "Fehler beim Abruf installierter Module"
     },
     "task": {
         "cannot_create_task": "Aufgabe {action} kann nicht erstellt werden"
