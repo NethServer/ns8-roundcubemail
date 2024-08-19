@@ -1,6 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "local>NethServer/.github:renovate-config"
+  "extends": ["config:base"],
+  "ignorePaths": ["**/ui/**"],
+  "regexManagers": [
+    {
+      "fileMatch": ["build-images.sh"],
+      "matchStrings": ["docker\\.io/roundcube/roundcubemail:(?<currentValue>[^\\s]+-apache)"],
+      "depNameTemplate": "collabora/code",
+      "datasourceTemplate": "docker"
+    }
   ]
 }
