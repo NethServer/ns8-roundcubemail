@@ -6,7 +6,7 @@
     {
       "fileMatch": ["build-images.sh"],
       "matchStrings": ["docker\\.io/roundcube/roundcubemail:(?<currentValue>[^\\s]+)-apache"],
-      "depNameTemplate": "collabora/code",
+      "depNameTemplate": "roundcube/roundcubemail",
       "datasourceTemplate": "docker"
     }
   ]
