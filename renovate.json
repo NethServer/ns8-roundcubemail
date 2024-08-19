@@ -5,7 +5,7 @@
   "regexManagers": [
     {
       "fileMatch": ["build-images.sh"],
-      "matchStrings": ["docker\\.io/roundcube/roundcubemail:(?<currentValue>[^\\s]+-apache)"],
+      "matchStrings": ["docker\\.io/roundcube/roundcubemail:(?<currentValue>[^\\s]+)"],
       "depNameTemplate": "collabora/code",
       "datasourceTemplate": "docker"
     }
