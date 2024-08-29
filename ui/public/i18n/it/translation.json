@@ -11,7 +11,7 @@
         "advanced": "Avanzate",
         "title": "Impostazioni",
         "save": "Salva",
-        "choose_the_mail_server_to_use": "Roundcube ha bisogno di collegarsi a un server di posta, selezionandone uno nell'elenco",
+        "choose_the_mail_server_to_use": "Scegli il suffisso di dominio utilizzato sia per identificare che per inizializzare l'account utente e le preferenze relative all'indirizzo di posta elettronica",
         "enabled": "Abilitato",
         "configure_instance": "Configura {instance}",
         "choose_mail_server": "Seleziona un dominio",
@@ -22,9 +22,9 @@
         "mail_module_misconfigured": "Nessun dominio di posta disponibile",
         "host_pattern": "Deve essere un nome di dominio pienamente qualificato valido",
         "host_format": "Deve essere un nome di dominio pienamente qualificato valido",
-        "upload_max_filesize_number_lte": "Must be less than 120 MB",
-        "invalid_plugin": "Invalid plugin name: {plugin}",
-        "plugins_list": "Plugins list (one plugin per line)"
+        "upload_max_filesize_number_lte": "Deve essere inferiore a 120 MB",
+        "invalid_plugin": "Nome del plugin non valido: {plugin}",
+        "plugins_list": "Elenco dei plugin (un plugin per riga)"
     },
     "error": {
         "403": "Operazione non autorizzata",
