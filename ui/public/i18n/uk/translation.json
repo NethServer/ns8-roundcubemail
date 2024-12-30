@@ -1,0 +1,78 @@
+{
+    "settings": {
+        "mail_server_fqdn": "Поштовий сервер",
+        "advanced": "Просунутий",
+        "no_available_mail_domain_check_users": "Переконайтеся, що в поштовому домені, який ви збираєтеся використовувати, увімкнено прапорець «Додати адреси користувачів із домену користувача»",
+        "upload_max_filesize_invalid_type": "Має бути цілим числом",
+        "plugins": "Плагіни",
+        "configure_instance": "Configure {instance}",
+        "configuring": "Конфігурація",
+        "upload_max_filesize": "Максимальний розмір для вкладень (Мб)",
+        "disabled": "Disabled",
+        "instance_configuration": "Налаштувати Roundcube",
+        "http_to_https": "Примусовий HTTPS",
+        "choose_the_mail_server_to_use": "Виберіть суфікс домену, який використовується як для ідентифікації, так і для ініціалізації облікового запису користувача та параметрів його електронної адреси",
+        "choose_mail_server": "Виберіть домен",
+        "invalid_plugin": "Недійсна назва плагіна: {plugin}",
+        "mail_server_is_not_valid": "Веб-пошта Roundcube не може використовувати цей поштовий сервер",
+        "lets_encrypt": "Запит на сертифікат LE",
+        "host_format": "Must be a valid fully qualified domain name",
+        "upload_max_filesize_number_lte": "Має бути менше 120 МБ",
+        "mail_module_misconfigured": "Немає доступного поштового домену",
+        "save": "Save",
+        "enabled": "Enabled",
+        "roundcubemail_fqdn": "Ім'я хоста Roundcube (FQDN)",
+        "host_pattern": "Must be a valid fully qualified domain name",
+        "title": "Settings",
+        "plugins_list": "Список плагінів (один плагін на рядок)"
+    },
+    "error": {
+        "error": "Error",
+        "403": "Operation not authorized",
+        "cannot_retrieve_installed_modules": "Cannot retrieve installed modules",
+        "401": "Invalid authentication",
+        "cannot_retrieve_module_info": "Cannot retrieve module info",
+        "generic_error": "Something went wrong",
+        "network_timeout": "Network timeout",
+        "404": "Resource not found",
+        "network_error": "Network error",
+        "validation_error": "Validation error"
+    },
+    "common": {
+        "required": "Required",
+        "work_in_progress": "Work in progress",
+        "processing": "Processing..."
+    },
+    "status": {
+        "created": "Created",
+        "size": "Size",
+        "name": "Name",
+        "no_images": "No images",
+        "app_volumes": "App volume | App volumes",
+        "services": "Service | Services",
+        "app_images": "App image | App images",
+        "no_services": "No services",
+        "app_instance": "App instance",
+        "mount": "Mount",
+        "title": "Status",
+        "installation_node": "Installation node",
+        "node": "Node",
+        "no_volumes": "No volumes"
+    },
+    "about": {
+        "title": "About"
+    },
+    "action": {
+        "list-backup-repositories": "List backup repositories",
+        "get-module-info": "Get module info",
+        "list-installed-modules": "List installed modules",
+        "list-backups": "List backups",
+        "get-status": "Get status",
+        "configure-module": "Configure module",
+        "get-configuration": "Get configuration",
+        "get-name": "Get name"
+    },
+    "task": {
+        "cannot_create_task": "Cannot create task {action}"
+    }
+}
