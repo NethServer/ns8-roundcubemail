@@ -35,7 +35,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.authorizations=traefik@node:routeadm mail@any:mailadm cluster:accountconsumer" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
-    --label="org.nethserver.images=docker.io/mariadb:10.11.10 docker.io/roundcube/roundcubemail:1.6.10-apache" \
+    --label="org.nethserver.images=docker.io/mariadb:10.11.11 docker.io/roundcube/roundcubemail:1.6.10-apache" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
