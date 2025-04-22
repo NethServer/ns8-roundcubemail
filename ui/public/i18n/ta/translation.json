@@ -1,0 +1,78 @@
+{
+    "settings": {
+        "advanced": "மேம்பட்ட",
+        "mail_server_fqdn": "அஞ்சல் சேவையகம்",
+        "upload_max_filesize_invalid_type": "ஒரு முழு எண்ணாக இருக்க வேண்டும்",
+        "plugins": "செருகுநிரல்கள்",
+        "configure_instance": "{உதாரணத்தை உள்ளமைக்கவும்",
+        "configuring": "உள்ளமைத்தல்",
+        "upload_max_filesize": "இணைப்புகளுக்கான அதிகபட்ச அளவு (எம்பி)",
+        "disabled": "முடக்கப்பட்டது",
+        "no_available_mail_domain_check_users": "நீங்கள் பயன்படுத்த விரும்பும் அஞ்சல் டொமைன் \"பயனர் டொமைனில் இருந்து பயனர் முகவரிகளைச் சேர்க்கவும்\" தேர்வுப்பெட்டி இயக்கப்பட்டதா என்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்",
+        "instance_configuration": "ரவுண்ட்கியூப் உள்ளமைக்கவும்",
+        "http_to_https": "Https ஐ கட்டாயப்படுத்துங்கள்",
+        "choose_the_mail_server_to_use": "பயனர் கணக்கு மற்றும் அவற்றின் அஞ்சல் முகவரி விருப்பங்களை அடையாளம் காணவும் துவக்கவும் பயன்படுத்தப்படும் டொமைன் பின்னொட்டைத் தேர்வுசெய்க",
+        "choose_mail_server": "ஒரு டொமைனைத் தேர்ந்தெடுக்கவும்",
+        "invalid_plugin": "தவறான சொருகி பெயர்: {plugin}",
+        "lets_encrypt": "LE சான்றிதழ் கோருங்கள்",
+        "mail_server_is_not_valid": "இந்த அஞ்சல் சேவையகத்தை ரவுண்ட்கியூப் வெப்மெயில் பயன்படுத்த முடியாது",
+        "host_format": "செல்லுபடியாகும் முழு தகுதி வாய்ந்த டொமைன் பெயராக இருக்க வேண்டும்",
+        "upload_max_filesize_number_lte": "120 எம்பிக்கும் குறைவாக இருக்க வேண்டும்",
+        "mail_module_misconfigured": "அஞ்சல் டொமைன் எதுவும் கிடைக்கவில்லை",
+        "save": "சேமி",
+        "enabled": "இயக்கப்பட்டது",
+        "roundcubemail_fqdn": "ரவுண்ட் கியூப் ஓச்ட்பெயர் (FQDN)",
+        "host_pattern": "செல்லுபடியாகும் முழு தகுதி வாய்ந்த டொமைன் பெயராக இருக்க வேண்டும்",
+        "title": "Settings",
+        "plugins_list": "செருகுநிரல்கள் பட்டியல் (ஒரு வரிக்கு ஒரு சொருகி)"
+    },
+    "error": {
+        "404": "Resource not found",
+        "403": "Operation not authorized",
+        "cannot_retrieve_installed_modules": "Cannot retrieve installed modules",
+        "401": "Invalid authentication",
+        "cannot_retrieve_module_info": "Cannot retrieve module info",
+        "generic_error": "Something went wrong",
+        "error": "Error",
+        "network_timeout": "Network timeout",
+        "network_error": "Network error",
+        "validation_error": "Validation error"
+    },
+    "common": {
+        "required": "Required",
+        "work_in_progress": "Work in progress",
+        "processing": "Processing..."
+    },
+    "status": {
+        "created": "Created",
+        "size": "Size",
+        "name": "Name",
+        "no_images": "No images",
+        "app_volumes": "App volume | App volumes",
+        "services": "Service | Services",
+        "app_images": "App image | App images",
+        "no_services": "No services",
+        "app_instance": "App instance",
+        "mount": "Mount",
+        "title": "Status",
+        "installation_node": "Installation node",
+        "node": "Node",
+        "no_volumes": "No volumes"
+    },
+    "about": {
+        "title": "About"
+    },
+    "action": {
+        "list-backup-repositories": "List backup repositories",
+        "get-module-info": "Get module info",
+        "list-installed-modules": "List installed modules",
+        "get-status": "Get status",
+        "list-backups": "List backups",
+        "configure-module": "Configure module",
+        "get-configuration": "Get configuration",
+        "get-name": "Get name"
+    },
+    "task": {
+        "cannot_create_task": "Cannot create task {action}"
+    }
+}
