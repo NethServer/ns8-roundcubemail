@@ -16,11 +16,9 @@ original_environment = request['environment']
 for evar in [
         "TRAEFIK_HOST",
         "TRAEFIK_HTTP2HTTPS",
-        "TRAEFIK_LETS_ENCRYPT",
         "MAIL_SERVER",
+        "MAIL_DOMAIN",
         "ROUNDCUBEMAIL_PLUGINS",
         "ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE",
     ]:
      agent.set_env(evar, original_environment[evar])
-
-agent.dump_env()
