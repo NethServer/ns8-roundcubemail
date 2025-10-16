@@ -33,20 +33,51 @@
               ref="host"
             >
             </cv-text-input>
-            <cv-toggle
+            <NsToggle
               value="letsEncrypt"
-              :label="$t('settings.lets_encrypt')"
+              :label="core.$t('apps_lets_encrypt.request_https_certificate')"
               v-model="isLetsEncryptEnabled"
-              :disabled="loading.getConfiguration || loading.configureModule"
+              :disabled="stillLoading"
               class="mg-bottom"
             >
+              <template #tooltip>
+                <div class="mg-bottom-sm">
+                  {{ core.$t("apps_lets_encrypt.lets_encrypt_tips") }}
+                </div>
+                <div class="mg-bottom-sm">
+                  <cv-link @click="goToCertificates">
+                    {{ core.$t("apps_lets_encrypt.go_to_tls_certificates") }}
+                  </cv-link>
+                </div>
+              </template>
               <template slot="text-left">{{
                 $t("settings.disabled")
               }}</template>
               <template slot="text-right">{{
                 $t("settings.enabled")
               }}</template>
-            </cv-toggle>
+            </NsToggle>
+            <cv-row v-if="letsEncryptIsEnabled && !isLetsEncryptEnabled">
+              <cv-column>
+                <NsInlineNotification
+                  kind="warning"
+                  :title="
+                    core.$t('apps_lets_encrypt.lets_encrypt_disabled_warning')
+                  "
+                  :description="
+                    core.$t(
+                      'apps_lets_encrypt.lets_encrypt_disabled_warning_description',
+                      {
+                        node: this.status.node_ui_name
+                          ? this.status.node_ui_name
+                          : this.status.node,
+                      }
+                    )
+                  "
+                  :showCloseButton="false"
+                />
+              </cv-column>
+            </cv-row>
             <cv-toggle
               value="httpToHttps"
               :label="$t('settings.http_to_https')"
@@ -157,6 +188,26 @@
                 />
               </cv-column>
             </cv-row>
+            <cv-row v-if="error.getStatus">
+              <cv-column>
+                <NsInlineNotification
+                  kind="error"
+                  :title="$t('action.get-status')"
+                  :description="error.getStatus"
+                  :showCloseButton="false"
+                />
+              </cv-column>
+            </cv-row>
+            <cv-row v-if="validationErrorDetails.length">
+              <cv-column>
+                <NsInlineNotification
+                  kind="error"
+                  :title="core.$t('apps_lets_encrypt.cannot_obtain_certificate')"
+                  :description="formattedValidationErrorDetails"
+                  :showCloseButton="false"
+                />
+              </cv-column>
+            </cv-row>
             <NsButton
               kind="primary"
               :icon="Save20"
@@ -199,9 +250,12 @@ export default {
       q: {
         page: "settings",
       },
+      status: {},
+      validationErrorDetails: [],
       urlCheckInterval: null,
       host: "",
       isLetsEncryptEnabled: false,
+      letsEncryptIsEnabled: false,
       isHttpToHttpsEnabled: true,
       mail_server: "",
       mail_domain: "",
@@ -211,6 +265,7 @@ export default {
       loading: {
         getConfiguration: false,
         configureModule: false,
+        getStatus: false,
       },
       error: {
         getConfiguration: "",
@@ -221,14 +276,26 @@ export default {
         mail_server: "",
         plugins: "",
         upload_max_filesize: "",
+        getStatus: false,
       },
     };
   },
   computed: {
     ...mapState(["instanceName", "core", "appName"]),
+    stillLoading() {
+      return (
+        this.loading.getConfiguration ||
+        this.loading.configureModule ||
+        this.loading.getStatus
+      );
+    },
+    formattedValidationErrorDetails() {
+      return this.validationErrorDetails.join("\n");
+    },
   },
   created() {
     this.getConfiguration();
+    this.getStatus();
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -241,6 +308,51 @@ export default {
     next();
   },
   methods: {
+    goToCertificates() {
+      this.core.$router.push("/settings/tls-certificates");
+    },
+    async getStatus() {
+      this.loading.getStatus = true;
+      this.error.getStatus = "";
+      const taskAction = "get-status";
+      const eventId = this.getUuid();
+      // register to task error
+      this.core.$root.$once(
+        `${taskAction}-aborted-${eventId}`,
+        this.getStatusAborted
+      );
+      // register to task completion
+      this.core.$root.$once(
+        `${taskAction}-completed-${eventId}`,
+        this.getStatusCompleted
+      );
+      const res = await to(
+        this.createModuleTaskForApp(this.instanceName, {
+          action: taskAction,
+          extra: {
+            title: this.$t("action." + taskAction),
+            isNotificationHidden: true,
+            eventId,
+          },
+        })
+      );
+      const err = res[0];
+      if (err) {
+        console.error(`error creating task ${taskAction}`, err);
+        this.error.getStatus = this.getErrorMessage(err);
+        this.loading.getStatus = false;
+        return;
+      }
+    },
+    getStatusAborted(taskResult, taskContext) {
+      console.error(`${taskContext.action} aborted`, taskResult);
+      this.error.getStatus = this.$t("error.generic_error");
+      this.loading.getStatus = false;
+    },
+    getStatusCompleted(taskContext, taskResult) {
+      this.status = taskResult.output;
+      this.loading.getStatus = false;
+    },
     async getConfiguration() {
       this.loading.getConfiguration = true;
       this.error.getConfiguration = "";
@@ -287,6 +399,7 @@ export default {
       const config = taskResult.output;
       this.host = config.host;
       this.isLetsEncryptEnabled = config.lets_encrypt;
+      this.letsEncryptIsEnabled = config.lets_encrypt;
       this.isHttpToHttpsEnabled = config.http2https;
       this.upload_max_filesize = config.upload_max_filesize;
       // force to reload mail_server value after dom update
@@ -316,7 +429,7 @@ export default {
     },
     validateConfigureModule() {
       this.clearErrors(this);
-
+      this.validationErrorDetails = [];
       let isValidationOk = true;
       if (!this.host) {
         this.error.host = "common.required";
@@ -357,15 +470,20 @@ export default {
     configureModuleValidationFailed(validationErrors) {
       this.loading.configureModule = false;
       let focusAlreadySet = false;
-
       for (const validationError of validationErrors) {
         const param = validationError.parameter;
-        // set i18n error message
-        this.error[param] = this.$t("settings." + validationError.error);
-
-        if (!focusAlreadySet) {
-          this.focusElement(param);
-          focusAlreadySet = true;
+        if (validationError.details) {
+          // show inline error notification with details
+          this.validationErrorDetails = validationError.details
+            .split("\n")
+            .filter((detail) => detail.trim() !== "");
+        } else {
+          // set i18n error message
+          this.error[param] = this.$t("settings." + validationError.error);
+          if (!focusAlreadySet) {
+            this.focusElement(param);
+            focusAlreadySet = true;
+          }
         }
       }
     },
