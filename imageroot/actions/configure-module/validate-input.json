@@ -16,9 +16,8 @@
     "type": "object",
     "required": [
         "host",
-        "http2https",
-        "lets_encrypt",
         "mail_server",
+        "mail_domain",
         "plugins",
         "upload_max_filesize"
     ],
