@@ -13,7 +13,7 @@ import agent
 # If parsing fails, output everything to stderr
 data = json.load(sys.stdin)
 
-host = data.get("host")
+host = data["host"]
 h2hs = data.get("http2https", True)
 plugins = 'archive,zipdownload,managesieve,markasjunk,' + data.get("plugins",'')
 upload_max_filesize = str(data.get("upload_max_filesize", '5')) + 'M'

@@ -15,7 +15,7 @@ import os
 data = json.load(sys.stdin)
 
 # Setup default values
-host = data.get("host")
+host = data["host"]
 h2hs = data.get("http2https", True)
 
 # Configure Traefik route for API
