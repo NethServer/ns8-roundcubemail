@@ -57,7 +57,7 @@
                 $t("settings.enabled")
               }}</template>
             </NsToggle>
-            <cv-row v-if="letsEncryptIsEnabled && !isLetsEncryptEnabled">
+            <cv-row v-if="isLetsEncryptCurrentlyEnabled && !isLetsEncryptEnabled">
               <cv-column>
                 <NsInlineNotification
                   kind="warning"
@@ -255,7 +255,7 @@ export default {
       urlCheckInterval: null,
       host: "",
       isLetsEncryptEnabled: false,
-      letsEncryptIsEnabled: false,
+      isLetsEncryptCurrentlyEnabled: false,
       isHttpToHttpsEnabled: true,
       mail_server: "",
       mail_domain: "",
@@ -399,7 +399,7 @@ export default {
       const config = taskResult.output;
       this.host = config.host;
       this.isLetsEncryptEnabled = config.lets_encrypt;
-      this.letsEncryptIsEnabled = config.lets_encrypt;
+      this.isLetsEncryptCurrentlyEnabled = config.lets_encrypt;
       this.isHttpToHttpsEnabled = config.http2https;
       this.upload_max_filesize = config.upload_max_filesize;
       // force to reload mail_server value after dom update
