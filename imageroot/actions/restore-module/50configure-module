@@ -12,7 +12,7 @@ configure_retval = agent.tasks.run(agent_id=os.environ['AGENT_ID'], action='conf
     "mail_server": os.environ["MAIL_SERVER"],
     "mail_domain": os.environ["MAIL_DOMAIN"],
     "plugins": os.environ["ROUNDCUBEMAIL_PLUGINS"],
-    "upload_max_filesize": os.environ["ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE"],
+    "upload_max_filesize": int(os.environ["ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE"].removesuffix('M')),
     "http2https": os.environ["TRAEFIK_HTTP2HTTPS"] == 'True',
     "host": os.environ["TRAEFIK_HOST"],
 })
