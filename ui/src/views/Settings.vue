@@ -57,7 +57,9 @@
                 $t("settings.enabled")
               }}</template>
             </NsToggle>
-            <cv-row v-if="isLetsEncryptCurrentlyEnabled && !isLetsEncryptEnabled">
+            <cv-row
+              v-if="isLetsEncryptCurrentlyEnabled && !isLetsEncryptEnabled"
+            >
               <cv-column>
                 <NsInlineNotification
                   kind="warning"
@@ -92,12 +94,16 @@
                 $t("settings.enabled")
               }}</template>
             </cv-toggle>
-            <cv-row v-if="mail_server_URL.length === 0 && ! loading.getConfiguration">
+            <cv-row
+              v-if="mail_server_URL.length === 0 && !loading.getConfiguration"
+            >
               <cv-column>
                 <NsInlineNotification
                   kind="warning"
                   :title="$t('settings.mail_module_misconfigured')"
-                  :description="$t('settings.no_available_mail_domain_check_users')"
+                  :description="
+                    $t('settings.no_available_mail_domain_check_users')
+                  "
                   :showCloseButton="false"
                 />
               </cv-column>
@@ -119,9 +125,7 @@
               ref="mail_server"
             >
               <template slot="tooltip">
-              {{
-                $t("settings.choose_the_mail_server_to_use")
-              }}
+                {{ $t("settings.choose_the_mail_server_to_use") }}
               </template>
             </NsComboBox>
             <!-- advanced options -->
@@ -416,7 +420,7 @@ export default {
         const mail_server_tmp = config.mail_server;
         const mail_domain_tmp = config.mail_domain;
         if (mail_server_tmp && mail_domain_tmp) {
-          this.mail_server = mail_server_tmp + ',' + mail_domain_tmp;
+          this.mail_server = mail_server_tmp + "," + mail_domain_tmp;
         } else {
           this.mail_server = "";
         }
@@ -460,7 +464,7 @@ export default {
         // test if the plugins list is valid
         const plugins_list = this.plugins.split("\n");
         for (const plugin of plugins_list) {
-          if (!this.isValidPlugin(plugin.trim())){
+          if (!this.isValidPlugin(plugin.trim())) {
             this.toggleAccordion[0] = true;
             // set i18n error message and return plugin in object
             this.error.plugins = this.$t("settings.invalid_plugin", {
@@ -525,7 +529,7 @@ export default {
         `${taskAction}-completed-${eventId}`,
         this.configureModuleCompleted
       );
-      const tmparray = this.mail_server.split(',');
+      const tmparray = this.mail_server.split(",");
       const mail_server_tmp = tmparray[0];
       const mail_domain_tmp = tmparray[1];
       const res = await to(
