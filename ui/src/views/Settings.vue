@@ -202,10 +202,22 @@
               <cv-column>
                 <NsInlineNotification
                   kind="error"
-                  :title="core.$t('apps_lets_encrypt.cannot_obtain_certificate')"
-                  :description="formattedValidationErrorDetails"
+                  :title="
+                    core.$t('apps_lets_encrypt.cannot_obtain_certificate')
+                  "
                   :showCloseButton="false"
-                />
+                >
+                  <template #description>
+                    <div class="flex flex-col gap-2">
+                      <div
+                        v-for="(detail, index) in validationErrorDetails"
+                        :key="index"
+                      >
+                        {{ detail }}
+                      </div>
+                    </div>
+                  </template>
+                </NsInlineNotification>
               </cv-column>
             </cv-row>
             <NsButton
@@ -288,9 +300,6 @@ export default {
         this.loading.configureModule ||
         this.loading.getStatus
       );
-    },
-    formattedValidationErrorDetails() {
-      return this.validationErrorDetails.join("\n");
     },
   },
   created() {
