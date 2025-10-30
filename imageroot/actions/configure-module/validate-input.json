@@ -16,9 +16,8 @@
     "type": "object",
     "required": [
         "host",
-        "http2https",
-        "lets_encrypt",
         "mail_server",
+        "mail_domain",
         "plugins",
         "upload_max_filesize"
     ],
@@ -37,7 +36,8 @@
         "http2https": {
             "type": "boolean",
             "title": "HTTP to HTTPS redirection",
-            "description": "Redirect all the HTTP requests to HTTPS"
+            "description": "Redirect all the HTTP requests to HTTPS",
+            "default": true
         },
         "mail_server": {
             "type": "string",
