@@ -11,5 +11,18 @@ Connect to the node
     ${output} =    Execute Command    systemctl is-system-running  --wait
     Should Be True    '${output}' == 'running' or '${output}' == 'degraded'
 
+Wait until boot completes
+    ${output} =    Execute Command    systemctl is-system-running  --wait
+    Should Be True    '${output}' == 'running' or '${output}' == 'degraded'
+
+disable offending units
+    Execute Command    [ -x /etc/init.d/exim4 ] && /etc/init.d/exim4 stop
+    ...    return_stdout=True
+    ...    return_stderr=True
+    ...    return_rc=True
+
 *** Settings ***
-Suite Setup       Connect to the Node
+Suite Setup       Run Keywords
+                  ...    Connect to the Node
+                  ...    Wait until boot completes
+                  ...    Disable offending units
