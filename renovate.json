@@ -1,27 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
-  "ignorePaths": ["**/ui/**"],
-  "regexManagers": [
-    {
-      "fileMatch": ["build-images.sh"],
-      "matchStrings": [
-        "docker\\.io/roundcube/roundcubemail:(?<currentValue>[-0-9\\.a-z]+)"
-      ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "roundcube/roundcubemail"
-    },
-    {
-      "fileMatch": ["build-images.sh"],
-      "matchStrings": ["docker\\.io/mariadb:(?<currentValue>[^\\s]+)"],
-      "depNameTemplate": "mariadb",
-      "datasourceTemplate": "docker"
-    }
-  ],
-  "packageRules": [
-    {
-      "matchPackageNames": ["mariadb"],
-      "allowedVersions": "<= 10.11"
-    }
+  "extends": [
+    "local>NethServer/.github:ns8-automerge"
   ]
 }

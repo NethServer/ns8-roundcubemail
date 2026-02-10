@@ -21,7 +21,7 @@ container=$(buildah from scratch)
 # Reuse existing nodebuilder-roundcubemail container, to speed up builds
 if ! buildah containers --format "{{.ContainerName}}" | grep -q nodebuilder-roundcubemail; then
     echo "Pulling NodeJS runtime..."
-    buildah from --name nodebuilder-roundcubemail -v "${PWD}:/usr/src:Z" docker.io/library/node:18-slim
+    buildah from --name nodebuilder-roundcubemail -v "${PWD}:/usr/src:Z" docker.io/library/node:24-slim
 fi
 
 echo "Build static UI files with node..."
@@ -36,7 +36,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
     --label="org.nethserver.min-core=3.12.4-0" \
-    --label="org.nethserver.images=docker.io/mariadb:10.11.13 docker.io/roundcube/roundcubemail:1.6.11-apache" \
+    --label="org.nethserver.images=docker.io/mariadb:10.11.15 docker.io/roundcube/roundcubemail:1.6.11-apache" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"

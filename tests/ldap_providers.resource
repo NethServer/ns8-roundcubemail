@@ -1,0 +1,19 @@
+*** Settings ***
+Resource    api.resource
+
+*** Variables ***
+${user_domain_ldap}      ldap.dom.test
+
+*** Keywords ***
+Configure LDAP user domain
+    [Tags]    udom    add    ldap
+    ${response} =     Run task    cluster/add-internal-provider    {"image":"openldap","node":1}
+    Set Suite Variable    ${mid_ldap}    ${response['module_id']}
+    Run task    module/${mid_ldap}/configure-module    {"domain":"${user_domain_ldap}","admuser":"admin","admpass":"Nethesis,1234","provision":"new-domain"}
+    Run task    module/${mid_ldap}/add-user    {"user":"u1","display_name":"First User","password":"Nethesis,1234"}
+    Run task    module/${mid_ldap}/add-user    {"user":"u3","display_name":"Third User","password":"Nethesis,1234"}
+    Run task    module/${mid_ldap}/add-group   {"group":"g1","description":"Group One","users":["u1","u3"]}
+
+Remove LDAP user domain
+    [Tags]    udom    remove    ldap
+    Run task    cluster/remove-internal-domain    {"domain":"${user_domain_ldap}"}
