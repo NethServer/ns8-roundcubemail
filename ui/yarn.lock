@@ -2085,12 +2085,13 @@ aws4@^1.8.0:
   integrity sha1-1h9G2DslGSUOJ4Ta9bCUeai0HFk=
 
 axios@^0.30.0:
-  version "0.30.3"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.30.3.tgz#ab1be887a2d37dd9ebc219657704180faf2c4920"
-  integrity sha512-5/tmEb6TmE/ax3mdXBc/Mi6YdPGxQsv+0p5YlciXWt3PHIn0VamqCXhRMtScnwY3lbgSXLneOuXAKUhgmSRpwg==
+  version "0.30.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.30.4.tgz#d6f3f62fd3b9f5432f5782b62d8cfd5247d5ee71"
+  integrity sha512-jkvoCrmfOCgLHdF0sPbW4zJhy/aQlyhYQp2tq5XiD2vKawPGP1JbrUkw1tTIdhBeN8iTo2wU0L3eub7p1QyMMg==
   dependencies:
     follow-redirects "^1.15.4"
     form-data "^4.0.4"
+    plain-crypto-js "^4.2.1"
     proxy-from-env "^1.1.0"
 
 babel-loader@^8.1.0:
@@ -6671,6 +6672,11 @@ pkg-dir@^4.1.0:
   integrity sha1-8JkTPfft5CLoHR2ESCcO6z5CYfM=
   dependencies:
     find-up "^4.0.0"
+
+plain-crypto-js@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/plain-crypto-js/-/plain-crypto-js-4.2.1.tgz#07d889e2dadce6f3910dcbc253317d28ca61c766"
+  integrity sha512-Wv41p4/aEMq03JjDqi0JxPYT4aoMbbQMSM8ur4QkjvjGEeuYvI7rGkqLcOZ7K1iThQGvpNvJnxRWcNodCNuEEQ==
 
 pnp-webpack-plugin@^1.6.4:
   version "1.6.4"
