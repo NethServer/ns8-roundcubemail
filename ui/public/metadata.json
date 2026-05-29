@@ -1,5 +1,6 @@
 {
   "name": "Roundcubemail",
+  "upstream_name": "Roundcube webmail (version set automatically)",
   "description": {
     "en": "The Roundcube Webmail suite",
     "it": "Webmail suite Roundcube"
