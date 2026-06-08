@@ -30,7 +30,9 @@ cleanup() {
 cp "${metadata_file}" "${metadata_backup}"
 trap cleanup EXIT
 
-sed -i "s/\"upstream_name\": \"[^\"]*\"/\"upstream_name\": \"Roundcube webmail ${roundcube_upstream_version}\"/" "${metadata_file}"
+jq --arg v "${roundcube_upstream_version}" \
+   '.upstream_name |= gsub("version set automatically"; $v)' \
+   "${metadata_file}" > "${metadata_file}.tmp" && mv "${metadata_file}.tmp" "${metadata_file}"
 
 # Create a new empty container image
 container=$(buildah from scratch)
