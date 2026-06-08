@@ -64,7 +64,7 @@
             </div>
             <div class="key-value-setting">
               <span class="label">{{ core.$t("common.version") }}</span>
-              <span class="value">{{ version }}</span>
+              <span class="value">{{ version }} ({{ app.upstream_name }})</span>
             </div>
             <div class="key-value-setting">
               <span class="label">{{

@@ -14,6 +14,25 @@ images=()
 repobase="${REPOBASE:-ghcr.io/nethserver}"
 # Configure the image name
 reponame="roundcubemail"
+roundcube_image="docker.io/roundcube/roundcubemail:1.7.1-apache"
+
+# Extract the upstream version from the image tag, to set it in the metadata
+roundcube_tag="${roundcube_image##*:}"
+roundcube_upstream_version="${roundcube_tag%-apache}"
+metadata_file="ui/public/metadata.json"
+metadata_backup=$(mktemp)
+
+cleanup() {
+    cp "${metadata_backup}" "${metadata_file}"
+    rm -f "${metadata_backup}"
+}
+
+cp "${metadata_file}" "${metadata_backup}"
+trap cleanup EXIT
+
+jq --arg v "${roundcube_upstream_version}" \
+   '.upstream_name |= gsub("version set automatically"; $v)' \
+   "${metadata_file}" > "${metadata_file}.tmp" && mv "${metadata_file}.tmp" "${metadata_file}"
 
 # Create a new empty container image
 container=$(buildah from scratch)
@@ -36,7 +55,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
     --label="org.nethserver.min-core=3.12.4-0" \
-    --label="org.nethserver.images=docker.io/mariadb:10.11.17 docker.io/roundcube/roundcubemail:1.7.1-apache" \
+    --label="org.nethserver.images=docker.io/mariadb:10.11.17 ${roundcube_image}" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
