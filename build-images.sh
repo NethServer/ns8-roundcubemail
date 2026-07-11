@@ -14,7 +14,7 @@ images=()
 repobase="${REPOBASE:-ghcr.io/nethserver}"
 # Configure the image name
 reponame="roundcubemail"
-roundcube_image="docker.io/roundcube/roundcubemail:1.7.1-apache"
+roundcube_image="docker.io/roundcube/roundcubemail:1.7.2-apache"
 
 # Extract the upstream version from the image tag, to set it in the metadata
 roundcube_tag="${roundcube_image##*:}"
