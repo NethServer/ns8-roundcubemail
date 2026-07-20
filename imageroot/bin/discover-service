@@ -77,6 +77,8 @@ with open("config/config.nethserver.php", "w") as f:
         f.write("$config['mail_domain'] = array('"+imap_server+"' => '"+ user_domain +"'); \n")
     # allow the browser to save login/credential and to fill them
     f.write("$config['login_autocomplete'] = 2; \n")
+    # create default folders at first user login
+    f.write("$config['create_default_folders'] = true; \n")
 
 # retrieve ldap user domain and following shcematype write the addressbook ldap configuration
 lp = Ldapproxy()
