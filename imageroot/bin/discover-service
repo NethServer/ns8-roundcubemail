@@ -158,3 +158,42 @@ with open('./config/config.addressbook.php', 'w') as file:
     file.write("<?php\n")
     file.write(str(ad if schema == 'ad' else openldap))
 
+#
+# OIDC login (NethServer/dev#8080). The settings are read from
+# oidc.env, set manually for now: without them, the OAuth configuration
+# is removed.
+#
+def php_string(value):
+    return "'" + value.replace("\\", "\\\\").replace("'", "\\'") + "'"
+
+oauth_conf = "config/config.oauth.php"
+try:
+    oidc = agent.read_envfile("oidc.env")
+except FileNotFoundError:
+    oidc = {}
+
+if oidc.get("OIDC_ISSUER") and oidc.get("OIDC_CLIENT_ID") and oidc.get("OIDC_CLIENT_SECRET"):
+    with open(oauth_conf + ".tmp", "w") as f:
+        f.write("<?php\n")
+        # Behind Traefik: build https:// URLs, the OAuth redirect_uri included
+        f.write("$config['use_https'] = true;\n")
+        f.write("$config['oauth_provider'] = 'generic';\n")
+        f.write("$config['oauth_provider_name'] = " + php_string(oidc.get("OIDC_PROVIDER_NAME") or "Single Sign-On") + ";\n")
+        f.write("$config['oauth_client_id'] = " + php_string(oidc["OIDC_CLIENT_ID"]) + ";\n")
+        f.write("$config['oauth_client_secret'] = " + php_string(oidc["OIDC_CLIENT_SECRET"]) + ";\n")
+        f.write("$config['oauth_config_uri'] = " + php_string(oidc["OIDC_ISSUER"].rstrip("/") + "/.well-known/openid-configuration") + ";\n")
+        f.write("$config['oauth_scope'] = 'openid profile email';\n")
+        # Roundcube appends username_domain to the user name, as for
+        # password logins
+        f.write("$config['oauth_identity_fields'] = ['preferred_username'];\n")
+        # Go straight to the identity provider, without the password form
+        f.write("$config['oauth_login_redirect'] = " + ("true" if oidc.get("OIDC_LOGIN_REDIRECT") == "1" else "false") + ";\n")
+    # The web server user of the container must read the file
+    os.chmod(oauth_conf + ".tmp", 0o644)
+    os.replace(oauth_conf + ".tmp", oauth_conf)
+else:
+    try:
+        os.unlink(oauth_conf)
+    except FileNotFoundError:
+        pass
+
