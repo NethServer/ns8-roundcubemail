@@ -48,6 +48,49 @@ The above command will:
 - start and configure the roundcubemail instance
 - configure a virtual host for trafik to access the instance
 
+## Single sign-on (OIDC)
+
+Work in progress, see NethServer/dev#8080. Roundcube can log users in
+with an OpenID Connect provider, like the NS8 idp module, next to the
+password login form. The provider is not discovered automatically yet:
+the settings are written manually in the `oidc.env` file of the module
+state directory. Each start of the `roundcubemail-app` service writes
+them to `config/config.oauth.php`, or removes that file if the settings
+are missing.
+
+| Variable | Required | Description |
+|---|---|---|
+| `OIDC_ISSUER` | yes | Issuer URL of the realm, for example `https://sso.example.org/realms/dp.example.org` |
+| `OIDC_CLIENT_ID` | yes | OIDC client ID |
+| `OIDC_CLIENT_SECRET` | yes | OIDC client secret |
+| `OIDC_PROVIDER_NAME` | no | Label of the login button, default `Single Sign-On` |
+| `OIDC_LOGIN_REDIRECT` | no | `1` redirects the login page straight to the provider, without the password form |
+
+The client of the provider needs:
+
+- the redirect URI `https://<host>/index.php/login/oauth`;
+- the client of the mail server (Dovecot) in the token audience: Roundcube
+  sends the access token to IMAP and SMTP with `OAUTHBEARER`, and Dovecot
+  accepts it only if its client is in the audience. The mail module must
+  have OIDC enabled too.
+
+The user name is the `preferred_username` claim: Roundcube appends the
+mail domain to it, as for password logins.
+
+For example, with the idp module:
+
+```
+api-cli run module/idp1/register-client --data '{"domain": "dp.example.org", "module_id": "roundcubemail1", "redirect_uris": ["https://webmail.example.org/index.php/login/oauth"], "audience": ["mail1"]}'
+runagent -m roundcubemail1 sh -c 'umask 077; cat > oidc.env' <<'EOF'
+OIDC_ISSUER=https://sso.example.org/realms/dp.example.org
+OIDC_CLIENT_ID=roundcubemail1
+OIDC_CLIENT_SECRET=<client_secret from register-client>
+EOF
+runagent -m roundcubemail1 systemctl --user restart roundcubemail-app.service
+```
+
+The file is included in the module backup.
+
 ## Get the configuration
 You can retrieve the configuration with
 
