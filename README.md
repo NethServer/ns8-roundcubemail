@@ -80,7 +80,7 @@ mail domain to it, as for password logins.
 For example, with the idp module:
 
 ```
-api-cli run module/idp1/register-client --data '{"domain": "dp.example.org", "module_id": "roundcubemail1", "redirect_uris": ["https://webmail.example.org/index.php/login/oauth"], "audience": ["mail1"]}'
+api-cli run module/idp1/register-client --data '{"domain": "dp.example.org", "module_id": "roundcubemail1", "redirect_uris": ["https://webmail.example.org/index.php/login/oauth"], "post_logout_redirect_uris": ["https://webmail.example.org/?_task=logout"], "audience": ["mail1"]}'
 runagent -m roundcubemail1 sh -c 'umask 077; cat > oidc.env' <<'EOF'
 OIDC_ISSUER=https://sso.example.org/realms/dp.example.org
 OIDC_CLIENT_ID=roundcubemail1
@@ -88,6 +88,11 @@ OIDC_CLIENT_SECRET=<client_secret from register-client>
 EOF
 runagent -m roundcubemail1 systemctl --user restart roundcubemail-app.service
 ```
+
+After the logout from the provider, Roundcube asks to return to its
+logout page, `https://<host>/?_task=logout`. Roundcube builds this URI
+itself: register it exactly in `post_logout_redirect_uris`, otherwise the
+provider refuses the logout redirect.
 
 The file is included in the module backup.
 
