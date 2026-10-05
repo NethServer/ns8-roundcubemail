@@ -53,18 +53,23 @@ The above command will:
 Work in progress, see NethServer/dev#8080. Roundcube can log users in
 with an OpenID Connect provider, like the NS8 idp module, next to the
 password login form. The provider is not discovered automatically yet:
-the settings are written manually in the `oidc.env` file of the module
-state directory. Each start of the `roundcubemail-app` service writes
-them to `config/config.oauth.php`, or removes that file if the settings
-are missing.
+the client settings are written manually in the `oidc.env` file of the
+module state directory. Each start of the `roundcubemail-app` service
+writes them to `config/config.oauth.php`, or removes that file if the
+settings are missing.
 
-| Variable | Required | Description |
+| Variable in `oidc.env` | Required | Description |
 |---|---|---|
 | `OIDC_ISSUER` | yes | Issuer URL of the realm, for example `https://sso.example.org/realms/dp.example.org` |
 | `OIDC_CLIENT_ID` | yes | OIDC client ID |
 | `OIDC_CLIENT_SECRET` | yes | OIDC client secret |
-| `OIDC_PROVIDER_NAME` | no | Label of the login button, default `Single Sign-On` |
-| `OIDC_LOGIN_REDIRECT` | no | `1` redirects the login page straight to the provider, without the password form |
+
+Settings that are not secret are in the module environment:
+
+| Environment variable | Default | Description |
+|---|---|---|
+| `OIDC_LOGIN_MODE` | `optional` | `optional`: the login page shows the password form and the SSO button. `exclusive`: the login page goes straight to the provider. See below |
+| `OIDC_PROVIDER_NAME` | `Single Sign-On` | Label of the login button |
 
 The client of the provider needs:
 
@@ -95,6 +100,38 @@ itself: register it exactly in `post_logout_redirect_uris`, otherwise the
 provider refuses the logout redirect.
 
 The file is included in the module backup.
+
+### Login mode
+
+Set the login mode in the module environment, then restart the app
+service to apply it:
+
+```
+runagent -m roundcubemail1 python3 -c 'import agent; agent.set_env("OIDC_LOGIN_MODE", "exclusive")'
+runagent -m roundcubemail1 systemctl --user restart roundcubemail-app.service
+```
+
+An unknown value works as `optional`, with a warning in the log.
+
+**Warning:** in `exclusive` mode Roundcube has no emergency login path.
+It removes the user name and password fields from its login page, also
+when the provider cannot be reached, so nobody can log in to the
+webmail while the provider is down. To recover, switch back to
+`optional` and restart the app service:
+
+```
+runagent -m roundcubemail1 python3 -c 'import agent; agent.set_env("OIDC_LOGIN_MODE", "optional")'
+runagent -m roundcubemail1 systemctl --user restart roundcubemail-app.service
+```
+
+In both modes, mail clients that connect to IMAP and SMTP keep using
+the LDAP passwords.
+
+If the realm of the provider accepts only federated logins (the
+`federated` login mode of the idp module), use `exclusive`: otherwise
+the Roundcube password form still accepts the LDAP passwords of native
+accounts, bypassing the federated provider and its multi-factor
+authentication.
 
 ## Get the configuration
 You can retrieve the configuration with
