@@ -79,6 +79,8 @@ with open("config/config.nethserver.php", "w") as f:
     f.write("$config['login_autocomplete'] = 2; \n")
     # create default folders at first user login
     f.write("$config['create_default_folders'] = true; \n")
+    # log each login with the user and the client IP, so a security tool can see who logged in from where
+    f.write("$config['log_logins'] = true; \n")
 
 # retrieve ldap user domain and following shcematype write the addressbook ldap configuration
 lp = Ldapproxy()
